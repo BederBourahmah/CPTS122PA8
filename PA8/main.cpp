@@ -2,7 +2,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "SFML works!", sf::Style::Fullscreen);
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
@@ -13,6 +13,11 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+            window.close();
         }
 
         window.clear();

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "VideoHelpers.h"
 #include "MenuSelector.h"
+#include "TextComponent.h"
 
 int main()
 {
@@ -15,7 +16,7 @@ int main()
 
     sf::RenderWindow window(fullscreenVideoMode, "SFML works!", sf::Style::Fullscreen);
 
-    MenuSelector menuSelector;
+    MenuSelector menuSelector(100, 100);
 
     sf::Sprite backgroundSprite;
     if (!VideoHelpers::getMainMenuBackgroundSprite(backgroundSprite, fullscreenVideoMode))
@@ -23,6 +24,8 @@ int main()
         std::cout << "Failed to load background." << std::endl;
         return EXIT_FAILURE;
     }
+
+    TextComponent testText("Leander.ttf", "Test string");
 
     while (window.isOpen())
     {
@@ -44,6 +47,7 @@ int main()
         window.draw(menuSelector.getBottomLeftSprite());
         window.draw(menuSelector.getBottomRightSprite());
         window.draw(menuSelector.getTopRightSprite());
+        window.draw(testText.getText());
         window.display();
     }
 

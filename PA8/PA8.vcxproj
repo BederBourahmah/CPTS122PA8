@@ -148,11 +148,13 @@
     <ClCompile Include="GUIComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuSelector.cpp" />
+    <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="VideoHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIComponent.h" />
     <ClInclude Include="MenuSelector.h" />
+    <ClInclude Include="TextComponent.h" />
     <ClInclude Include="VideoHelpers.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

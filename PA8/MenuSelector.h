@@ -7,7 +7,8 @@
 class MenuSelector : public GUIComponent
 {
 public:
-	MenuSelector(float, float);
+	MenuSelector();
+	MenuSelector(float width, float height);
 
 	sf::Sprite getTopLeftSprite();
 	sf::Sprite getBottomLeftSprite();
@@ -23,7 +24,6 @@ private:
 	sf::Texture topRightTexture;
 	sf::Sprite bottomRightSprite;
 	sf::Texture bottomRightTexture;
-	float width;
 };
 
 #endif // !MENU_SELECTOR_H

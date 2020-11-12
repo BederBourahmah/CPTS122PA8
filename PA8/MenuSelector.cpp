@@ -1,5 +1,9 @@
 #include "MenuSelector.h"
 
+MenuSelector::MenuSelector()
+{
+}
+
 MenuSelector::MenuSelector(float width, float height)
 {
     topLeftSprite.setTexture(baseTexture);

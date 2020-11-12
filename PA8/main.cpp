@@ -3,6 +3,7 @@
 #include "VideoHelpers.h"
 #include "MenuSelector.h"
 #include "TextComponent.h"
+#include "MainMenu.h"
 
 int main()
 {
@@ -25,7 +26,7 @@ int main()
         return EXIT_FAILURE;
     }
 
-    TextComponent testText("Leander.ttf", "Test string");
+    MainMenu mainMenu(fullscreenVideoMode);
 
     while (window.isOpen())
     {
@@ -47,7 +48,7 @@ int main()
         window.draw(menuSelector.getBottomLeftSprite());
         window.draw(menuSelector.getBottomRightSprite());
         window.draw(menuSelector.getTopRightSprite());
-        window.draw(testText.getText());
+        mainMenu.draw(window);
         window.display();
     }
 

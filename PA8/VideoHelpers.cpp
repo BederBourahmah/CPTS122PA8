@@ -17,7 +17,7 @@ bool VideoHelpers::getFullscreenVideoMode(sf::VideoMode &rtnVideoMode)
 
 bool VideoHelpers::loadMainMenuBackgroundTexture()
 {
-    if (!backgroundTexture.loadFromFile("brown_age_by_darkwood67.jpg"))
+    if (!backgroundTexture.loadFromFile("assets/main_menu_background.jpg"))
     {
         return false;
     }

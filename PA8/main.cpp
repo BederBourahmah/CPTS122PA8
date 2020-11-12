@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "VideoHelpers.h"
+#include "MenuSelector.h"
 
 int main()
 {
@@ -13,8 +14,8 @@ int main()
     }
 
     sf::RenderWindow window(fullscreenVideoMode, "SFML works!", sf::Style::Fullscreen);
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+
+    MenuSelector menuSelector;
 
     sf::Sprite backgroundSprite;
     if (!VideoHelpers::getMainMenuBackgroundSprite(backgroundSprite, fullscreenVideoMode))
@@ -39,7 +40,10 @@ int main()
 
         window.clear();
         window.draw(backgroundSprite);
-        window.draw(shape);
+        window.draw(menuSelector.getTopLeftSprite());
+        window.draw(menuSelector.getBottomLeftSprite());
+        window.draw(menuSelector.getBottomRightSprite());
+        window.draw(menuSelector.getTopRightSprite());
         window.display();
     }
 

@@ -6,7 +6,9 @@ MainMenu::MainMenu(sf::VideoMode const videoMode)
 	Exit = new TextComponent("Leander.ttf", "Exit Game");
 	Selector = new MenuSelector(100, 200);
 	Start->centerHorizontal(videoMode);
-	Start->move(0, videoMode.height / 2);
+	Start->snapToVertical(videoMode, 4, 2);
+	Exit->centerHorizontal(videoMode);
+	Exit->snapToVertical(videoMode, 4, 3);
 }
 
 MainMenu::~MainMenu()
@@ -19,4 +21,5 @@ MainMenu::~MainMenu()
 void MainMenu::draw(sf::RenderWindow &window)
 {
 	window.draw(Start->getText());
+	window.draw(Exit->getText());
 }

@@ -1,9 +1,10 @@
 #ifndef GUI_COMPONENT_H
 #define GUI_COMPONENT_H
 
+#include "MoveableComponent.h"
 #include <SFML/Graphics.hpp>
 
-class GUIComponent
+class GUIComponent : MoveableComponent
 {
 public:
 	GUIComponent();

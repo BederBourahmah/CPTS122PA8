@@ -17,8 +17,6 @@ int main()
 
     sf::RenderWindow window(fullscreenVideoMode, "SFML works!", sf::Style::Fullscreen);
 
-    MenuSelector menuSelector(100, 100);
-
     sf::Sprite backgroundSprite;
     if (!VideoHelpers::getMainMenuBackgroundSprite(backgroundSprite, fullscreenVideoMode))
     {
@@ -42,12 +40,18 @@ int main()
             window.close();
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        {
+            mainMenu.moveSelectorDown();
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        {
+            mainMenu.moveSelectorUp();
+        }
+
         window.clear();
         window.draw(backgroundSprite);
-        window.draw(menuSelector.getTopLeftSprite());
-        window.draw(menuSelector.getBottomLeftSprite());
-        window.draw(menuSelector.getBottomRightSprite());
-        window.draw(menuSelector.getTopRightSprite());
         mainMenu.draw(window);
         window.display();
     }

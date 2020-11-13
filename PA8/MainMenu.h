@@ -5,16 +5,26 @@
 #include "MenuSelector.h"
 #include <SFML/Graphics.hpp>
 
+enum class CurrentSelection
+{
+	Start,
+	Exit
+};
+
 class MainMenu
 {
 public:
 	MainMenu(sf::VideoMode const);
 	~MainMenu();
 	void draw(sf::RenderWindow &window);
+	void moveSelectorDown();
+	void moveSelectorUp();
 private:
-	TextComponent* Start;
-	TextComponent* Exit;
-	MenuSelector* Selector;
+	TextComponent* start;
+	TextComponent* exit;
+	MenuSelector* selector;
+	CurrentSelection currentSelection;
+	void updateSelectorPosition();
 };
 
 #endif // !MAIN_MENU_H

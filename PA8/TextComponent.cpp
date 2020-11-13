@@ -1,11 +1,6 @@
 #include "TextComponent.h"
 #include <iostream>
 
-TextComponent::TextComponent()
-{
-	didLoadSuccessfully = false;
-}
-
 TextComponent::TextComponent(std::string textFile, std::string contents)
 {
 	didLoadSuccessfully = true;
@@ -18,6 +13,9 @@ TextComponent::TextComponent(std::string textFile, std::string contents)
 	text.setString(contents);
 	text.setFillColor(sf::Color::Black);
 	text.setCharacterSize(100);
+	centerPosX = text.getGlobalBounds().width / 2;
+	centerPosY = text.getGlobalBounds().height / 2;
+	text.setOrigin(centerPosX, centerPosY);
 }
 
 sf::Text TextComponent::getText()
@@ -34,10 +32,8 @@ TextComponent::TextComponent(const TextComponent& compToCopy)
 
 void TextComponent::centerHorizontal(sf::VideoMode const videoMode)
 {
-	float textCenterOffset = text.getGlobalBounds().width / 2;
-	float videoCenter = videoMode.width / 2;
-	float horizontalPos = videoCenter - textCenterOffset;
-	text.setPosition(horizontalPos, text.getPosition().y);
+	centerPosX = videoMode.width / 2;
+	text.setPosition(centerPosX, centerPosY);
 }
 
 void TextComponent::snapToVertical(sf::VideoMode const videoMode, int sections, int sectionToSnapTo)
@@ -48,5 +44,26 @@ void TextComponent::snapToVertical(sf::VideoMode const videoMode, int sections, 
 	float centerOfSelectedSection = (bottomOfSelectedSection + topOfSelectedSection) / 2;
 	float textCenterOffset = text.getGlobalBounds().height / 2;
 	float verticalPos = centerOfSelectedSection - textCenterOffset;
-	text.setPosition(text.getPosition().x, verticalPos);
+	centerPosY = centerOfSelectedSection;
+	text.setPosition(centerPosX, centerPosY);
+}
+
+float TextComponent::getCenterPosX()
+{
+	return centerPosX;
+}
+
+float TextComponent::getCenterPosY()
+{
+	return centerPosY;
+}
+
+float TextComponent::getWidth()
+{
+	return text.getGlobalBounds().width;
+}
+
+float TextComponent::getHeight()
+{
+	return text.getGlobalBounds().height;
 }

@@ -17,6 +17,7 @@ MainMenu::MainMenu(sf::VideoMode const videoMode)
 	{
 		std::cout << "Failed to load background sprite." << std::endl;
 	}
+	isExitingGame = false;
 }
 
 MainMenu::~MainMenu()
@@ -52,6 +53,32 @@ void MainMenu::moveSelectorUp()
 		updateSelectorPosition();
 		return;
 	}
+}
+
+void MainMenu::processKeyboardInput()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		moveSelectorDown();
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		moveSelectorUp();
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+	{
+		if (currentSelection == CurrentSelection::Exit)
+		{
+			isExitingGame = true;
+		}
+	}
+}
+
+bool MainMenu::shouldExitGame()
+{
+	return isExitingGame;
 }
 
 void MainMenu::updateSelectorPosition()

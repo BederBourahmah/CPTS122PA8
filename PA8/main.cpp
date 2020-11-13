@@ -27,19 +27,11 @@ int main()
                 window.close();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        mainMenu.processKeyboardInput();
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || mainMenu.shouldExitGame())
         {
             window.close();
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-            mainMenu.moveSelectorDown();
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        {
-            mainMenu.moveSelectorUp();
         }
 
         window.clear();
@@ -47,5 +39,5 @@ int main()
         window.display();
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }

@@ -19,6 +19,8 @@ public:
 	void drawTo(sf::RenderWindow &window);
 	void moveSelectorDown();
 	void moveSelectorUp();
+	void processKeyboardInput();
+	bool shouldExitGame();
 private:
 	TextComponent* start;
 	TextComponent* exit;
@@ -29,6 +31,7 @@ private:
 	sf::Texture backgroundTexture;
 	bool loadMainMenuBackgroundTexture();
 	bool loadMainMenuBackgroundSprite(sf::VideoMode const videoMode);
+	bool isExitingGame;
 };
 
 #endif // !MAIN_MENU_H

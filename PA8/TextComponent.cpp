@@ -3,7 +3,7 @@
 
 TextComponent::TextComponent(std::string textFile, std::string contents)
 {
-	if (font.loadFromFile("assets/" + textFile))
+	if (!font.loadFromFile("assets/" + textFile))
 	{
 		std::cout << "Failed to load '" << textFile << "' text file." << std::endl;
 	}

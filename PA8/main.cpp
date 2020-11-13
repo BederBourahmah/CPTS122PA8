@@ -8,21 +8,13 @@
 int main()
 {
     sf::VideoMode fullscreenVideoMode;
-    VideoHelpers::getFullscreenVideoMode(fullscreenVideoMode);
     if (!VideoHelpers::getFullscreenVideoMode(fullscreenVideoMode))
     {
         std::cout << "Failed to get fullscreen video mode." << std::endl;
         return EXIT_FAILURE;
     }
 
-    sf::RenderWindow window(fullscreenVideoMode, "SFML works!", sf::Style::Fullscreen);
-
-    sf::Sprite backgroundSprite;
-    if (!VideoHelpers::getMainMenuBackgroundSprite(backgroundSprite, fullscreenVideoMode))
-    {
-        std::cout << "Failed to load background." << std::endl;
-        return EXIT_FAILURE;
-    }
+    sf::RenderWindow window(fullscreenVideoMode, "PA8", sf::Style::Fullscreen);
 
     MainMenu mainMenu(fullscreenVideoMode);
 
@@ -51,8 +43,7 @@ int main()
         }
 
         window.clear();
-        window.draw(backgroundSprite);
-        mainMenu.draw(window);
+        mainMenu.drawTo(window);
         window.display();
     }
 

@@ -8,20 +8,20 @@ class TextComponent : MoveableComponent
 {
 public:
 	TextComponent(std::string textFile, std::string contents);
-	sf::Text getText();
-	TextComponent(const TextComponent&);
+
 	void centerHorizontal(sf::VideoMode const videoMode);
 	void snapToVertical(sf::VideoMode const videoMode, int sections, int sectionToSnapTo);
 	float getCenterPosX();
 	float getCenterPosY();
 	float getWidth();
 	float getHeight();
+	void drawTo(sf::RenderWindow& window);
 private:
 	sf::Text text;
 	sf::Font font;
-	bool didLoadSuccessfully;
 	float centerPosX;
 	float centerPosY;
+	void updatePosition();
 };
 
 #endif // !TEXT_COMPONENT_H

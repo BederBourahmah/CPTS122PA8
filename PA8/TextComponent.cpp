@@ -3,10 +3,9 @@
 
 TextComponent::TextComponent(std::string textFile, std::string contents)
 {
-	didLoadSuccessfully = true;
 	if (font.loadFromFile("assets/" + textFile))
 	{
-		didLoadSuccessfully = false;
+		std::cout << "Failed to load '" << textFile << "' text file." << std::endl;
 	}
 
 	text.setFont(font);
@@ -18,22 +17,10 @@ TextComponent::TextComponent(std::string textFile, std::string contents)
 	text.setOrigin(centerPosX, centerPosY);
 }
 
-sf::Text TextComponent::getText()
-{
-	return text;
-}
-
-TextComponent::TextComponent(const TextComponent& compToCopy)
-{
-	font = compToCopy.font;
-	didLoadSuccessfully = compToCopy.didLoadSuccessfully;
-	text = compToCopy.text;
-}
-
 void TextComponent::centerHorizontal(sf::VideoMode const videoMode)
 {
 	centerPosX = videoMode.width / 2;
-	text.setPosition(centerPosX, centerPosY);
+	updatePosition();
 }
 
 void TextComponent::snapToVertical(sf::VideoMode const videoMode, int sections, int sectionToSnapTo)
@@ -45,7 +32,7 @@ void TextComponent::snapToVertical(sf::VideoMode const videoMode, int sections, 
 	float textCenterOffset = text.getGlobalBounds().height / 2;
 	float verticalPos = centerOfSelectedSection - textCenterOffset;
 	centerPosY = centerOfSelectedSection;
-	text.setPosition(centerPosX, centerPosY);
+	updatePosition();
 }
 
 float TextComponent::getCenterPosX()
@@ -66,4 +53,14 @@ float TextComponent::getWidth()
 float TextComponent::getHeight()
 {
 	return text.getGlobalBounds().height;
+}
+
+void TextComponent::drawTo(sf::RenderWindow& window)
+{
+	window.draw(text);
+}
+
+void TextComponent::updatePosition()
+{
+	text.setPosition(centerPosX, centerPosY);
 }

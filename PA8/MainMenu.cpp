@@ -1,4 +1,6 @@
 #include "MainMenu.h"
+#include "VideoHelpers.h"
+#include <iostream>
 
 MainMenu::MainMenu(sf::VideoMode const videoMode)
 {
@@ -11,6 +13,10 @@ MainMenu::MainMenu(sf::VideoMode const videoMode)
 	exit->snapToVertical(videoMode, 4, 3);
 	currentSelection = CurrentSelection::Start;
 	updateSelectorPosition();
+	if (!loadMainMenuBackgroundSprite(videoMode))
+	{
+		std::cout << "Failed to load background sprite." << std::endl;
+	}
 }
 
 MainMenu::~MainMenu()
@@ -20,11 +26,12 @@ MainMenu::~MainMenu()
 	delete selector;
 }
 
-void MainMenu::draw(sf::RenderWindow &window)
+void MainMenu::drawTo(sf::RenderWindow &window)
 {
-	window.draw(start->getText());
-	window.draw(exit->getText());
-	selector->draw(window);
+	window.draw(backgroundSprite);
+	start->drawTo(window);
+	exit->drawTo(window);
+	selector->drawTo(window);
 }
 
 void MainMenu::moveSelectorDown()
@@ -60,4 +67,28 @@ void MainMenu::updateSelectorPosition()
 	default:
 		return;
 	}
+}
+
+const static float backgroundWidth = 3071;
+const static float backgroundHeight = 2299;
+
+bool MainMenu::loadMainMenuBackgroundTexture()
+{
+	if (!backgroundTexture.loadFromFile("assets/main_menu_background.jpg"))
+	{
+		return false;
+	}
+	return true;
+}
+
+bool MainMenu::loadMainMenuBackgroundSprite(sf::VideoMode const videoMode)
+{
+	if (!loadMainMenuBackgroundTexture())
+	{
+		return false;
+	}
+
+	backgroundSprite.setTexture(backgroundTexture);
+	backgroundSprite.setScale((float)videoMode.width / backgroundWidth, (float)videoMode.height / backgroundHeight);
+	return true;
 }

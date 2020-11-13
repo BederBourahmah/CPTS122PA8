@@ -16,7 +16,7 @@ public:
 	void updatePosition(float posX, float posY);
 	void centerHorizontal(sf::VideoMode const videoMode);
 	void snapToVertical(sf::VideoMode const videoMode, int sections, int sectionToSnapTo);
-	void draw(sf::RenderWindow& window);
+	void drawTo(sf::RenderWindow& window);
 private:
 	sf::Sprite topLeftSprite;
 	sf::Texture topLeftTexture;

@@ -53,10 +53,7 @@ void MenuSelector::updatePosition(float posX, float posY)
 
 void MenuSelector::centerHorizontal(sf::VideoMode const videoMode)
 {
-    float centerOffset = totalWidth / 2;
-    float videoCenter = videoMode.width / 2;
-    float horizontalPos = videoCenter - centerOffset;
-    updatePosition(horizontalPos, centerPosY);
+    updatePosition(videoMode.width / 2, centerPosY);
 }
 
 void MenuSelector::snapToVertical(sf::VideoMode const videoMode, int sections, int sectionToSnapTo)
@@ -68,7 +65,7 @@ void MenuSelector::snapToVertical(sf::VideoMode const videoMode, int sections, i
     updatePosition(centerPosX, centerOfSelectedSection);
 }
 
-void MenuSelector::draw(sf::RenderWindow& window)
+void MenuSelector::drawTo(sf::RenderWindow& window)
 {
     window.draw(topLeftSprite);
     window.draw(topRightSprite);

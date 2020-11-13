@@ -16,7 +16,7 @@ class MainMenu
 public:
 	MainMenu(sf::VideoMode const);
 	~MainMenu();
-	void draw(sf::RenderWindow &window);
+	void drawTo(sf::RenderWindow &window);
 	void moveSelectorDown();
 	void moveSelectorUp();
 private:
@@ -25,6 +25,10 @@ private:
 	MenuSelector* selector;
 	CurrentSelection currentSelection;
 	void updateSelectorPosition();
+	sf::Sprite backgroundSprite;
+	sf::Texture backgroundTexture;
+	bool loadMainMenuBackgroundTexture();
+	bool loadMainMenuBackgroundSprite(sf::VideoMode const videoMode);
 };
 
 #endif // !MAIN_MENU_H

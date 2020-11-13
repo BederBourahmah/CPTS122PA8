@@ -11,8 +11,6 @@ public:
 
 protected:
 	sf::Texture baseTexture;
-private:
-	bool didLoadSuccessfully;
 };
 
 #endif // !GUI_COMPONENT_H

@@ -1,10 +1,10 @@
 #include "GUIComponent.h"
+#include <iostream>
 
 GUIComponent::GUIComponent()
 {
-	didLoadSuccessfully = true;
 	if (!baseTexture.loadFromFile("assets/gui_components.png"))
 	{
-		didLoadSuccessfully = false;
+		std::cout << "Failed to load GUI components texture." << std::endl;
 	}
 }

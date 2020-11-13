@@ -1,38 +1,22 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-
-const static float backgroundWidth = 3071;
-const static float backgroundHeight = 2299;
+#include "VideoHelpers.h"
+#include "MenuSelector.h"
+#include "TextComponent.h"
+#include "MainMenu.h"
 
 int main()
 {
-    std::vector<sf::VideoMode> fullscreenVideoModes = sf::VideoMode::getFullscreenModes();
-    if (fullscreenVideoModes.size() < 1)
+    sf::VideoMode fullscreenVideoMode;
+    if (!VideoHelpers::getFullscreenVideoMode(fullscreenVideoMode))
     {
         std::cout << "Failed to get fullscreen video mode." << std::endl;
         return EXIT_FAILURE;
     }
 
-    sf::VideoMode fullscreenVideoMode = fullscreenVideoModes[0];
-    unsigned int fullscreenWidth = fullscreenVideoMode.width;
-    unsigned int fullscreenHeight = fullscreenVideoMode.height;
-    float screenToBackgroundWidthScale = (float)fullscreenWidth / backgroundWidth;
-    float screenToBackgroundHeightScale = (float)fullscreenHeight / backgroundHeight;
+    sf::RenderWindow window(fullscreenVideoMode, "PA8", sf::Style::Fullscreen);
 
-    sf::RenderWindow window(fullscreenVideoMode, "SFML works!", sf::Style::Fullscreen);
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
-    sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("brown_age_by_darkwood67.jpg"))
-    {
-        std::cout << "Failed to load background." << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    sf::Sprite backgroundSprite;
-    backgroundSprite.setTexture(backgroundTexture);
-    backgroundSprite.setScale(screenToBackgroundWidthScale, screenToBackgroundHeightScale);
+    MainMenu mainMenu(fullscreenVideoMode);
 
     while (window.isOpen())
     {
@@ -43,16 +27,17 @@ int main()
                 window.close();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        mainMenu.processKeyboardInput();
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || mainMenu.shouldExitGame())
         {
             window.close();
         }
 
         window.clear();
-        window.draw(backgroundSprite);
-        window.draw(shape);
+        mainMenu.drawTo(window);
         window.display();
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }

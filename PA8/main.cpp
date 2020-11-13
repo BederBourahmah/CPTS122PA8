@@ -15,7 +15,7 @@ int main()
     }
 
     sf::RenderWindow window(fullscreenVideoMode, "PA8", sf::Style::Fullscreen);
-
+    //Test
     MainMenu mainMenu(fullscreenVideoMode);
 
     while (window.isOpen())

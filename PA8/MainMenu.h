@@ -5,12 +5,7 @@
 #include "MenuSelector.h"
 #include <SFML/Graphics.hpp>
 #include "Screen.h"
-
-enum class CurrentSelection
-{
-	Start,
-	Exit
-};
+#include "MainMenuSelection.h"
 
 class MainMenu : public Screen
 {
@@ -28,7 +23,7 @@ private:
 	TextComponent* start;
 	TextComponent* exit;
 	MenuSelector* selector;
-	CurrentSelection currentSelection;
+	MainMenuSelection currentSelection;
 	void updateSelectorPosition();
 	sf::Sprite backgroundSprite;
 	sf::Texture backgroundTexture;

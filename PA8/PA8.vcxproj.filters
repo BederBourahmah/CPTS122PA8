@@ -80,5 +80,8 @@
     <ClInclude Include="TextComponent.h">
       <Filter>Header Files\UserInterface</Filter>
     </ClInclude>
+    <ClInclude Include="MainMenuSelection.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

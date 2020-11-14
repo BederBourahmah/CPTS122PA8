@@ -11,7 +11,7 @@ MainMenu::MainMenu(sf::VideoMode const videoMode)
 	start->snapToVertical(videoMode, 4, 2);
 	exit->centerHorizontal(videoMode);
 	exit->snapToVertical(videoMode, 4, 3);
-	currentSelection = CurrentSelection::Start;
+	currentSelection = MainMenuSelection::Start;
 	updateSelectorPosition();
 	if (!loadMainMenuBackgroundSprite(videoMode))
 	{
@@ -37,9 +37,9 @@ void MainMenu::drawTo(sf::RenderWindow &window)
 
 void MainMenu::moveSelectorDown()
 {
-	if (currentSelection == CurrentSelection::Start)
+	if (currentSelection == MainMenuSelection::Start)
 	{
-		currentSelection = CurrentSelection::Exit;
+		currentSelection = MainMenuSelection::Exit;
 		updateSelectorPosition();
 		return;
 	}
@@ -47,9 +47,9 @@ void MainMenu::moveSelectorDown()
 
 void MainMenu::moveSelectorUp()
 {
-	if (currentSelection == CurrentSelection::Exit)
+	if (currentSelection == MainMenuSelection::Exit)
 	{
-		currentSelection = CurrentSelection::Start;
+		currentSelection = MainMenuSelection::Start;
 		updateSelectorPosition();
 		return;
 	}
@@ -69,7 +69,7 @@ void MainMenu::processKeyboardInput()
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
-		if (currentSelection == CurrentSelection::Exit)
+		if (currentSelection == MainMenuSelection::Exit)
 		{
 			isExitingGame = true;
 		}
@@ -80,14 +80,14 @@ void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 {
 	if (start->isPositionInMyArea(mouseWindowPosition))
 	{
-		currentSelection = CurrentSelection::Start;
+		currentSelection = MainMenuSelection::Start;
 		updateSelectorPosition();
 		return;
 	}
 
 	if (exit->isPositionInMyArea(mouseWindowPosition))
 	{
-		currentSelection = CurrentSelection::Exit;
+		currentSelection = MainMenuSelection::Exit;
 		updateSelectorPosition();
 		return;
 	}
@@ -106,7 +106,7 @@ void MainMenu::processMouseClick()
 
 	if (exit->isPositionInMyArea(mousePosition))
 	{
-		currentSelection = CurrentSelection::Exit;
+		currentSelection = MainMenuSelection::Exit;
 		updateSelectorPosition();
 		isExitingGame = true;
 		return;
@@ -122,10 +122,10 @@ void MainMenu::updateSelectorPosition()
 {
 	switch (currentSelection)
 	{
-	case CurrentSelection::Start:
+	case MainMenuSelection::Start:
 		selector->moveTo(start->getCenterPosX(), start->getCenterPosY());
 		return;
-	case CurrentSelection::Exit:
+	case MainMenuSelection::Exit:
 		selector->moveTo(exit->getCenterPosX(), exit->getCenterPosY());
 		return;
 	default:

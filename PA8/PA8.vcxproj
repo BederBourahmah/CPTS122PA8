@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClInclude Include="GUIComponent.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="MainMenuSelection.h" />
     <ClInclude Include="MenuSelector.h" />
     <ClInclude Include="MoveableComponent.h" />
     <ClInclude Include="Screen.h" />

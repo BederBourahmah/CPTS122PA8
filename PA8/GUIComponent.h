@@ -4,7 +4,7 @@
 #include "MoveableComponent.h"
 #include <SFML/Graphics.hpp>
 
-class GUIComponent : MoveableComponent
+class GUIComponent : public MoveableComponent
 {
 public:
 	GUIComponent();

@@ -13,9 +13,7 @@ public:
 	sf::Sprite getBottomLeftSprite();
 	sf::Sprite getTopRightSprite();
 	sf::Sprite getBottomRightSprite();
-	void updatePosition(float posX, float posY);
-	void centerHorizontal(sf::VideoMode const videoMode);
-	void snapToVertical(sf::VideoMode const videoMode, int sections, int sectionToSnapTo);
+	void updatePosition();
 	void drawTo(sf::RenderWindow& window);
 private:
 	sf::Sprite topLeftSprite;
@@ -26,14 +24,7 @@ private:
 	sf::Texture topRightTexture;
 	sf::Sprite bottomRightSprite;
 	sf::Texture bottomRightTexture;
-	float getTopPosYToCenter();
-	float getLeftPosXToCenter();
-	float getBottomPosYToCenter();
-	float getRightPosXToCenter();
-	float totalWidth;
-	float totalHeight;
-	float centerPosX;
-	float centerPosY;
+	bool isPositionInMyArea(sf::Vector2i position);
 };
 
 #endif // !MENU_SELECTOR_H

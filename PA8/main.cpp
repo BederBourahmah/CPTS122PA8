@@ -28,6 +28,7 @@ int main()
         }
 
         mainMenu.processKeyboardInput();
+        mainMenu.processMousePosition(sf::Mouse::getPosition());
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || mainMenu.shouldExitGame())
         {

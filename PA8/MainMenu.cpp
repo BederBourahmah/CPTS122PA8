@@ -76,6 +76,11 @@ void MainMenu::processKeyboardInput()
 	}
 }
 
+void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
+{
+	
+}
+
 bool MainMenu::shouldExitGame()
 {
 	return isExitingGame;
@@ -86,10 +91,10 @@ void MainMenu::updateSelectorPosition()
 	switch (currentSelection)
 	{
 	case CurrentSelection::Start:
-		selector->updatePosition(start->getCenterPosX(), start->getCenterPosY());
+		selector->moveTo(start->getCenterPosX(), start->getCenterPosY());
 		return;
 	case CurrentSelection::Exit:
-		selector->updatePosition(exit->getCenterPosX(), exit->getCenterPosY());
+		selector->moveTo(exit->getCenterPosX(), exit->getCenterPosY());
 		return;
 	default:
 		return;

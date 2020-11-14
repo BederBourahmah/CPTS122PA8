@@ -41,28 +41,12 @@ sf::Sprite MenuSelector::getBottomRightSprite()
     return bottomRightSprite;
 }
 
-void MenuSelector::updatePosition(float posX, float posY)
+void MenuSelector::updatePosition()
 {
-    centerPosX = posX;
-    centerPosY = posY;
     topLeftSprite.setPosition(getLeftPosXToCenter(), getTopPosYToCenter());
     topRightSprite.setPosition(getRightPosXToCenter(), getTopPosYToCenter());
     bottomLeftSprite.setPosition(getLeftPosXToCenter(), getBottomPosYToCenter());
     bottomRightSprite.setPosition(getRightPosXToCenter(), getBottomPosYToCenter());
-}
-
-void MenuSelector::centerHorizontal(sf::VideoMode const videoMode)
-{
-    updatePosition(videoMode.width / 2, centerPosY);
-}
-
-void MenuSelector::snapToVertical(sf::VideoMode const videoMode, int sections, int sectionToSnapTo)
-{
-    float sizePerSection = (float)videoMode.height / (float)sections;
-    float bottomOfSelectedSection = sectionToSnapTo * sizePerSection;
-    float topOfSelectedSection = (sectionToSnapTo - 1) * sizePerSection;
-    float centerOfSelectedSection = (bottomOfSelectedSection + topOfSelectedSection) / 2;
-    updatePosition(centerPosX, centerOfSelectedSection);
 }
 
 void MenuSelector::drawTo(sf::RenderWindow& window)
@@ -73,22 +57,12 @@ void MenuSelector::drawTo(sf::RenderWindow& window)
     window.draw(bottomRightSprite);
 }
 
-float MenuSelector::getTopPosYToCenter()
+bool MenuSelector::isPositionInMyArea(sf::Vector2i position)
 {
-    return centerPosY - (totalHeight/2);
-}
+    if (position.y < getTopPosYToCenter()) return false;
+    if (position.y > getBottomPosYToCenter()) return false;
+    if (position.x < getLeftPosXToCenter()) return false;
+    if (position.x > getRightPosXToCenter()) return false;
 
-float MenuSelector::getLeftPosXToCenter()
-{
-    return centerPosX - (totalWidth/2);
-}
-
-float MenuSelector::getBottomPosYToCenter()
-{
-    return centerPosY + (totalHeight/2);
-}
-
-float MenuSelector::getRightPosXToCenter()
-{
-    return centerPosX + (totalWidth/2);
+    return true;
 }

@@ -20,6 +20,8 @@ public:
 	void moveSelectorDown();
 	void moveSelectorUp();
 	void processKeyboardInput();
+	void processMousePosition(sf::Vector2i mouseWindowPosition);
+	void processMouseClick();
 	bool shouldExitGame();
 private:
 	TextComponent* start;

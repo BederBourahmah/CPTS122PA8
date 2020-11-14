@@ -1,7 +1,7 @@
 #ifndef SCREENS_H
 #define SCREENS_H
 
-enum class CurrentScreen
+enum class Screens
 {
 	MainMenu,
 	SideScroller

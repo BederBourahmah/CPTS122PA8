@@ -5,6 +5,7 @@
 #include "TextComponent.h"
 #include "MainMenu.h"
 #include "Screens.h"
+#include "ScreenManager.h"
 
 using namespace sf;
 using namespace std;
@@ -19,9 +20,7 @@ int main()
     }
 
     RenderWindow window(fullscreenVideoMode, "PA8", Style::Fullscreen);
-    MainMenu* mainMenu = new MainMenu(fullscreenVideoMode);
-
-    CurrentScreen currentScreen = CurrentScreen::MainMenu;
+    ScreenManager screenManager(fullscreenVideoMode);
 
     while (window.isOpen())
     {
@@ -37,29 +36,19 @@ int main()
             window.close();
         }
 
-        if (currentScreen == CurrentScreen::MainMenu && mainMenu != nullptr)
+        Screen* currentScreen = screenManager.getCurrentScreen();
+
+        currentScreen->processKeyboardInput();
+        currentScreen->processMousePosition(Mouse::getPosition());
+        currentScreen->processMouseClick();
+        if (currentScreen->shouldExitGame())
         {
-            mainMenu->processKeyboardInput();
-            mainMenu->processMousePosition(Mouse::getPosition());
-            mainMenu->processMouseClick();
-            if (mainMenu->shouldExitGame())
-            {
-                window.close();
-            }
+            window.close();
         }
 
         window.clear();
-
-        if (currentScreen == CurrentScreen::MainMenu && mainMenu != nullptr)
-        {
-            mainMenu->drawTo(window);
-        }
-
+        currentScreen->drawTo(window);
         window.display();
-        if (currentScreen == CurrentScreen::MainMenu)
-        {
-            cout << "Main Menu" << endl;
-        }
     }
 
     return EXIT_SUCCESS;

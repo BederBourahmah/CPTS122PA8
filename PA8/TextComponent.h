@@ -14,6 +14,8 @@ public:
 	float getWidth();
 	float getHeight();
 	void drawTo(sf::RenderWindow& window);
+	void setText(std::string newText);
+	void setColor(sf::Color newColor);
 private:
 	sf::Text text;
 	sf::Font font;

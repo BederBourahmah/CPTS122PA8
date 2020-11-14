@@ -17,12 +17,19 @@ SideScroller::SideScroller(sf::VideoMode vm)
 	horizontalVelocity = -0.5f;
 	isGameOver = false;
 	shouldGoBackToMainMenu = false;
+	score = 0;
+	displayedScore = new TextComponent("Leander.ttf", std::to_string(score));
+	displayedScore->snapToVertical(videoMode, 10, 1);
+	displayedScore->snapToHorizontal(videoMode, 10, 1);
+	displayedScore->setColor(sf::Color::Green);
 }
 
 SideScroller::~SideScroller()
 {
 	delete playerShape;
 	playerShape = nullptr;
+	delete displayedScore;
+	displayedScore = nullptr;
 }
 
 void SideScroller::drawTo(sf::RenderWindow& window)
@@ -31,14 +38,17 @@ void SideScroller::drawTo(sf::RenderWindow& window)
 	for (std::list<MoveableRectangle*>::iterator i = obstacles.begin(); i != obstacles.end(); ++i)
 	{
 		(*i)->drawTo(window);
-		
 	}
 	
 	if (!obstacles.empty() && obstacles.front()->isLeftOfScreen(videoMode))
 	{
 		obstacles.pop_front();
 		obstacles.push_back(generateObstacle());
+		score++;
+		displayedScore->setText(std::to_string(score));
 	}
+
+	displayedScore->drawTo(window);
 }
 
 void SideScroller::processKeyboardInput()

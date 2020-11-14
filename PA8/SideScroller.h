@@ -3,6 +3,7 @@
 
 #include "Screen.h"
 #include "MoveableRectangle.h"
+#include "TextComponent.h"
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <list>
@@ -37,6 +38,8 @@ private:
 	bool isGameOver;
 	void checkForCollisions();
 	bool shouldGoBackToMainMenu;
+	unsigned int score;
+	TextComponent* displayedScore;
 };
 
 #endif // !SIDE_SCROLLER_H

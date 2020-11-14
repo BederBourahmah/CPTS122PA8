@@ -4,13 +4,11 @@
 #include <SFML/Graphics.hpp>
 #include "MoveableComponent.h"
 
-class TextComponent : MoveableComponent
+class TextComponent : public MoveableComponent
 {
 public:
 	TextComponent(std::string textFile, std::string contents);
 
-	void centerHorizontal(sf::VideoMode const videoMode);
-	void snapToVertical(sf::VideoMode const videoMode, int sections, int sectionToSnapTo);
 	float getCenterPosX();
 	float getCenterPosY();
 	float getWidth();
@@ -19,8 +17,6 @@ public:
 private:
 	sf::Text text;
 	sf::Font font;
-	float centerPosX;
-	float centerPosY;
 	void updatePosition();
 };
 

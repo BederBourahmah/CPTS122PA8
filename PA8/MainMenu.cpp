@@ -76,6 +76,43 @@ void MainMenu::processKeyboardInput()
 	}
 }
 
+void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
+{
+	if (start->isPositionInMyArea(mouseWindowPosition))
+	{
+		currentSelection = CurrentSelection::Start;
+		updateSelectorPosition();
+		return;
+	}
+
+	if (exit->isPositionInMyArea(mouseWindowPosition))
+	{
+		currentSelection = CurrentSelection::Exit;
+		updateSelectorPosition();
+		return;
+	}
+}
+
+void MainMenu::processMouseClick()
+{
+	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
+
+	sf::Vector2i mousePosition = sf::Mouse::getPosition();
+	if (start->isPositionInMyArea(mousePosition))
+	{
+		//TODO: Implement start game
+		return;
+	}
+
+	if (exit->isPositionInMyArea(mousePosition))
+	{
+		currentSelection = CurrentSelection::Exit;
+		updateSelectorPosition();
+		isExitingGame = true;
+		return;
+	}
+}
+
 bool MainMenu::shouldExitGame()
 {
 	return isExitingGame;
@@ -86,10 +123,10 @@ void MainMenu::updateSelectorPosition()
 	switch (currentSelection)
 	{
 	case CurrentSelection::Start:
-		selector->updatePosition(start->getCenterPosX(), start->getCenterPosY());
+		selector->moveTo(start->getCenterPosX(), start->getCenterPosY());
 		return;
 	case CurrentSelection::Exit:
-		selector->updatePosition(exit->getCenterPosX(), exit->getCenterPosY());
+		selector->moveTo(exit->getCenterPosX(), exit->getCenterPosY());
 		return;
 	default:
 		return;

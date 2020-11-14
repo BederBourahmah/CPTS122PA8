@@ -32,18 +32,15 @@ int main()
             window.close();
         }
 
-        Screen* currentScreen = screenManager.getCurrentScreen();
-
-        currentScreen->processKeyboardInput();
-        currentScreen->processMousePosition(Mouse::getPosition());
-        currentScreen->processMouseClick();
-        if (currentScreen->shouldExitGame())
+        screenManager.updateState();
+        if (screenManager.shouldExitGame())
         {
             window.close();
+            return EXIT_SUCCESS;
         }
 
         window.clear();
-        currentScreen->drawTo(window);
+        screenManager.getCurrentScreen()->drawTo(window);
         window.display();
     }
 

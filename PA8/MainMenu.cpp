@@ -4,13 +4,13 @@
 
 MainMenu::MainMenu(sf::VideoMode const videoMode)
 {
-	sideScroller = new TextComponent("Leander.ttf", "Side Scroller Game");
-	exit = new TextComponent("Leander.ttf", "Exit Game");
-	selector = new MenuSelector(sideScroller->getWidth(), sideScroller->getHeight());
-	sideScroller->centerHorizontal(videoMode);
-	sideScroller->snapToVertical(videoMode, 4, 2);
-	exit->centerHorizontal(videoMode);
-	exit->snapToVertical(videoMode, 4, 3);
+	sideScrollerText = new TextComponent("Leander.ttf", "Side Scroller Game");
+	exitText = new TextComponent("Leander.ttf", "Exit Game");
+	selector = new MenuSelector(sideScrollerText->getWidth(), sideScrollerText->getHeight());
+	sideScrollerText->centerHorizontal(videoMode);
+	sideScrollerText->snapToVertical(videoMode, 4, 2);
+	exitText->centerHorizontal(videoMode);
+	exitText->snapToVertical(videoMode, 4, 3);
 	currentSelection = MainMenuSelection::SideScroller;
 	updateSelectorPosition();
 	if (!loadMainMenuBackgroundSprite(videoMode))
@@ -22,16 +22,19 @@ MainMenu::MainMenu(sf::VideoMode const videoMode)
 
 MainMenu::~MainMenu()
 {
-	delete sideScroller;
-	delete exit;
+	delete sideScrollerText;
+	sideScrollerText = nullptr;
+	delete exitText;
+	exitText = nullptr;
 	delete selector;
+	selector = nullptr;
 }
 
 void MainMenu::drawTo(sf::RenderWindow &window)
 {
 	window.draw(backgroundSprite);
-	sideScroller->drawTo(window);
-	exit->drawTo(window);
+	sideScrollerText->drawTo(window);
+	exitText->drawTo(window);
 	selector->drawTo(window);
 }
 
@@ -86,14 +89,14 @@ void MainMenu::processKeyboardInput()
 
 void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 {
-	if (sideScroller->isPositionInMyArea(mouseWindowPosition))
+	if (sideScrollerText->isPositionInMyArea(mouseWindowPosition))
 	{
 		currentSelection = MainMenuSelection::SideScroller;
 		updateSelectorPosition();
 		return;
 	}
 
-	if (exit->isPositionInMyArea(mouseWindowPosition))
+	if (exitText->isPositionInMyArea(mouseWindowPosition))
 	{
 		currentSelection = MainMenuSelection::Exit;
 		updateSelectorPosition();
@@ -106,13 +109,13 @@ void MainMenu::processMouseClick()
 	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
 
 	sf::Vector2i mousePosition = sf::Mouse::getPosition();
-	if (sideScroller->isPositionInMyArea(mousePosition))
+	if (sideScrollerText->isPositionInMyArea(mousePosition))
 	{
-		//TODO: Implement sideScroller game
+		//TODO: Implement sideScrollerText game
 		return;
 	}
 
-	if (exit->isPositionInMyArea(mousePosition))
+	if (exitText->isPositionInMyArea(mousePosition))
 	{
 		currentSelection = MainMenuSelection::Exit;
 		updateSelectorPosition();
@@ -136,10 +139,10 @@ void MainMenu::updateSelectorPosition()
 	switch (currentSelection)
 	{
 	case MainMenuSelection::SideScroller:
-		selector->moveTo(sideScroller->getCenterPosX(), sideScroller->getCenterPosY());
+		selector->moveTo(sideScrollerText->getCenterPosX(), sideScrollerText->getCenterPosY());
 		return;
 	case MainMenuSelection::Exit:
-		selector->moveTo(exit->getCenterPosX(), exit->getCenterPosY());
+		selector->moveTo(exitText->getCenterPosX(), exitText->getCenterPosY());
 		return;
 	default:
 		return;

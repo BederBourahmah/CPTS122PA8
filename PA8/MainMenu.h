@@ -22,8 +22,8 @@ public:
 	bool shouldExitGame();
 	Screens getSelectedScreen();
 private:
-	TextComponent* sideScroller;
-	TextComponent* exit;
+	TextComponent* sideScrollerText;
+	TextComponent* exitText;
 	MenuSelector* selector;
 	MainMenuSelection currentSelection;
 	Screens selectedScreen;

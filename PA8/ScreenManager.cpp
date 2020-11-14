@@ -9,7 +9,7 @@ ScreenManager::ScreenManager(sf::VideoMode videoMode)
 
 ScreenManager::~ScreenManager()
 {
-	delete mainMenu;
+	deleteAllScreens();
 }
 
 Screen* ScreenManager::getCurrentScreen()
@@ -23,4 +23,60 @@ Screen* ScreenManager::getCurrentScreen()
 	default:
 		break;
 	}
+}
+
+void ScreenManager::updateState()
+{
+	Screen* currentScreenPtr = getCurrentScreen();
+	if (currentScreenPtr == nullptr) return;
+
+	currentScreenPtr->processKeyboardInput();
+	currentScreenPtr->processMousePosition(sf::Mouse::getPosition());
+	currentScreenPtr->processMouseClick();
+
+	if (currentScreen == Screens::MainMenu)
+	{
+		processScreenSelection((MainMenu*)currentScreenPtr);
+	}
+}
+
+bool ScreenManager::shouldExitGame()
+{
+	if (currentScreen == Screens::Exit) return true;
+
+	return getCurrentScreen()->shouldExitGame();
+}
+
+void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
+{
+	switch (selectedScreen)
+	{
+	case Screens::MainMenu:
+		break;
+	case Screens::SideScroller:
+		sideScroller = new SideScroller();
+		return;
+	case Screens::Exit:
+		break;
+	default:
+		break;
+	}
+}
+
+void ScreenManager::processScreenSelection(MainMenu* currentScreenPtr)
+{
+	Screens nextScreen = (currentScreenPtr)->getSelectedScreen();
+	if (currentScreen == nextScreen) return;
+
+	deleteAllScreens();
+	initializeSelectedScreen(nextScreen);
+	currentScreen = nextScreen;
+}
+
+void ScreenManager::deleteAllScreens()
+{
+	delete mainMenu;
+	mainMenu = nullptr;
+	delete sideScroller;
+	sideScroller = nullptr;
 }

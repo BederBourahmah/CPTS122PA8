@@ -32,6 +32,7 @@ private:
 	float horizontalVelocity;
 	void updatePlayerState();
 	sf::VideoMode videoMode;
+	void generateStartingObstacles();
 };
 
 #endif // !SIDE_SCROLLER_H

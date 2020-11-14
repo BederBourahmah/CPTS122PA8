@@ -2,6 +2,7 @@
 
 const float gravitationalAcceleration = 0.001f;
 const float playerUpwardsAcceleration = -2*gravitationalAcceleration;
+const unsigned short int obstaclesPerScreen = 5;
 
 SideScroller::SideScroller(sf::VideoMode vm)
 {
@@ -12,7 +13,7 @@ SideScroller::SideScroller(sf::VideoMode vm)
 	playerShape->snapToVertical(videoMode, 5, 3);
 	verticalVelocity = 0.002f;
 	isPlayerMoving = true;
-	obstacles = std::list<MoveableRectangle*>(1, generateObstacle());
+	generateStartingObstacles();
 	horizontalVelocity = -0.5f;
 }
 
@@ -31,7 +32,7 @@ void SideScroller::drawTo(sf::RenderWindow& window)
 		
 	}
 	
-	if (!obstacles.empty() && obstacles.front()->isOffScreen(videoMode))
+	if (!obstacles.empty() && obstacles.front()->isLeftOfScreen(videoMode))
 	{
 		obstacles.pop_front();
 		obstacles.push_back(generateObstacle());
@@ -77,7 +78,7 @@ MoveableRectangle* SideScroller::generateObstacle()
 	static std::uniform_real_distribution<float> d{ 0.25f , 0.75f };
 	float randomHeight = (float)videoMode.height*d(e);
 	MoveableRectangle* newObstacle = new MoveableRectangle(sf::Vector2f(50, randomHeight), sf::Color::Cyan);
-	newObstacle->snapToHorizontal(videoMode, 4, 4);
+	newObstacle->snapToHorizontal(videoMode, obstaclesPerScreen, obstaclesPerScreen+1);
 	newObstacle->snapToBottom(videoMode);
 	return newObstacle;
 }
@@ -96,4 +97,19 @@ void SideScroller::updatePlayerState()
 	}
 
 	playerShape->shiftVertical(verticalVelocity);
+}
+
+void SideScroller::generateStartingObstacles()
+{
+	for (int i = 0; i < obstaclesPerScreen; i++)
+	{
+		obstacles.push_back(generateObstacle());
+	}
+
+	unsigned short int k = 1;
+
+	for (std::list<MoveableRectangle*>::iterator i = obstacles.begin(); i != obstacles.end(); ++i)
+	{
+		(*i)->snapToHorizontal(videoMode, obstaclesPerScreen, obstaclesPerScreen + k++);
+	}
 }

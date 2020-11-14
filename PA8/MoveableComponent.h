@@ -91,10 +91,15 @@ public:
 	{
 		if (getBottomPosYToCenter() < 0) return true;
 		if (getTopPosYToCenter() > videoMode.height) return true;
-		if (getRightPosXToCenter() < 0) return true;
+		if (isLeftOfScreen(videoMode)) return true;
 		if (getLeftPosXToCenter() > videoMode.width) return true;
 
 		return false;
+	}
+
+	bool isLeftOfScreen(sf::VideoMode videoMode)
+	{
+		return getRightPosXToCenter() < 0;
 	}
 
 	virtual void drawTo(sf::RenderWindow& window) = 0;

@@ -156,13 +156,13 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MenuSelector.cpp" />
     <ClCompile Include="TextComponent.cpp" />
-    <ClCompile Include="VideoHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIComponent.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MenuSelector.h" />
     <ClInclude Include="MoveableComponent.h" />
+    <ClInclude Include="Screens.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="VideoHelpers.h" />
   </ItemGroup>

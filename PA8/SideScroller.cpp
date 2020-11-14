@@ -1,6 +1,7 @@
 #include "SideScroller.h"
 
-const float verticalAcceleration = 0.001f;
+const float gravitationalAcceleration = 0.001f;
+const float playerUpwardsAcceleration = -2*gravitationalAcceleration;
 
 SideScroller::SideScroller(sf::VideoMode videoMode)
 {
@@ -24,6 +25,11 @@ void SideScroller::drawTo(sf::RenderWindow& window)
 
 void SideScroller::processKeyboardInput()
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		isPlayerMoving = true;
+		verticalVelocity += playerUpwardsAcceleration;
+	}
 }
 
 void SideScroller::processMousePosition(sf::Vector2i mouseWindowPosition)
@@ -41,16 +47,16 @@ bool SideScroller::shouldExitGame()
 
 void SideScroller::updateState(sf::VideoMode videoMode)
 {
-	if (!isPlayerMoving) return;
-	
-	verticalVelocity += verticalAcceleration;
-	playerShape->shiftVertical(verticalVelocity);
-	if (playerShape->didCollideWithWindowEdge(videoMode))
+	verticalVelocity += gravitationalAcceleration;
+	if (playerShape->didCollideWithBottomWindowEdge(videoMode) && verticalVelocity > 0)
 	{
 		verticalVelocity = verticalVelocity * (-0.9f);
-		if (std::abs(verticalVelocity) <= verticalAcceleration)
-		{
-			isPlayerMoving = false;
-		}
 	}
+
+	if (playerShape->didCollideWithTopWindowEdge(videoMode) && verticalVelocity < 0)
+	{
+		verticalVelocity = verticalVelocity * (-0.9f);
+	}
+
+	playerShape->shiftVertical(verticalVelocity);
 }

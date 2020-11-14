@@ -47,12 +47,22 @@ public:
 
 	bool didCollideWithWindowEdge(sf::VideoMode videoMode)
 	{
-		if (getTopPosYToCenter() <= 0) return true;
-		if (getBottomPosYToCenter() >= videoMode.height) return true;
+		if (didCollideWithTopWindowEdge(videoMode)) return true;
+		if (didCollideWithBottomWindowEdge(videoMode)) return true;
 		if (getLeftPosXToCenter() <= 0) return true;
 		if (getRightPosXToCenter() >= videoMode.width) return true;
 
 		return false;
+	}
+
+	bool didCollideWithBottomWindowEdge(sf::VideoMode videoMode)
+	{
+		 return getBottomPosYToCenter() >= videoMode.height;
+	}
+
+	bool didCollideWithTopWindowEdge(sf::VideoMode videoMode)
+	{
+		return getTopPosYToCenter() <= 0;
 	}
 
 	bool isPositionInMyArea(sf::Vector2i position)

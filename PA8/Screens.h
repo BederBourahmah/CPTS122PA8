@@ -4,7 +4,8 @@
 enum class Screens
 {
 	MainMenu,
-	SideScroller
+	SideScroller,
+	Exit
 };
 
 

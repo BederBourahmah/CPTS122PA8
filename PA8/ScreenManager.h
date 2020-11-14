@@ -2,6 +2,7 @@
 #define SCREEN_MANAGER_H
 
 #include "MainMenu.h"
+#include "SideScroller.h"
 #include <SFML/Graphics.hpp>
 #include "Screen.h"
 #include "Screens.h"
@@ -14,6 +15,7 @@ public:
 	Screen* getCurrentScreen();
 private:
 	MainMenu* mainMenu;
+	SideScroller* sideScroller;
 	Screens currentScreen;
 };
 

@@ -4,6 +4,7 @@ ScreenManager::ScreenManager(sf::VideoMode videoMode)
 {
 	mainMenu = new MainMenu(videoMode);
 	currentScreen = Screens::MainMenu;
+	sideScroller = nullptr;
 }
 
 ScreenManager::~ScreenManager()
@@ -18,7 +19,7 @@ Screen* ScreenManager::getCurrentScreen()
 	case Screens::MainMenu:
 		return mainMenu;
 	case Screens::SideScroller:
-		break;
+		return sideScroller;
 	default:
 		break;
 	}

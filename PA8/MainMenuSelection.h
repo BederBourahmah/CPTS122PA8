@@ -3,7 +3,7 @@
 
 enum class MainMenuSelection
 {
-	Start,
+	SideScroller,
 	Exit
 };
 

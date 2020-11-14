@@ -38,6 +38,13 @@ void ScreenManager::updateState()
 	if (currentScreen == Screens::MainMenu)
 	{
 		processScreenSelection((MainMenu*)currentScreenPtr);
+		return;
+	}
+
+	if (currentScreen == Screens::SideScroller)
+	{
+		((SideScroller*)currentScreenPtr)->updateState();
+		return;
 	}
 }
 

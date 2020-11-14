@@ -39,6 +39,12 @@ public:
 		updatePosition();
 	}
 
+	void shiftVertical(float y)
+	{
+		centerPosY += y;
+		updatePosition();
+	}
+
 	bool isPositionInMyArea(sf::Vector2i position)
 	{
 		if (position.y < getTopPosYToCenter()) return false;

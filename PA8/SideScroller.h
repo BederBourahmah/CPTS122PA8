@@ -5,6 +5,8 @@
 #include "MoveableRectangle.h"
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <list>
+#include <random>
 
 class SideScroller : public Screen
 {
@@ -18,13 +20,18 @@ public:
 	void processMousePosition(sf::Vector2i mouseWindowPosition);
 	void processMouseClick();
 	bool shouldExitGame();
-	void updateState(sf::VideoMode videoMode);
+	void updateState();
 
 private:
 
 	MoveableRectangle* playerShape;
 	float verticalVelocity;
 	bool isPlayerMoving;
+	std::list<MoveableRectangle*> obstacles;
+	MoveableRectangle* generateObstacle();
+	float horizontalVelocity;
+	void updatePlayerState();
+	sf::VideoMode videoMode;
 };
 
 #endif // !SIDE_SCROLLER_H

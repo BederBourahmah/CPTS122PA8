@@ -32,6 +32,12 @@ public:
 		updatePosition();
 	}
 
+	void snapToBottom(sf::VideoMode const videoMode)
+	{
+		centerPosY = videoMode.height - (totalHeight/2);
+		updatePosition();
+	}
+
 	void moveTo(float x, float y)
 	{
 		centerPosX = x;
@@ -42,6 +48,12 @@ public:
 	void shiftVertical(float y)
 	{
 		centerPosY += y;
+		updatePosition();
+	}
+
+	void shiftHorizontal(float x)
+	{
+		centerPosX += x;
 		updatePosition();
 	}
 
@@ -73,6 +85,16 @@ public:
 		if (position.x >= getRightPosXToCenter()) return false;
 
 		return true;
+	}
+
+	bool isOffScreen(sf::VideoMode videoMode)
+	{
+		if (getBottomPosYToCenter() < 0) return true;
+		if (getTopPosYToCenter() > videoMode.height) return true;
+		if (getRightPosXToCenter() < 0) return true;
+		if (getLeftPosXToCenter() > videoMode.width) return true;
+
+		return false;
 	}
 
 	virtual void drawTo(sf::RenderWindow& window) = 0;

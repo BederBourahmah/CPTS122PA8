@@ -1,10 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "VideoHelpers.h"
-#include "MenuSelector.h"
-#include "TextComponent.h"
-#include "MainMenu.h"
-#include "Screens.h"
 #include "ScreenManager.h"
 
 using namespace sf;

@@ -24,7 +24,6 @@ private:
 	sf::Texture topRightTexture;
 	sf::Sprite bottomRightSprite;
 	sf::Texture bottomRightTexture;
-	bool isPositionInMyArea(sf::Vector2i position);
 };
 
 #endif // !MENU_SELECTOR_H

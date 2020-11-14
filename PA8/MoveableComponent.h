@@ -8,7 +8,7 @@ class MoveableComponent
 public:
 	void centerHorizontal(sf::VideoMode const videoMode)
 	{
-		centerPosX = videoMode.width / 2;
+		centerPosX = (float)videoMode.width / 2;
 		updatePosition();
 	}
 
@@ -27,6 +27,16 @@ public:
 		centerPosX = x;
 		centerPosY = y;
 		updatePosition();
+	}
+
+	bool isPositionInMyArea(sf::Vector2i position)
+	{
+		if (position.y < getTopPosYToCenter()) return false;
+		if (position.y > getBottomPosYToCenter()) return false;
+		if (position.x < getLeftPosXToCenter()) return false;
+		if (position.x > getRightPosXToCenter()) return false;
+
+		return true;
 	}
 
 protected:

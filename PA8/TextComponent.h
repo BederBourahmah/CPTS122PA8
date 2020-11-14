@@ -14,7 +14,6 @@ public:
 	float getWidth();
 	float getHeight();
 	void drawTo(sf::RenderWindow& window);
-	bool isPositionInMyArea(sf::Vector2i position);
 private:
 	sf::Text text;
 	sf::Font font;

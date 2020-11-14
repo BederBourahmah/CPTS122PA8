@@ -16,6 +16,11 @@ void MoveableRectangle::drawTo(sf::RenderWindow& window)
 	window.draw(shape);
 }
 
+bool MoveableRectangle::didCollideWithOtherComponent(MoveableRectangle otherComponent)
+{
+	return didComponentsCollide(*this, otherComponent);
+}
+
 void MoveableRectangle::updatePosition()
 {
 	shape.setPosition(centerPosX, centerPosY);

@@ -15,6 +15,7 @@ SideScroller::SideScroller(sf::VideoMode vm)
 	isPlayerMoving = true;
 	generateStartingObstacles();
 	horizontalVelocity = -0.5f;
+	isGameOver = false;
 }
 
 SideScroller::~SideScroller()
@@ -41,6 +42,9 @@ void SideScroller::drawTo(sf::RenderWindow& window)
 
 void SideScroller::processKeyboardInput()
 {
+
+	if (isGameOver) return;
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		isPlayerMoving = true;
@@ -63,12 +67,11 @@ bool SideScroller::shouldExitGame()
 
 void SideScroller::updateState()
 {
-	updatePlayerState();
+	if (isGameOver) return;
 
-	for (std::list<MoveableRectangle*>::iterator i = obstacles.begin(); i != obstacles.end(); ++i)
-	{
-		(*i)->shiftHorizontal(horizontalVelocity);
-	}
+	updatePlayerState();
+	updateObstacleState();
+	checkForCollisions();
 }
 
 MoveableRectangle* SideScroller::generateObstacle()
@@ -111,5 +114,25 @@ void SideScroller::generateStartingObstacles()
 	for (std::list<MoveableRectangle*>::iterator i = obstacles.begin(); i != obstacles.end(); ++i)
 	{
 		(*i)->snapToHorizontal(videoMode, obstaclesPerScreen, obstaclesPerScreen + k++);
+	}
+}
+
+void SideScroller::updateObstacleState()
+{
+	for (std::list<MoveableRectangle*>::iterator i = obstacles.begin(); i != obstacles.end(); ++i)
+	{
+		(*i)->shiftHorizontal(horizontalVelocity);
+	}
+}
+
+void SideScroller::checkForCollisions()
+{
+	for (std::list<MoveableRectangle*>::iterator i = obstacles.begin(); i != obstacles.end(); ++i)
+	{
+		if ((*i)->didCollideWithOtherComponent(*playerShape))
+		{
+			isGameOver = true;
+			break;
+		}
 	}
 }

@@ -33,6 +33,9 @@ private:
 	void updatePlayerState();
 	sf::VideoMode videoMode;
 	void generateStartingObstacles();
+	void updateObstacleState();
+	bool isGameOver;
+	void checkForCollisions();
 };
 
 #endif // !SIDE_SCROLLER_H

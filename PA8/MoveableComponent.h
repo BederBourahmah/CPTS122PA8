@@ -6,6 +6,7 @@
 class MoveableComponent
 {
 public:
+	
 	void centerHorizontal(sf::VideoMode const videoMode)
 	{
 		centerPosX = (float)videoMode.width / 2;
@@ -63,6 +64,8 @@ public:
 		updatePosition();
 	}
 
+	
+
 	bool didCollideWithWindowEdge(sf::VideoMode videoMode)
 	{
 		if (didCollideWithTopWindowEdge(videoMode)) return true;
@@ -110,9 +113,13 @@ public:
 
 	virtual void drawTo(sf::RenderWindow& window) = 0;
 
+	
+
 protected:
 
 	virtual void updatePosition()=0;
+
+	
 
 	float getTopPosYToCenter()
 	{

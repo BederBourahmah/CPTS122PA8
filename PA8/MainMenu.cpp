@@ -111,7 +111,9 @@ void MainMenu::processMouseClick()
 	sf::Vector2i mousePosition = sf::Mouse::getPosition();
 	if (sideScrollerText->isPositionInMyArea(mousePosition))
 	{
-		//TODO: Implement sideScrollerText game
+		currentSelection = MainMenuSelection::SideScroller;
+		updateSelectorPosition();
+		selectedScreen = Screens::SideScroller;
 		return;
 	}
 

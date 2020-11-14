@@ -36,6 +36,7 @@ private:
 	void updateObstacleState();
 	bool isGameOver;
 	void checkForCollisions();
+	bool shouldGoBackToMainMenu;
 };
 
 #endif // !SIDE_SCROLLER_H

@@ -40,10 +40,14 @@ void ScreenManager::updateState()
 		processScreenSelection((MainMenu*)currentScreenPtr);
 		return;
 	}
-
+	
 	if (currentScreen == Screens::SideScroller)
 	{
 		((SideScroller*)currentScreenPtr)->updateState();
+		if (currentScreenPtr->shouldExitGame())
+		{
+			switchToSelectedScreen(Screens::MainMenu);
+		}
 		return;
 	}
 }
@@ -51,8 +55,13 @@ void ScreenManager::updateState()
 bool ScreenManager::shouldExitGame()
 {
 	if (currentScreen == Screens::Exit) return true;
+	
+	if (currentScreen == Screens::MainMenu)
+	{
+		return getCurrentScreen()->shouldExitGame();
+	}
 
-	return getCurrentScreen()->shouldExitGame();
+	return false;
 }
 
 void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
@@ -60,6 +69,7 @@ void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 	switch (selectedScreen)
 	{
 	case Screens::MainMenu:
+		mainMenu = new MainMenu(videoMode);
 		break;
 	case Screens::SideScroller:
 		sideScroller = new SideScroller(videoMode);
@@ -73,12 +83,10 @@ void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 
 void ScreenManager::processScreenSelection(MainMenu* currentScreenPtr)
 {
-	Screens nextScreen = (currentScreenPtr)->getSelectedScreen();
-	if (currentScreen == nextScreen) return;
+	Screens selectedScreen = (currentScreenPtr)->getSelectedScreen();
+	if (currentScreen == selectedScreen) return;
 
-	deleteAllScreens();
-	initializeSelectedScreen(nextScreen);
-	currentScreen = nextScreen;
+	switchToSelectedScreen(selectedScreen);
 }
 
 void ScreenManager::deleteAllScreens()
@@ -87,4 +95,11 @@ void ScreenManager::deleteAllScreens()
 	mainMenu = nullptr;
 	delete sideScroller;
 	sideScroller = nullptr;
+}
+
+void ScreenManager::switchToSelectedScreen(Screens selectedScreen)
+{
+	deleteAllScreens();
+	initializeSelectedScreen(selectedScreen);
+	currentScreen = selectedScreen;
 }

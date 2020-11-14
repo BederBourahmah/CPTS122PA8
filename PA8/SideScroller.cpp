@@ -16,6 +16,7 @@ SideScroller::SideScroller(sf::VideoMode vm)
 	generateStartingObstacles();
 	horizontalVelocity = -0.5f;
 	isGameOver = false;
+	shouldGoBackToMainMenu = false;
 }
 
 SideScroller::~SideScroller()
@@ -42,6 +43,10 @@ void SideScroller::drawTo(sf::RenderWindow& window)
 
 void SideScroller::processKeyboardInput()
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		shouldGoBackToMainMenu = true;
+	}
 
 	if (isGameOver) return;
 
@@ -62,7 +67,7 @@ void SideScroller::processMouseClick()
 
 bool SideScroller::shouldExitGame()
 {
-	return false;
+	return shouldGoBackToMainMenu;
 }
 
 void SideScroller::updateState()

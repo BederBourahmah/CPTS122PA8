@@ -27,11 +27,6 @@ int main()
                 window.close();
         }
 
-        if (Keyboard::isKeyPressed(Keyboard::Escape))
-        {
-            window.close();
-        }
-
         screenManager.updateState();
         if (screenManager.shouldExitGame())
         {

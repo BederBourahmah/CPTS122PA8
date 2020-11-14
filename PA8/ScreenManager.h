@@ -22,6 +22,7 @@ private:
 	void initializeSelectedScreen(Screens selectedScreen);
 	void processScreenSelection(MainMenu* currentScreenPtr);
 	void deleteAllScreens();
+	void switchToSelectedScreen(Screens selectedScreen);
 	sf::VideoMode videoMode;
 };
 

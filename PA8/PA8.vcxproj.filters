@@ -51,6 +51,9 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files\Screens</Filter>
     </ClCompile>
+    <ClCompile Include="SideScroller.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VideoHelpers.h">
@@ -82,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="MainMenuSelection.h">
       <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="SideScroller.h">
+      <Filter>Header Files\Screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

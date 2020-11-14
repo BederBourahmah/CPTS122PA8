@@ -156,6 +156,7 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MenuSelector.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="SideScroller.cpp" />
     <ClCompile Include="TextComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +168,7 @@
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="Screens.h" />
+    <ClInclude Include="SideScroller.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="VideoHelpers.h" />
   </ItemGroup>

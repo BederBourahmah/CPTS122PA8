@@ -32,17 +32,29 @@ int main()
                 window.close();
         }
 
-        mainMenu->processKeyboardInput();
-        mainMenu->processMousePosition(Mouse::getPosition());
-        mainMenu->processMouseClick();
-
-        if (Keyboard::isKeyPressed(Keyboard::Escape) || mainMenu->shouldExitGame())
+        if (Keyboard::isKeyPressed(Keyboard::Escape))
         {
             window.close();
         }
 
+        if (currentScreen == CurrentScreen::MainMenu && mainMenu != nullptr)
+        {
+            mainMenu->processKeyboardInput();
+            mainMenu->processMousePosition(Mouse::getPosition());
+            mainMenu->processMouseClick();
+            if (mainMenu->shouldExitGame())
+            {
+                window.close();
+            }
+        }
+
         window.clear();
-        mainMenu->drawTo(window);
+
+        if (currentScreen == CurrentScreen::MainMenu && mainMenu != nullptr)
+        {
+            mainMenu->drawTo(window);
+        }
+
         window.display();
         if (currentScreen == CurrentScreen::MainMenu)
         {

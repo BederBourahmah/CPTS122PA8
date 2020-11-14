@@ -4,6 +4,7 @@
 #include "TextComponent.h"
 #include "MenuSelector.h"
 #include <SFML/Graphics.hpp>
+#include "Screen.h"
 
 enum class CurrentSelection
 {
@@ -11,7 +12,7 @@ enum class CurrentSelection
 	Exit
 };
 
-class MainMenu
+class MainMenu : public Screen
 {
 public:
 	MainMenu(sf::VideoMode const);

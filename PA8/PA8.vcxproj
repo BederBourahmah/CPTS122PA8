@@ -162,6 +162,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MenuSelector.h" />
     <ClInclude Include="MoveableComponent.h" />
+    <ClInclude Include="Screen.h" />
     <ClInclude Include="Screens.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="VideoHelpers.h" />

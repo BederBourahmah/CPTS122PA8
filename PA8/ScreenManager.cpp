@@ -1,7 +1,8 @@
 #include "ScreenManager.h"
 
-ScreenManager::ScreenManager(sf::VideoMode videoMode)
+ScreenManager::ScreenManager(sf::VideoMode vm)
 {
+	videoMode = vm;
 	mainMenu = new MainMenu(videoMode);
 	currentScreen = Screens::MainMenu;
 	sideScroller = nullptr;
@@ -54,7 +55,7 @@ void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 	case Screens::MainMenu:
 		break;
 	case Screens::SideScroller:
-		sideScroller = new SideScroller();
+		sideScroller = new SideScroller(videoMode);
 		return;
 	case Screens::Exit:
 		break;

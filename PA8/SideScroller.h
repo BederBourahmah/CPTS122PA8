@@ -2,13 +2,15 @@
 #define SIDE_SCROLLER_H
 
 #include "Screen.h"
+#include "MoveableRectangle.h"
 #include <SFML/Graphics.hpp>
 
 class SideScroller : public Screen
 {
 public:
 
-	SideScroller();
+	SideScroller(sf::VideoMode videoMode);
+	~SideScroller();
 
 	void drawTo(sf::RenderWindow& window);
 	void processKeyboardInput();
@@ -18,7 +20,7 @@ public:
 
 private:
 
-	sf::RectangleShape playerShape;
+	MoveableRectangle* playerShape;
 };
 
 #endif // !SIDE_SCROLLER_H

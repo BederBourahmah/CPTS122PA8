@@ -1,14 +1,21 @@
 #include "SideScroller.h"
 
-SideScroller::SideScroller()
+SideScroller::SideScroller(sf::VideoMode videoMode)
 {
-	playerShape = sf::RectangleShape(sf::Vector2f(50, 50));
-	playerShape.setFillColor(sf::Color::Green);
+	playerShape = new MoveableRectangle(sf::Vector2f(50, 50), sf::Color::Green);
+	playerShape->snapToHorizontal(videoMode, 4, 1);
+	playerShape->snapToVertical(videoMode, 5, 3);
+}
+
+SideScroller::~SideScroller()
+{
+	delete playerShape;
+	playerShape = nullptr;
 }
 
 void SideScroller::drawTo(sf::RenderWindow& window)
 {
-	window.draw(playerShape);
+	playerShape->drawTo(window);
 }
 
 void SideScroller::processKeyboardInput()

@@ -22,6 +22,16 @@ public:
 		updatePosition();
 	}
 
+	void snapToHorizontal(sf::VideoMode const videoMode, int sections, int sectionToSnapTo)
+	{
+		float sizePerSection = (float)videoMode.width / (float)sections;
+		float rightOfSelectedSection = sectionToSnapTo * sizePerSection;
+		float leftOfSelectedSection = (sectionToSnapTo - 1) * sizePerSection;
+		float centerOfSelectedSection = (rightOfSelectedSection + leftOfSelectedSection) / 2;
+		centerPosX = centerOfSelectedSection;
+		updatePosition();
+	}
+
 	void moveTo(float x, float y)
 	{
 		centerPosX = x;
@@ -38,6 +48,8 @@ public:
 
 		return true;
 	}
+
+	virtual void drawTo(sf::RenderWindow& window) = 0;
 
 protected:
 

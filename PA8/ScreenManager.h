@@ -10,7 +10,7 @@
 class ScreenManager
 {
 public:
-	ScreenManager(sf::VideoMode videoMode);
+	ScreenManager(sf::VideoMode vm);
 	~ScreenManager();
 	Screen* getCurrentScreen();
 	void updateState();
@@ -22,6 +22,7 @@ private:
 	void initializeSelectedScreen(Screens selectedScreen);
 	void processScreenSelection(MainMenu* currentScreenPtr);
 	void deleteAllScreens();
+	sf::VideoMode videoMode;
 };
 
 #endif // !SCREEN_MANAGER_H

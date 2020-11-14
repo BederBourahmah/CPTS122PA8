@@ -45,12 +45,22 @@ public:
 		updatePosition();
 	}
 
+	bool didCollideWithWindowEdge(sf::VideoMode videoMode)
+	{
+		if (getTopPosYToCenter() <= 0) return true;
+		if (getBottomPosYToCenter() >= videoMode.height) return true;
+		if (getLeftPosXToCenter() <= 0) return true;
+		if (getRightPosXToCenter() >= videoMode.width) return true;
+
+		return false;
+	}
+
 	bool isPositionInMyArea(sf::Vector2i position)
 	{
-		if (position.y < getTopPosYToCenter()) return false;
-		if (position.y > getBottomPosYToCenter()) return false;
-		if (position.x < getLeftPosXToCenter()) return false;
-		if (position.x > getRightPosXToCenter()) return false;
+		if (position.y <= getTopPosYToCenter()) return false;
+		if (position.y >= getBottomPosYToCenter()) return false;
+		if (position.x <= getLeftPosXToCenter()) return false;
+		if (position.x >= getRightPosXToCenter()) return false;
 
 		return true;
 	}

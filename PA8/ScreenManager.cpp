@@ -22,6 +22,7 @@ Screen* ScreenManager::getCurrentScreen()
 	case Screens::SideScroller:
 		return sideScroller;
 	default:
+		return nullptr;
 		break;
 	}
 }
@@ -43,7 +44,7 @@ void ScreenManager::updateState()
 
 	if (currentScreen == Screens::SideScroller)
 	{
-		((SideScroller*)currentScreenPtr)->updateState();
+		((SideScroller*)currentScreenPtr)->updateState(videoMode);
 		return;
 	}
 }

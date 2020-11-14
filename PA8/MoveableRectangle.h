@@ -2,6 +2,7 @@
 #define MOVEABLE_RECTANGLE_H
 
 #include "MoveableComponent.h"
+#include <SFML/Graphics.hpp>
 
 class MoveableRectangle : public MoveableComponent
 {

@@ -4,6 +4,7 @@
 #include "Screen.h"
 #include "MoveableRectangle.h"
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
 class SideScroller : public Screen
 {
@@ -17,12 +18,13 @@ public:
 	void processMousePosition(sf::Vector2i mouseWindowPosition);
 	void processMouseClick();
 	bool shouldExitGame();
-	void updateState();
+	void updateState(sf::VideoMode videoMode);
 
 private:
 
 	MoveableRectangle* playerShape;
 	float verticalVelocity;
+	bool isPlayerMoving;
 };
 
 #endif // !SIDE_SCROLLER_H

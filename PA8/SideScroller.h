@@ -22,6 +22,7 @@ public:
 	void processMouseClick();
 	bool shouldExitGame();
 	void updateState();
+	void handleEvents(sf::RenderWindow& window);
 
 private:
 

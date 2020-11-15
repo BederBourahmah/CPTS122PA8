@@ -21,8 +21,10 @@ public:
 	void processMouseClick();
 	bool shouldExitGame();
 	Screens getSelectedScreen();
+	void handleEvents(sf::RenderWindow& window);
 private:
 	TextComponent* sideScrollerText;
+	TextComponent* swarmDefenderText;
 	TextComponent* exitText;
 	MenuSelector* selector;
 	MainMenuSelection currentSelection;
@@ -32,6 +34,7 @@ private:
 	sf::Texture backgroundTexture;
 	bool loadMainMenuBackgroundTexture();
 	bool loadMainMenuBackgroundSprite(sf::VideoMode const videoMode);
+	void handleKeyPressEvent(sf::Event event);
 };
 
 #endif // !MAIN_MENU_H

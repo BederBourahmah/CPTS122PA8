@@ -40,7 +40,7 @@ void SideScroller::drawTo(sf::RenderWindow& window)
 		(*i)->drawTo(window);
 	}
 	
-	if (!obstacles.empty() && obstacles.front()->isLeftOfScreen(videoMode))
+	if (!obstacles.empty() && obstacles.front()->isLeftOfScreen())
 	{
 		obstacles.pop_front();
 		obstacles.push_back(generateObstacle());
@@ -89,6 +89,16 @@ void SideScroller::updateState()
 	checkForCollisions();
 }
 
+void SideScroller::handleEvents(sf::RenderWindow& window)
+{
+	sf::Event event;
+	while (window.pollEvent(event))
+	{
+		if (event.type == sf::Event::Closed)
+			window.close();
+	}
+}
+
 MoveableRectangle* SideScroller::generateObstacle()
 {
 	std::random_device rdev{};
@@ -97,14 +107,14 @@ MoveableRectangle* SideScroller::generateObstacle()
 	static std::uniform_int_distribution<int> c{ 0,1 };
 	float randomHeight = (float)videoMode.height*d(e);
 	bool isDown = (bool)c(e);
-	MoveableRectangle* newObstacle = new MoveableRectangle(sf::Vector2f(50, randomHeight), sf::Color::Cyan);
+	MoveableRectangle* newObstacle = new MoveableRectangle(sf::Vector2f(0.05f * (float)videoMode.height, randomHeight), sf::Color::Cyan);
 	newObstacle->snapToRightOffScreen(videoMode);
 	if (isDown)
 	{
 		newObstacle->snapToBottom(videoMode);
 	}
 	else {
-		newObstacle->snapToTop(videoMode);
+		newObstacle->snapToTop();
 	}
 	return newObstacle;
 }
@@ -117,7 +127,7 @@ void SideScroller::updatePlayerState()
 		verticalVelocity = verticalVelocity * (-0.9f);
 	}
 
-	if (playerShape->didCollideWithTopWindowEdge(videoMode) && verticalVelocity < 0)
+	if (playerShape->didCollideWithTopWindowEdge() && verticalVelocity < 0)
 	{
 		verticalVelocity = verticalVelocity * (-0.9f);
 	}

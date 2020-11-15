@@ -57,6 +57,9 @@
     <ClCompile Include="MoveableRectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SwarmDefense.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VideoHelpers.h">
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="MoveableRectangle.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SwarmDefense.h">
+      <Filter>Header Files\Screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

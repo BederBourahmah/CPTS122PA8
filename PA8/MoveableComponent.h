@@ -45,6 +45,12 @@ public:
 		updatePosition();
 	}
 
+	void snapToTop(sf::VideoMode const videoMode)
+	{
+		centerPosY = totalHeight / 2;
+		updatePosition();
+	}
+
 	void moveTo(float x, float y)
 	{
 		centerPosX = x;

@@ -34,6 +34,11 @@ bool MoveableRectangle::didCollideWithOtherComponent(MoveableRectangle otherComp
 	return didComponentsCollide(*this, otherComponent);
 }
 
+int MoveableRectangle::getId()
+{
+	return id;
+}
+
 void MoveableRectangle::updatePosition()
 {
 	shape.setPosition(centerPosX, centerPosY);

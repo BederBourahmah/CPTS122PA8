@@ -54,13 +54,47 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
-		if (event.type == sf::Event::Closed)
-			window.close();
+		if (event.type == sf::Event::Closed) window.close();
+
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+				{
+					if ((*i)->isPositionInMyArea(event.mouseButton.x, event.mouseButton.y))
+					{
+						enemiesToDestroy.push((*i)->getId());
+					}
+				}
+			}
+		}
 	}
 }
 
 void SwarmDefense::updateState()
 {
+	while (!enemiesToDestroy.empty())
+	{
+		if (enemies.empty())
+		{
+			enemiesToDestroy.pop();
+			continue;
+		}
+		
+		int idToDelete = enemiesToDestroy.front();
+		std::list<MoveableRectangle*>::iterator itemToDelete = enemies.begin();
+		for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+		{
+			if ((*i)->getId() == idToDelete) break;
+
+			++itemToDelete;
+		}
+
+		enemies.erase(itemToDelete);
+		enemiesToDestroy.pop();
+	}
+
 	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
 		(*i)->shiftTowards(videoMode.width / 2, videoMode.height / 2, enemyVelocity);

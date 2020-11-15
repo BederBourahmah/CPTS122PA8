@@ -148,6 +148,16 @@ public:
 		return true;
 	}
 
+	bool isPositionInMyArea(int x, int y)
+	{
+		if (y <= getTopPosYToCenter()) return false;
+		if (y >= getBottomPosYToCenter()) return false;
+		if (x <= getLeftPosXToCenter()) return false;
+		if (x >= getRightPosXToCenter()) return false;
+
+		return true;
+	}
+
 	bool isOffScreen(sf::VideoMode videoMode)
 	{
 		if (getBottomPosYToCenter() < 0) return true;

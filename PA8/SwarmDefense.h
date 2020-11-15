@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <random>
+#include <queue>
 
 class SwarmDefense : public Screen
 {
@@ -29,6 +30,7 @@ private:
 	bool shouldGoBackToMainMenu;
 	std::list<MoveableRectangle*> enemies;
 	void generateEnemy();
+	std::queue<int> enemiesToDestroy;
 };
 
 #endif // !SWARM_DEFENSE_H

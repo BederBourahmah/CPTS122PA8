@@ -13,6 +13,8 @@ public:
 
 	bool didCollideWithOtherComponent(MoveableRectangle otherComponent);
 
+	int getId();
+
 private:
 	sf::RectangleShape shape;
 	void updatePosition();

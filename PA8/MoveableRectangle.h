@@ -8,6 +8,7 @@ class MoveableRectangle : public MoveableComponent
 {
 public:
 	MoveableRectangle(sf::Vector2f dimensions, sf::Color color);
+	MoveableRectangle(sf::Vector2f dimensions, sf::Color color, short int newId);
 	void drawTo(sf::RenderWindow& window);
 
 	bool didCollideWithOtherComponent(MoveableRectangle otherComponent);
@@ -30,6 +31,8 @@ private:
 	{
 		return componentA.getBottomPosYToCenter() >= componentB.getTopPosYToCenter() && componentA.getTopPosYToCenter() <= componentB.getBottomPosYToCenter();
 	}
+
+	int id;
 };
 
 #endif // !MOVEABLE_RECTANGLE_H

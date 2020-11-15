@@ -107,7 +107,7 @@ MoveableRectangle* SideScroller::generateObstacle()
 	static std::uniform_int_distribution<int> c{ 0,1 };
 	float randomHeight = (float)videoMode.height*d(e);
 	bool isDown = (bool)c(e);
-	MoveableRectangle* newObstacle = new MoveableRectangle(sf::Vector2f(50, randomHeight), sf::Color::Cyan);
+	MoveableRectangle* newObstacle = new MoveableRectangle(sf::Vector2f(0.05f * (float)videoMode.height, randomHeight), sf::Color::Cyan);
 	newObstacle->snapToRightOffScreen(videoMode);
 	if (isDown)
 	{

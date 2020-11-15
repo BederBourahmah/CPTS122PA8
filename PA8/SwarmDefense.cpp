@@ -7,6 +7,7 @@ SwarmDefense::SwarmDefense(sf::VideoMode vm)
 	playerBase->centerHorizontal(videoMode);
 	playerBase->centerVertical(videoMode);
 	shouldGoBackToMainMenu = false;
+	currentEnemyId = INT16_MIN;
 }
 
 SwarmDefense::~SwarmDefense()
@@ -49,4 +50,51 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 		if (event.type == sf::Event::Closed)
 			window.close();
 	}
+}
+
+void SwarmDefense::updateState()
+{
+
+}
+
+MoveableRectangle* SwarmDefense::generateEnemy()
+{
+	float enemySideLength = 0.025f * (float)videoMode.height;
+	std::random_device rdev{};
+	static std::default_random_engine randomEngine{ rdev() };
+	static std::uniform_real_distribution<float> realDistribution{ 0.00f , 1.00f };
+	static std::uniform_int_distribution<int> integerDistrubution{ 0,1 };
+	float randomPercent = realDistribution(randomEngine);
+	bool isDown = (bool)integerDistrubution(randomEngine);
+	bool isRight = (bool)integerDistrubution(randomEngine);
+	bool isVerticalShift = (bool)integerDistrubution(randomEngine);
+	MoveableRectangle* newEnemy = new MoveableRectangle(sf::Vector2f(enemySideLength, enemySideLength), sf::Color::Cyan, currentEnemyId++);
+	if (isDown)
+	{
+		newEnemy->snapToBottomOffScreen(videoMode);
+	}
+	else {
+		newEnemy->snapToTopOffScreen(videoMode);
+	}
+
+	if (isRight)
+	{
+		newEnemy->snapToRightOffScreen(videoMode);
+	}
+	else {
+		newEnemy->snapToLeftOffScreen(videoMode);
+	}
+
+	float shift = 0;
+	if (isVerticalShift)
+	{
+		shift = isDown ? -randomPercent * videoMode.height : randomPercent * videoMode.height;
+		newEnemy->shiftVertical(shift);
+	}
+	else {
+		shift = isRight ? -randomPercent * videoMode.width : randomPercent * videoMode.width;
+		newEnemy->shiftHorizontal(shift);
+	}
+
+	return newEnemy;
 }

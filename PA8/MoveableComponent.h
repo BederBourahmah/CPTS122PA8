@@ -45,6 +45,24 @@ public:
 		updatePosition();
 	}
 
+	void snapToLeftOffScreen(sf::VideoMode const videoMode)
+	{
+		centerPosX = 0 - (totalWidth / 2);
+		updatePosition();
+	}
+
+	void snapToBottomOffScreen(sf::VideoMode const videoMode)
+	{
+		centerPosY = videoMode.height + (totalHeight / 2);
+		updatePosition();
+	}
+
+	void snapToTopOffScreen(sf::VideoMode const videoMode)
+	{
+		centerPosY = 0 - (totalHeight / 2);
+		updatePosition();
+	}
+
 	void snapToBottom(sf::VideoMode const videoMode)
 	{
 		centerPosY = videoMode.height - (totalHeight/2);

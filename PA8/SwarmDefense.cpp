@@ -11,17 +11,25 @@ SwarmDefense::SwarmDefense(sf::VideoMode vm)
 	shouldGoBackToMainMenu = false;
 	currentEnemyId = INT16_MIN;
 	generateEnemy();
+	displayedScore = new TextComponent("Leander.ttf", std::to_string(score));
+	displayedScore->snapToVertical(videoMode, 10, 1);
+	displayedScore->snapToHorizontal(videoMode, 10, 1);
+	displayedScore->setColor(sf::Color::Green);
 }
 
 SwarmDefense::~SwarmDefense()
 {
 	delete playerBase;
 	playerBase = nullptr;
+	delete displayedScore;
+	displayedScore = nullptr;
 }
 
 void SwarmDefense::drawTo(sf::RenderWindow& window)
 {
+	displayedScore->setText(std::to_string(score));
 	playerBase->drawTo(window);
+	displayedScore->drawTo(window);
 	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
 		(*i)->drawTo(window);
@@ -65,6 +73,7 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 					if ((*i)->isPositionInMyArea(event.mouseButton.x, event.mouseButton.y))
 					{
 						enemiesToDestroy.push((*i)->getId());
+						score++;
 					}
 				}
 			}

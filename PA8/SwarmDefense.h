@@ -3,6 +3,7 @@
 
 #include "Screen.h"
 #include "MoveableRectangle.h"
+#include "TextComponent.h"
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <random>
@@ -31,6 +32,8 @@ private:
 	std::list<MoveableRectangle*> enemies;
 	void generateEnemy();
 	std::queue<int> enemiesToDestroy;
+	TextComponent* displayedScore;
+	unsigned int score;
 };
 
 #endif // !SWARM_DEFENSE_H

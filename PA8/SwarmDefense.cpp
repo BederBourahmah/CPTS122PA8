@@ -20,6 +20,7 @@ SwarmDefense::SwarmDefense(sf::VideoMode vm)
 	displayedHealth->snapToVertical(videoMode, 10, 2);
 	displayedHealth->setColor(sf::Color::Green);
 	health = 100;
+	isGameOver = false;
 }
 
 SwarmDefense::~SwarmDefense()
@@ -74,6 +75,8 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 	{
 		if (event.type == sf::Event::Closed) window.close();
 
+		if (isGameOver) return;
+
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
@@ -93,12 +96,16 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 
 void SwarmDefense::updateState()
 {
+	if (isGameOver) return;
+	
 	destroyEnemies();
 
 	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
 		(*i)->shiftTowards(videoMode.width / 2, videoMode.height / 2, enemyVelocity);
 	}
+
+	checkForCollisions();
 }
 
 void SwarmDefense::generateEnemy()
@@ -166,5 +173,22 @@ void SwarmDefense::destroyEnemies()
 		enemiesToDestroy.pop();
 		generateEnemy();
 		generateEnemy();
+	}
+}
+
+void SwarmDefense::checkForCollisions()
+{
+	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	{
+		if ((*i)->didCollideWithOtherComponent(*playerBase))
+		{
+			enemiesToDestroy.push((*i)->getId());
+			health--;
+			if (health == 0)
+			{
+				isGameOver = true;
+			}
+		}
+
 	}
 }

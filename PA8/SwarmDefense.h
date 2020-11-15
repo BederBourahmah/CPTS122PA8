@@ -37,6 +37,8 @@ private:
 	unsigned int score;
 	unsigned short int health;
 	void destroyEnemies();
+	void checkForCollisions();
+	bool isGameOver;
 };
 
 #endif // !SWARM_DEFENSE_H

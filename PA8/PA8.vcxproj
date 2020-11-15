@@ -155,14 +155,22 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MenuSelector.cpp" />
+    <ClCompile Include="MoveableRectangle.cpp" />
+    <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="SideScroller.cpp" />
     <ClCompile Include="TextComponent.cpp" />
-    <ClCompile Include="VideoHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIComponent.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="MainMenuSelection.h" />
     <ClInclude Include="MenuSelector.h" />
     <ClInclude Include="MoveableComponent.h" />
+    <ClInclude Include="MoveableRectangle.h" />
+    <ClInclude Include="Screen.h" />
+    <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="Screens.h" />
+    <ClInclude Include="SideScroller.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="VideoHelpers.h" />
   </ItemGroup>

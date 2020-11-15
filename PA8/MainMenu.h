@@ -4,14 +4,11 @@
 #include "TextComponent.h"
 #include "MenuSelector.h"
 #include <SFML/Graphics.hpp>
+#include "Screen.h"
+#include "Screens.h"
+#include "MainMenuSelection.h"
 
-enum class CurrentSelection
-{
-	Start,
-	Exit
-};
-
-class MainMenu
+class MainMenu : public Screen
 {
 public:
 	MainMenu(sf::VideoMode const);
@@ -23,17 +20,18 @@ public:
 	void processMousePosition(sf::Vector2i mouseWindowPosition);
 	void processMouseClick();
 	bool shouldExitGame();
+	Screens getSelectedScreen();
 private:
-	TextComponent* start;
-	TextComponent* exit;
+	TextComponent* sideScrollerText;
+	TextComponent* exitText;
 	MenuSelector* selector;
-	CurrentSelection currentSelection;
+	MainMenuSelection currentSelection;
+	Screens selectedScreen;
 	void updateSelectorPosition();
 	sf::Sprite backgroundSprite;
 	sf::Texture backgroundTexture;
 	bool loadMainMenuBackgroundTexture();
 	bool loadMainMenuBackgroundSprite(sf::VideoMode const videoMode);
-	bool isExitingGame;
 };
 
 #endif // !MAIN_MENU_H

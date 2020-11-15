@@ -4,42 +4,45 @@
 
 MainMenu::MainMenu(sf::VideoMode const videoMode)
 {
-	start = new TextComponent("Leander.ttf", "Start Game");
-	exit = new TextComponent("Leander.ttf", "Exit Game");
-	selector = new MenuSelector(start->getWidth(), start->getHeight());
-	start->centerHorizontal(videoMode);
-	start->snapToVertical(videoMode, 4, 2);
-	exit->centerHorizontal(videoMode);
-	exit->snapToVertical(videoMode, 4, 3);
-	currentSelection = CurrentSelection::Start;
+	sideScrollerText = new TextComponent("Leander.ttf", "Side Scroller Game");
+	exitText = new TextComponent("Leander.ttf", "Exit Game");
+	selector = new MenuSelector(sideScrollerText->getWidth(), sideScrollerText->getHeight());
+	sideScrollerText->centerHorizontal(videoMode);
+	sideScrollerText->snapToVertical(videoMode, 4, 2);
+	exitText->centerHorizontal(videoMode);
+	exitText->snapToVertical(videoMode, 4, 3);
+	currentSelection = MainMenuSelection::SideScroller;
 	updateSelectorPosition();
 	if (!loadMainMenuBackgroundSprite(videoMode))
 	{
 		std::cout << "Failed to load background sprite." << std::endl;
 	}
-	isExitingGame = false;
+	selectedScreen = Screens::MainMenu;
 }
 
 MainMenu::~MainMenu()
 {
-	delete start;
-	delete exit;
+	delete sideScrollerText;
+	sideScrollerText = nullptr;
+	delete exitText;
+	exitText = nullptr;
 	delete selector;
+	selector = nullptr;
 }
 
 void MainMenu::drawTo(sf::RenderWindow &window)
 {
 	window.draw(backgroundSprite);
-	start->drawTo(window);
-	exit->drawTo(window);
+	sideScrollerText->drawTo(window);
+	exitText->drawTo(window);
 	selector->drawTo(window);
 }
 
 void MainMenu::moveSelectorDown()
 {
-	if (currentSelection == CurrentSelection::Start)
+	if (currentSelection == MainMenuSelection::SideScroller)
 	{
-		currentSelection = CurrentSelection::Exit;
+		currentSelection = MainMenuSelection::Exit;
 		updateSelectorPosition();
 		return;
 	}
@@ -47,9 +50,9 @@ void MainMenu::moveSelectorDown()
 
 void MainMenu::moveSelectorUp()
 {
-	if (currentSelection == CurrentSelection::Exit)
+	if (currentSelection == MainMenuSelection::Exit)
 	{
-		currentSelection = CurrentSelection::Start;
+		currentSelection = MainMenuSelection::SideScroller;
 		updateSelectorPosition();
 		return;
 	}
@@ -69,25 +72,33 @@ void MainMenu::processKeyboardInput()
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
-		if (currentSelection == CurrentSelection::Exit)
+		switch (currentSelection)
 		{
-			isExitingGame = true;
+		case MainMenuSelection::SideScroller:
+			selectedScreen = Screens::SideScroller;
+			break;
+		case MainMenuSelection::Exit:
+			selectedScreen = Screens::Exit;
+			break;
+		default:
+			selectedScreen = Screens::MainMenu;
+			break;
 		}
 	}
 }
 
 void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 {
-	if (start->isPositionInMyArea(mouseWindowPosition))
+	if (sideScrollerText->isPositionInMyArea(mouseWindowPosition))
 	{
-		currentSelection = CurrentSelection::Start;
+		currentSelection = MainMenuSelection::SideScroller;
 		updateSelectorPosition();
 		return;
 	}
 
-	if (exit->isPositionInMyArea(mouseWindowPosition))
+	if (exitText->isPositionInMyArea(mouseWindowPosition))
 	{
-		currentSelection = CurrentSelection::Exit;
+		currentSelection = MainMenuSelection::Exit;
 		updateSelectorPosition();
 		return;
 	}
@@ -98,35 +109,42 @@ void MainMenu::processMouseClick()
 	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
 
 	sf::Vector2i mousePosition = sf::Mouse::getPosition();
-	if (start->isPositionInMyArea(mousePosition))
+	if (sideScrollerText->isPositionInMyArea(mousePosition))
 	{
-		//TODO: Implement start game
+		currentSelection = MainMenuSelection::SideScroller;
+		updateSelectorPosition();
+		selectedScreen = Screens::SideScroller;
 		return;
 	}
 
-	if (exit->isPositionInMyArea(mousePosition))
+	if (exitText->isPositionInMyArea(mousePosition))
 	{
-		currentSelection = CurrentSelection::Exit;
+		currentSelection = MainMenuSelection::Exit;
 		updateSelectorPosition();
-		isExitingGame = true;
+		selectedScreen = Screens::Exit;
 		return;
 	}
 }
 
 bool MainMenu::shouldExitGame()
 {
-	return isExitingGame;
+	return selectedScreen == Screens::Exit;
+}
+
+Screens MainMenu::getSelectedScreen()
+{
+	return selectedScreen;
 }
 
 void MainMenu::updateSelectorPosition()
 {
 	switch (currentSelection)
 	{
-	case CurrentSelection::Start:
-		selector->moveTo(start->getCenterPosX(), start->getCenterPosY());
+	case MainMenuSelection::SideScroller:
+		selector->moveTo(sideScrollerText->getCenterPosX(), sideScrollerText->getCenterPosY());
 		return;
-	case CurrentSelection::Exit:
-		selector->moveTo(exit->getCenterPosX(), exit->getCenterPosY());
+	case MainMenuSelection::Exit:
+		selector->moveTo(exitText->getCenterPosX(), exitText->getCenterPosY());
 		return;
 	default:
 		return;

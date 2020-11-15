@@ -1,5 +1,7 @@
 #include "SwarmDefense.h"
 
+const static float enemyVelocity = 0.1f;
+
 SwarmDefense::SwarmDefense(sf::VideoMode vm)
 {
 	videoMode = vm;
@@ -8,6 +10,7 @@ SwarmDefense::SwarmDefense(sf::VideoMode vm)
 	playerBase->centerVertical(videoMode);
 	shouldGoBackToMainMenu = false;
 	currentEnemyId = INT16_MIN;
+	generateEnemy();
 }
 
 SwarmDefense::~SwarmDefense()
@@ -19,6 +22,10 @@ SwarmDefense::~SwarmDefense()
 void SwarmDefense::drawTo(sf::RenderWindow& window)
 {
 	playerBase->drawTo(window);
+	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	{
+		(*i)->drawTo(window);
+	}
 }
 
 void SwarmDefense::processKeyboardInput()
@@ -54,10 +61,13 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 
 void SwarmDefense::updateState()
 {
-
+	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	{
+		(*i)->shiftTowards(videoMode.width / 2, videoMode.height / 2, enemyVelocity);
+	}
 }
 
-MoveableRectangle* SwarmDefense::generateEnemy()
+void SwarmDefense::generateEnemy()
 {
 	float enemySideLength = 0.025f * (float)videoMode.height;
 	std::random_device rdev{};
@@ -96,5 +106,5 @@ MoveableRectangle* SwarmDefense::generateEnemy()
 		newEnemy->shiftHorizontal(shift);
 	}
 
-	return newEnemy;
+	enemies.push_back(newEnemy);
 }

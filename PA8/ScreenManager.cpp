@@ -54,9 +54,15 @@ void ScreenManager::updateState()
 		return;
 	}
 
-	if (currentScreen == Screens::SwarmDefense && currentScreenPtr->shouldExitGame())
+	if (currentScreen == Screens::SwarmDefense)
 	{
-		switchToSelectedScreen(Screens::MainMenu);
+		if (currentScreenPtr->shouldExitGame())
+		{
+			switchToSelectedScreen(Screens::MainMenu);
+			return;
+		}
+
+		((SwarmDefense*)currentScreenPtr)->updateState();
 	}
 }
 

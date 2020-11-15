@@ -2,6 +2,7 @@
 #define MOVEABLE_COMPONENT_H
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
 class MoveableComponent
 {
@@ -94,7 +95,28 @@ public:
 		updatePosition();
 	}
 
-	
+	void shiftTowards(float x, float y, float velocity)
+	{
+		float diffX = centerPosX - x;
+		float diffY = centerPosY - y;
+		float angle = std::atanf(diffX / diffY);
+		float distance = std::hypotf(diffX, diffY);
+		distance -= velocity;
+		if (distance <= 0)
+		{
+			centerPosX = x;
+			centerPosY = y;
+			updatePosition();
+			return;
+		}
+
+		float newDiffX = distance * std::sin(angle);
+		float newDiffY = distance * std::cos(angle);
+		shiftHorizontal(newDiffX - diffX);
+		shiftVertical(newDiffY - diffY);
+		updatePosition();
+		return;
+	}
 
 	bool didCollideWithWindowEdge(sf::VideoMode videoMode)
 	{

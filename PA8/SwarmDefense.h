@@ -28,7 +28,7 @@ private:
 	sf::VideoMode videoMode;
 	bool shouldGoBackToMainMenu;
 	std::list<MoveableRectangle*> enemies;
-	MoveableRectangle* generateEnemy();
+	void generateEnemy();
 };
 
 #endif // !SWARM_DEFENSE_H

@@ -8,6 +8,7 @@ class TextComponent : public MoveableComponent
 {
 public:
 	TextComponent(std::string textFile, std::string contents);
+	TextComponent(std::string textFile, std::string contents, unsigned int size);
 
 	float getCenterPosX();
 	float getCenterPosY();

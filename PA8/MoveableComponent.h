@@ -2,6 +2,7 @@
 #define MOVEABLE_COMPONENT_H
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
 class MoveableComponent
 {
@@ -10,6 +11,12 @@ public:
 	void centerHorizontal(sf::VideoMode const videoMode)
 	{
 		centerPosX = (float)videoMode.width / 2;
+		updatePosition();
+	}
+
+	void centerVertical(sf::VideoMode const videoMode)
+	{
+		centerPosY = (float)videoMode.height / 2;
 		updatePosition();
 	}
 
@@ -39,16 +46,52 @@ public:
 		updatePosition();
 	}
 
+	void snapToLeftOffScreen()
+	{
+		centerPosX = 0 - (totalWidth / 2);
+		updatePosition();
+	}
+
+	void snapToBottomOffScreen(sf::VideoMode const videoMode)
+	{
+		centerPosY = videoMode.height + (totalHeight / 2);
+		updatePosition();
+	}
+
+	void snapToTopOffScreen()
+	{
+		centerPosY = 0 - (totalHeight / 2);
+		updatePosition();
+	}
+
 	void snapToBottom(sf::VideoMode const videoMode)
 	{
 		centerPosY = videoMode.height - (totalHeight/2);
 		updatePosition();
 	}
 
-	void snapToTop(sf::VideoMode const videoMode)
+	void snapToTop()
 	{
 		centerPosY = totalHeight / 2;
 		updatePosition();
+	}
+
+	void snapToLeft()
+	{
+		centerPosX = totalWidth / 2;
+		updatePosition();
+	}
+
+	void snapToRight(sf::VideoMode const videoMode)
+	{
+		centerPosX = videoMode.width - totalWidth / 2;
+		updatePosition();
+	}
+
+	void snapToTopLeft()
+	{
+		snapToLeft();
+		snapToTop();
 	}
 
 	void moveTo(float x, float y)
@@ -70,11 +113,37 @@ public:
 		updatePosition();
 	}
 
-	
+	void shiftTowards(float x, float y, float velocity)
+	{
+		float diffX = centerPosX - x;
+		float diffY = centerPosY - y;
+		float angle = std::atanf(diffX / diffY);
+		float distance = std::hypotf(diffX, diffY);
+		distance -= velocity;
+		if (distance <= 0)
+		{
+			centerPosX = x;
+			centerPosY = y;
+			updatePosition();
+			return;
+		}
+
+		float newDiffX = distance * std::sin(angle);
+		float newDiffY = distance * std::cos(angle);
+		if (diffY < 0 && newDiffY > 0)
+		{
+			newDiffY *= -1.0f;
+			newDiffX *= -1.0f;
+		}
+		shiftHorizontal(newDiffX - diffX);
+		shiftVertical(newDiffY - diffY);
+		updatePosition();
+		return;
+	}
 
 	bool didCollideWithWindowEdge(sf::VideoMode videoMode)
 	{
-		if (didCollideWithTopWindowEdge(videoMode)) return true;
+		if (didCollideWithTopWindowEdge()) return true;
 		if (didCollideWithBottomWindowEdge(videoMode)) return true;
 		if (getLeftPosXToCenter() <= 0) return true;
 		if (getRightPosXToCenter() >= videoMode.width) return true;
@@ -87,7 +156,7 @@ public:
 		 return getBottomPosYToCenter() >= videoMode.height;
 	}
 
-	bool didCollideWithTopWindowEdge(sf::VideoMode videoMode)
+	bool didCollideWithTopWindowEdge()
 	{
 		return getTopPosYToCenter() <= 0;
 	}
@@ -102,17 +171,27 @@ public:
 		return true;
 	}
 
+	bool isPositionInMyArea(int x, int y)
+	{
+		if (y <= getTopPosYToCenter()) return false;
+		if (y >= getBottomPosYToCenter()) return false;
+		if (x <= getLeftPosXToCenter()) return false;
+		if (x >= getRightPosXToCenter()) return false;
+
+		return true;
+	}
+
 	bool isOffScreen(sf::VideoMode videoMode)
 	{
 		if (getBottomPosYToCenter() < 0) return true;
 		if (getTopPosYToCenter() > videoMode.height) return true;
-		if (isLeftOfScreen(videoMode)) return true;
+		if (isLeftOfScreen()) return true;
 		if (getLeftPosXToCenter() > videoMode.width) return true;
 
 		return false;
 	}
 
-	bool isLeftOfScreen(sf::VideoMode videoMode)
+	bool isLeftOfScreen()
 	{
 		return getRightPosXToCenter() < 0;
 	}
@@ -151,6 +230,7 @@ protected:
 	float centerPosY;
 	float totalWidth;
 	float totalHeight;
+	
 };
 
 #endif // !MOVEABLE_COMPONENT_H

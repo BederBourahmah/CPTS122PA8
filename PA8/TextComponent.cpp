@@ -45,6 +45,16 @@ void TextComponent::drawTo(sf::RenderWindow& window)
 	window.draw(text);
 }
 
+void TextComponent::setText(std::string newText)
+{
+	text.setString(newText);
+}
+
+void TextComponent::setColor(sf::Color newColor)
+{
+	text.setFillColor(newColor);
+}
+
 void TextComponent::updatePosition()
 {
 	text.setPosition(centerPosX, centerPosY);

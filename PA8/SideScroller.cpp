@@ -89,6 +89,16 @@ void SideScroller::updateState()
 	checkForCollisions();
 }
 
+void SideScroller::handleEvents(sf::RenderWindow& window)
+{
+	sf::Event event;
+	while (window.pollEvent(event))
+	{
+		if (event.type == sf::Event::Closed)
+			window.close();
+	}
+}
+
 MoveableRectangle* SideScroller::generateObstacle()
 {
 	std::random_device rdev{};

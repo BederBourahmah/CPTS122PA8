@@ -4,6 +4,7 @@
 enum class MainMenuSelection
 {
 	SideScroller,
+	SwarmDefender,
 	Exit
 };
 

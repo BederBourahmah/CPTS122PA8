@@ -13,6 +13,12 @@ public:
 		updatePosition();
 	}
 
+	void centerVertical(sf::VideoMode const videoMode)
+	{
+		centerPosY = (float)videoMode.height / 2;
+		updatePosition();
+	}
+
 	void snapToVertical(sf::VideoMode const videoMode, int sections, int sectionToSnapTo)
 	{
 		float sizePerSection = (float)videoMode.height / (float)sections;

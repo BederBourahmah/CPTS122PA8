@@ -20,13 +20,6 @@ int main()
 
     while (window.isOpen())
     {
-        Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == Event::Closed)
-                window.close();
-        }
-
         screenManager.updateState();
         if (screenManager.shouldExitGame())
         {
@@ -34,6 +27,7 @@ int main()
             return EXIT_SUCCESS;
         }
 
+        screenManager.getCurrentScreen()->handleEvents(window);
         window.clear();
         screenManager.getCurrentScreen()->drawTo(window);
         window.display();

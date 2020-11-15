@@ -3,6 +3,7 @@
 
 #include "MainMenu.h"
 #include "SideScroller.h"
+#include "SwarmDefense.h"
 #include <SFML/Graphics.hpp>
 #include "Screen.h"
 #include "Screens.h"
@@ -18,6 +19,7 @@ public:
 private:
 	MainMenu* mainMenu;
 	SideScroller* sideScroller;
+	SwarmDefense* swarmDefense;
 	Screens currentScreen;
 	void initializeSelectedScreen(Screens selectedScreen);
 	void processScreenSelection(MainMenu* currentScreenPtr);

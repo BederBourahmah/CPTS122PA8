@@ -6,6 +6,7 @@ ScreenManager::ScreenManager(sf::VideoMode vm)
 	mainMenu = new MainMenu(videoMode);
 	currentScreen = Screens::MainMenu;
 	sideScroller = nullptr;
+	swarmDefense = nullptr;
 }
 
 ScreenManager::~ScreenManager()
@@ -21,6 +22,8 @@ Screen* ScreenManager::getCurrentScreen()
 		return mainMenu;
 	case Screens::SideScroller:
 		return sideScroller;
+	case Screens::SwarmDefense:
+		return swarmDefense;
 	default:
 		return nullptr;
 	}
@@ -71,6 +74,9 @@ void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 	case Screens::MainMenu:
 		mainMenu = new MainMenu(videoMode);
 		break;
+	case Screens::SwarmDefense:
+		swarmDefense = new SwarmDefense(videoMode);
+		break;
 	case Screens::SideScroller:
 		sideScroller = new SideScroller(videoMode);
 		return;
@@ -93,6 +99,8 @@ void ScreenManager::deleteAllScreens()
 {
 	delete mainMenu;
 	mainMenu = nullptr;
+	delete swarmDefense;
+	swarmDefense = nullptr;
 	delete sideScroller;
 	sideScroller = nullptr;
 }

@@ -112,6 +112,11 @@ public:
 
 		float newDiffX = distance * std::sin(angle);
 		float newDiffY = distance * std::cos(angle);
+		if (diffY < 0 && newDiffY > 0)
+		{
+			newDiffY *= -1.0f;
+			newDiffX *= -1.0f;
+		}
 		shiftHorizontal(newDiffX - diffX);
 		shiftVertical(newDiffY - diffY);
 		updatePosition();
@@ -207,6 +212,7 @@ protected:
 	float centerPosY;
 	float totalWidth;
 	float totalHeight;
+	
 };
 
 #endif // !MOVEABLE_COMPONENT_H

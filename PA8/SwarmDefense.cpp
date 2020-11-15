@@ -93,6 +93,8 @@ void SwarmDefense::updateState()
 
 		enemies.erase(itemToDelete);
 		enemiesToDestroy.pop();
+		generateEnemy();
+		generateEnemy();
 	}
 
 	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)

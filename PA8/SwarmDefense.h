@@ -23,6 +23,7 @@ private:
 
 	MoveableRectangle* playerBase;
 	sf::VideoMode videoMode;
+	bool shouldGoBackToMainMenu;
 };
 
 #endif // !SWARM_DEFENSE_H

@@ -40,7 +40,7 @@ void SideScroller::drawTo(sf::RenderWindow& window)
 		(*i)->drawTo(window);
 	}
 	
-	if (!obstacles.empty() && obstacles.front()->isLeftOfScreen(videoMode))
+	if (!obstacles.empty() && obstacles.front()->isLeftOfScreen())
 	{
 		obstacles.pop_front();
 		obstacles.push_back(generateObstacle());
@@ -114,7 +114,7 @@ MoveableRectangle* SideScroller::generateObstacle()
 		newObstacle->snapToBottom(videoMode);
 	}
 	else {
-		newObstacle->snapToTop(videoMode);
+		newObstacle->snapToTop();
 	}
 	return newObstacle;
 }
@@ -127,7 +127,7 @@ void SideScroller::updatePlayerState()
 		verticalVelocity = verticalVelocity * (-0.9f);
 	}
 
-	if (playerShape->didCollideWithTopWindowEdge(videoMode) && verticalVelocity < 0)
+	if (playerShape->didCollideWithTopWindowEdge() && verticalVelocity < 0)
 	{
 		verticalVelocity = verticalVelocity * (-0.9f);
 	}

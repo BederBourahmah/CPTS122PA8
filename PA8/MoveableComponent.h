@@ -46,7 +46,7 @@ public:
 		updatePosition();
 	}
 
-	void snapToLeftOffScreen(sf::VideoMode const videoMode)
+	void snapToLeftOffScreen()
 	{
 		centerPosX = 0 - (totalWidth / 2);
 		updatePosition();
@@ -58,7 +58,7 @@ public:
 		updatePosition();
 	}
 
-	void snapToTopOffScreen(sf::VideoMode const videoMode)
+	void snapToTopOffScreen()
 	{
 		centerPosY = 0 - (totalHeight / 2);
 		updatePosition();
@@ -70,10 +70,28 @@ public:
 		updatePosition();
 	}
 
-	void snapToTop(sf::VideoMode const videoMode)
+	void snapToTop()
 	{
 		centerPosY = totalHeight / 2;
 		updatePosition();
+	}
+
+	void snapToLeft()
+	{
+		centerPosX = totalWidth / 2;
+		updatePosition();
+	}
+
+	void snapToRight(sf::VideoMode const videoMode)
+	{
+		centerPosX = videoMode.width - totalWidth / 2;
+		updatePosition();
+	}
+
+	void snapToTopLeft()
+	{
+		snapToLeft();
+		snapToTop();
 	}
 
 	void moveTo(float x, float y)
@@ -125,7 +143,7 @@ public:
 
 	bool didCollideWithWindowEdge(sf::VideoMode videoMode)
 	{
-		if (didCollideWithTopWindowEdge(videoMode)) return true;
+		if (didCollideWithTopWindowEdge()) return true;
 		if (didCollideWithBottomWindowEdge(videoMode)) return true;
 		if (getLeftPosXToCenter() <= 0) return true;
 		if (getRightPosXToCenter() >= videoMode.width) return true;
@@ -138,7 +156,7 @@ public:
 		 return getBottomPosYToCenter() >= videoMode.height;
 	}
 
-	bool didCollideWithTopWindowEdge(sf::VideoMode videoMode)
+	bool didCollideWithTopWindowEdge()
 	{
 		return getTopPosYToCenter() <= 0;
 	}
@@ -167,13 +185,13 @@ public:
 	{
 		if (getBottomPosYToCenter() < 0) return true;
 		if (getTopPosYToCenter() > videoMode.height) return true;
-		if (isLeftOfScreen(videoMode)) return true;
+		if (isLeftOfScreen()) return true;
 		if (getLeftPosXToCenter() > videoMode.width) return true;
 
 		return false;
 	}
 
-	bool isLeftOfScreen(sf::VideoMode videoMode)
+	bool isLeftOfScreen()
 	{
 		return getRightPosXToCenter() < 0;
 	}

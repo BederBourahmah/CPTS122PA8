@@ -33,7 +33,10 @@ private:
 	void generateEnemy();
 	std::queue<int> enemiesToDestroy;
 	TextComponent* displayedScore;
+	TextComponent* displayedHealth;
 	unsigned int score;
+	unsigned short int health;
+	void destroyEnemies();
 };
 
 #endif // !SWARM_DEFENSE_H

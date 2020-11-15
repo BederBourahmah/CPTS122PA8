@@ -1,6 +1,8 @@
 #include "SwarmDefense.h"
 
 const static float enemyVelocity = 0.1f;
+static const std::string scorePrefix = "Score: ";
+static const std::string healthPrefix = "Health: ";
 
 SwarmDefense::SwarmDefense(sf::VideoMode vm)
 {
@@ -11,10 +13,13 @@ SwarmDefense::SwarmDefense(sf::VideoMode vm)
 	shouldGoBackToMainMenu = false;
 	currentEnemyId = INT16_MIN;
 	generateEnemy();
-	displayedScore = new TextComponent("Leander.ttf", std::to_string(score));
+	displayedScore = new TextComponent("Leander.ttf", scorePrefix + std::to_string(score), 50);
 	displayedScore->snapToVertical(videoMode, 10, 1);
-	displayedScore->snapToHorizontal(videoMode, 10, 1);
 	displayedScore->setColor(sf::Color::Green);
+	displayedHealth = new TextComponent("Leander.ttf", healthPrefix + std::to_string(health), 50);
+	displayedHealth->snapToVertical(videoMode, 10, 2);
+	displayedHealth->setColor(sf::Color::Green);
+	health = 100;
 }
 
 SwarmDefense::~SwarmDefense()
@@ -27,9 +32,14 @@ SwarmDefense::~SwarmDefense()
 
 void SwarmDefense::drawTo(sf::RenderWindow& window)
 {
-	displayedScore->setText(std::to_string(score));
+	std::string newScore = std::to_string(score);
+	std::string newHealth = std::to_string(health);
+
+	displayedScore->setText(scorePrefix + newScore);
+	displayedHealth->setText(healthPrefix + newHealth);
 	playerBase->drawTo(window);
 	displayedScore->drawTo(window);
+	displayedHealth->drawTo(window);
 	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
 		(*i)->drawTo(window);
@@ -83,28 +93,7 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 
 void SwarmDefense::updateState()
 {
-	while (!enemiesToDestroy.empty())
-	{
-		if (enemies.empty())
-		{
-			enemiesToDestroy.pop();
-			continue;
-		}
-		
-		int idToDelete = enemiesToDestroy.front();
-		std::list<MoveableRectangle*>::iterator itemToDelete = enemies.begin();
-		for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
-		{
-			if ((*i)->getId() == idToDelete) break;
-
-			++itemToDelete;
-		}
-
-		enemies.erase(itemToDelete);
-		enemiesToDestroy.pop();
-		generateEnemy();
-		generateEnemy();
-	}
+	destroyEnemies();
 
 	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
@@ -129,7 +118,7 @@ void SwarmDefense::generateEnemy()
 		newEnemy->snapToBottomOffScreen(videoMode);
 	}
 	else {
-		newEnemy->snapToTopOffScreen(videoMode);
+		newEnemy->snapToTopOffScreen();
 	}
 
 	if (isRight)
@@ -137,7 +126,7 @@ void SwarmDefense::generateEnemy()
 		newEnemy->snapToRightOffScreen(videoMode);
 	}
 	else {
-		newEnemy->snapToLeftOffScreen(videoMode);
+		newEnemy->snapToLeftOffScreen();
 	}
 
 	float shift = 0;
@@ -152,4 +141,30 @@ void SwarmDefense::generateEnemy()
 	}
 
 	enemies.push_back(newEnemy);
+}
+
+void SwarmDefense::destroyEnemies()
+{
+	while (!enemiesToDestroy.empty())
+	{
+		if (enemies.empty())
+		{
+			enemiesToDestroy.pop();
+			continue;
+		}
+
+		int idToDelete = enemiesToDestroy.front();
+		std::list<MoveableRectangle*>::iterator itemToDelete = enemies.begin();
+		for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+		{
+			if ((*i)->getId() == idToDelete) break;
+
+			++itemToDelete;
+		}
+
+		enemies.erase(itemToDelete);
+		enemiesToDestroy.pop();
+		generateEnemy();
+		generateEnemy();
+	}
 }

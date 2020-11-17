@@ -160,6 +160,7 @@
     <ClCompile Include="SideScroller.cpp" />
     <ClCompile Include="SwarmDefense.cpp" />
     <ClCompile Include="TcpClient.cpp" />
+    <ClCompile Include="TcpServer.cpp" />
     <ClCompile Include="TextComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +176,7 @@
     <ClInclude Include="SideScroller.h" />
     <ClInclude Include="SwarmDefense.h" />
     <ClInclude Include="TcpClient.h" />
+    <ClInclude Include="TcpServer.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="VideoHelpers.h" />
   </ItemGroup>

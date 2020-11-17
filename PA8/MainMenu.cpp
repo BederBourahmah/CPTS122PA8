@@ -190,7 +190,16 @@ void MainMenu::handleEvents(sf::RenderWindow& window)
 
 void MainMenu::updateState()
 {
-	if (modal != nullptr) modal->updateState();
+	if (modal != nullptr)
+	{
+		modal->updateState();
+		if (modal->getIsReady())
+		{
+			//TODO attempt to connect to network client
+			delete modal;
+			modal = nullptr;
+		}
+	}
 }
 
 void MainMenu::updateSelectorPosition()

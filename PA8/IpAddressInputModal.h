@@ -15,12 +15,14 @@ public:
 	void updateState();
 	void processMouseClick(sf::Vector2i mousePosition);
 	void handleEvents(sf::RenderWindow& window);
+	bool getIsReady();
 private:
 	TextComponent* title;
 	TextComponent* ipAddressTitle;
 	TextComponent* ipAddressInput;
 	TextComponent* portTitle;
 	TextComponent* portInput;
+	TextComponent* okButton;
 
 	//Text Input Component
 	std::string currentIpAddress;
@@ -33,6 +35,7 @@ private:
 	MoveableRectangle* portInputBox;
 	MoveableRectangle* boxHighlighter;
 	bool isIpInputSelected;
+	bool isReady;
 };
 
 #endif // !IP_ADDRESS_INPUT_MODAL_H

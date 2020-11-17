@@ -9,21 +9,13 @@ class MenuSelector : public GUIComponent
 public:
 	MenuSelector(float width, float height);
 
-	sf::Sprite getTopLeftSprite();
-	sf::Sprite getBottomLeftSprite();
-	sf::Sprite getTopRightSprite();
-	sf::Sprite getBottomRightSprite();
 	void updatePosition();
 	void drawTo(sf::RenderWindow& window);
 private:
-	sf::Sprite topLeftSprite;
-	sf::Texture topLeftTexture;
-	sf::Sprite bottomLeftSprite;
-	sf::Texture bottomLeftTexture;
-	sf::Sprite topRightSprite;
-	sf::Texture topRightTexture;
-	sf::Sprite bottomRightSprite;
-	sf::Texture bottomRightTexture;
+	sf::RectangleShape topLeftBorder;
+	sf::RectangleShape bottomLeftBorder;
+	sf::RectangleShape topRightBorder;
+	sf::RectangleShape bottomRightBorder;
 };
 
 #endif // !MENU_SELECTOR_H

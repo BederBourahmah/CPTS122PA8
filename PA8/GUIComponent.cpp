@@ -56,4 +56,24 @@ GUIComponent::GUIComponent()
 	{
 		std::cout << "Failed to load modal_background texture." << std::endl;
 	}
+
+	if (!topLeftSingleBorder.loadFromFile("assets/top_left_single_border.png"))
+	{
+		std::cout << "Failed to load top_left_single_border texture." << std::endl;
+	}
+
+	if (!bottomLeftSingleBorder.loadFromFile("assets/bottom_left_single_border.png"))
+	{
+		std::cout << "Failed to load bottom_left_single_border texture." << std::endl;
+	}
+
+	if (!topRightSingleBorder.loadFromFile("assets/top_right_single_border.png"))
+	{
+		std::cout << "Failed to load top_right_single_border texture." << std::endl;
+	}
+
+	if (!bottomRightSingleBorder.loadFromFile("assets/bottom_right_single_border.png"))
+	{
+		std::cout << "Failed to load bottom_right_single_border texture." << std::endl;
+	}
 }

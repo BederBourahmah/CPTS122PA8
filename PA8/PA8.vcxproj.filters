@@ -72,6 +72,12 @@
     <ClCompile Include="TcpServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ModalBorder.cpp">
+      <Filter>Source Files\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Modal.cpp">
+      <Filter>Source Files\UserInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VideoHelpers.h">
@@ -118,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="TcpServer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModalSize.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="ModalBorder.h">
+      <Filter>Header Files\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Modal.h">
+      <Filter>Header Files\UserInterface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

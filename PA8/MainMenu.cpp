@@ -21,6 +21,7 @@ MainMenu::MainMenu(sf::VideoMode const videoMode)
 		std::cout << "Failed to load background sprite." << std::endl;
 	}
 	selectedScreen = Screens::MainMenu;
+	modal = new Modal(ModalSize::ExtraLarge, videoMode);
 }
 
 MainMenu::~MainMenu()
@@ -42,6 +43,7 @@ void MainMenu::drawTo(sf::RenderWindow &window)
 	swarmDefenderText->drawTo(window);
 	exitText->drawTo(window);
 	selector->drawTo(window);
+	modal->drawTo(window);
 }
 
 void MainMenu::moveSelectorDown()

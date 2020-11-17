@@ -159,6 +159,7 @@
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="SideScroller.cpp" />
     <ClCompile Include="SwarmDefense.cpp" />
+    <ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TextComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +174,7 @@
     <ClInclude Include="Screens.h" />
     <ClInclude Include="SideScroller.h" />
     <ClInclude Include="SwarmDefense.h" />
+    <ClInclude Include="TcpClient.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="VideoHelpers.h" />
   </ItemGroup>

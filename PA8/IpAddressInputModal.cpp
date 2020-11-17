@@ -3,15 +3,15 @@
 IpAddressInputModal::IpAddressInputModal(sf::VideoMode vm) : Modal(ModalSize::Medium, vm)
 {
 	videoMode = vm;
-	title = new TextComponent("Leander.ttf", "Input IP Address and Port", 18);
+	title = new TextComponent("Leander.ttf", "Input IP Address and Port", 20);
 	title->centerHorizontal(videoMode);
 	title->snapToVertical(videoMode, 8, 2)
 		;
-	ipAddressTitle = new TextComponent("Leander.ttf", "IP Address", 16);
+	ipAddressTitle = new TextComponent("Leander.ttf", "IP Address", 18);
 	ipAddressTitle->centerHorizontal(videoMode);
 	ipAddressTitle->snapToVertical(videoMode, 8, 3);
 
-	ipAddressInput = new TextComponent("Leander.ttf", "", 16, sf::Color::Green);
+	ipAddressInput = new TextComponent("Leander.ttf", "", 18, sf::Color::Green);
 	ipAddressInput->centerHorizontal(videoMode);
 	ipAddressInput->snapToVertical(videoMode, 8, 4);
 
@@ -20,11 +20,11 @@ IpAddressInputModal::IpAddressInputModal(sf::VideoMode vm) : Modal(ModalSize::Me
 	ipInputBox->centerHorizontal(videoMode);
 	ipInputBox->snapToVertical(videoMode, 8, 4);
 
-	portTitle = new TextComponent("Leander.ttf", "Port", 16);
+	portTitle = new TextComponent("Leander.ttf", "Port", 18);
 	portTitle->centerHorizontal(videoMode);
 	portTitle->snapToVertical(videoMode, 8, 5);
 
-	portInput = new TextComponent("Leander.ttf", "", 16, sf::Color::Green);
+	portInput = new TextComponent("Leander.ttf", "", 18, sf::Color::Green);
 	portInput->centerHorizontal(videoMode);
 	portInput->snapToVertical(videoMode, 8, 6);
 
@@ -35,6 +35,7 @@ IpAddressInputModal::IpAddressInputModal(sf::VideoMode vm) : Modal(ModalSize::Me
 	boxHighlighter = new MoveableRectangle(sf::Vector2f(0.2f * videoMode.width + 5, boxHeight+5), sf::Color::Red);
 	boxHighlighter->centerHorizontal(videoMode);
 	boxHighlighter->snapToVertical(videoMode, 8, 4);
+	isIpInputSelected = true;
 }
 
 IpAddressInputModal::~IpAddressInputModal()
@@ -72,6 +73,7 @@ void IpAddressInputModal::drawTo(sf::RenderWindow& window)
 void IpAddressInputModal::updateState()
 {
 	ipAddressInput->setText(currentIpAddress);
+	portInput->setText(currentPort);
 }
 
 void IpAddressInputModal::processMouseClick(sf::Vector2i mousePosition)
@@ -81,12 +83,14 @@ void IpAddressInputModal::processMouseClick(sf::Vector2i mousePosition)
 	if (portInputBox->isPositionInMyArea(mousePosition))
 	{
 		boxHighlighter->snapToVertical(videoMode, 8, 6);
+		isIpInputSelected = false;
 		return;
 	}
 
 	if (ipInputBox->isPositionInMyArea(mousePosition))
 	{
 		boxHighlighter->snapToVertical(videoMode, 8, 4);
+		isIpInputSelected = true;
 		return;
 	}
 }
@@ -133,12 +137,26 @@ void IpAddressInputModal::handleTextEnteredEvent(sf::Uint32 enteredChar)
 
 void IpAddressInputModal::handleBackSpace()
 {
-	if (currentIpAddress.empty()) return;
+	if (isIpInputSelected)
+	{
+		if (currentIpAddress.empty()) return;
+
+		currentIpAddress.pop_back();
+		return;
+	}
 	
-	currentIpAddress.pop_back();
+	if (currentPort.empty()) return;
+
+	currentPort.pop_back();
 }
 
 void IpAddressInputModal::handleAddText(char charToAdd)
 {
-	currentIpAddress.push_back(charToAdd);
+	if (isIpInputSelected)
+	{
+		currentIpAddress.push_back(charToAdd);
+		return;
+	}
+	
+	currentPort.push_back(charToAdd);
 }

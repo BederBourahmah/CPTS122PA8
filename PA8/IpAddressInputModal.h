@@ -24,6 +24,7 @@ private:
 
 	//Text Input Component
 	std::string currentIpAddress;
+	std::string currentPort;
 	void handleTextEnteredEvent(sf::Uint32 enteredChar);
 	void handleBackSpace();
 	void handleAddText(char charToAdd);
@@ -31,6 +32,7 @@ private:
 	MoveableRectangle* ipInputBox;
 	MoveableRectangle* portInputBox;
 	MoveableRectangle* boxHighlighter;
+	bool isIpInputSelected;
 };
 
 #endif // !IP_ADDRESS_INPUT_MODAL_H

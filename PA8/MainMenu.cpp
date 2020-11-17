@@ -195,6 +195,7 @@ void MainMenu::updateState()
 		modal->updateState();
 		if (modal->getIsReady())
 		{
+			std::cout << modal->getAddress() << " : " << modal->getPort() << std::endl;
 			//TODO attempt to connect to network client
 			delete modal;
 			modal = nullptr;

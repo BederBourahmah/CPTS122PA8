@@ -141,6 +141,31 @@ bool IpAddressInputModal::getIsReady()
 	return isReady;
 }
 
+std::string IpAddressInputModal::getAddress()
+{
+	return currentIpAddress;
+}
+
+unsigned short IpAddressInputModal::getPort()
+{
+	int intValue = 0;
+	try
+	{
+		intValue = std::stoi(currentPort, nullptr, 10);
+	}
+	catch (const std::exception&)
+	{
+		return 0;
+	}
+
+	if (intValue > USHRT_MAX || intValue < 0)
+	{
+		return 0;
+	}
+
+	return (unsigned short)intValue;
+}
+
 void IpAddressInputModal::handleTextEnteredEvent(sf::Uint32 enteredChar)
 {
 	if (enteredChar >= 128) return;

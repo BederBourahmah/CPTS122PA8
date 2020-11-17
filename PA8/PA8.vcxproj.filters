@@ -75,9 +75,6 @@
     <ClCompile Include="TcpClient.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
-    <ClCompile Include="TcpServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ModalBorder.cpp">
       <Filter>Source Files\UserInterface</Filter>
     </ClCompile>
@@ -86,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="IpAddressInputModal.cpp">
       <Filter>Source Files\UserInterface\Modals</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpServer.cpp">
+      <Filter>Source Files\Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,9 +131,6 @@
     <ClInclude Include="TcpClient.h">
       <Filter>Header Files\Network</Filter>
     </ClInclude>
-    <ClInclude Include="TcpServer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ModalSize.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
@@ -145,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="IpAddressInputModal.h">
       <Filter>Header Files\UserInterface\Modals</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpServer.h">
+      <Filter>Header Files\Network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

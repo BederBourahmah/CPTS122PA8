@@ -16,6 +16,8 @@ public:
 	void processMouseClick(sf::Vector2i mousePosition);
 	void handleEvents(sf::RenderWindow& window);
 	bool getIsReady();
+	std::string getAddress();
+	unsigned short getPort();
 private:
 	TextComponent* title;
 	TextComponent* ipAddressTitle;

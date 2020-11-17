@@ -13,11 +13,14 @@ public:
 	
 	void drawTo(sf::RenderWindow& window);
 	void updateState();
+	void processMouseClick(sf::Vector2i mousePosition);
 	void handleEvents(sf::RenderWindow& window);
 private:
 	TextComponent* title;
 	TextComponent* ipAddressTitle;
 	TextComponent* ipAddressInput;
+	TextComponent* portTitle;
+	TextComponent* portInput;
 
 	//Text Input Component
 	std::string currentIpAddress;
@@ -26,6 +29,8 @@ private:
 	void handleAddText(char charToAdd);
 	sf::VideoMode videoMode;
 	MoveableRectangle* ipInputBox;
+	MoveableRectangle* portInputBox;
+	MoveableRectangle* boxHighlighter;
 };
 
 #endif // !IP_ADDRESS_INPUT_MODAL_H

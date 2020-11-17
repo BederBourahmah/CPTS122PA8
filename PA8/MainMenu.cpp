@@ -22,6 +22,7 @@ MainMenu::MainMenu(sf::VideoMode const videoMode)
 	}
 	selectedScreen = Screens::MainMenu;
 	modal = new IpAddressInputModal(videoMode);
+	server = nullptr;
 }
 
 MainMenu::~MainMenu()
@@ -34,6 +35,8 @@ MainMenu::~MainMenu()
 	exitText = nullptr;
 	delete selector;
 	selector = nullptr;
+	delete server;
+	server = nullptr;
 }
 
 void MainMenu::drawTo(sf::RenderWindow &window)
@@ -195,10 +198,14 @@ void MainMenu::updateState()
 		modal->updateState();
 		if (modal->getIsReady())
 		{
-			std::cout << modal->getAddress() << " : " << modal->getPort() << std::endl;
+			std::string addr = modal->getAddress();
+			unsigned int port = modal->getPort();
+			std::cout << addr << " : " << port << std::endl;
+			server = new TcpServer(port);
 			//TODO attempt to connect to network client
 			delete modal;
 			modal = nullptr;
+
 		}
 	}
 }

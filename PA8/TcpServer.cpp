@@ -10,7 +10,10 @@ TcpServer::TcpServer(unsigned short port)
 		std::cout << "Failed to open TCP listener on port " << port << std::endl;
 	}
 
+	listener->setBlocking(false);
+
 	listenerStatus = listener->accept(client);
+
 	if (listenerStatus != sf::Socket::Done)
 	{
 		std::cout << "Failed to accept TCP client on port " << port << std::endl;

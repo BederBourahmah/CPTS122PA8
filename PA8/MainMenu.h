@@ -8,6 +8,7 @@
 #include "Screens.h"
 #include "MainMenuSelection.h"
 #include "IpAddressInputModal.h"
+#include "TcpServer.h"
 
 class MainMenu : public Screen
 {
@@ -38,6 +39,7 @@ private:
 	bool loadMainMenuBackgroundSprite(sf::VideoMode const videoMode);
 	void handleKeyPressEvent(sf::Event event);
 	IpAddressInputModal* modal;
+	TcpServer* server;
 };
 
 #endif // !MAIN_MENU_H

@@ -5,42 +5,52 @@ IpAddressInputModal::IpAddressInputModal(sf::VideoMode vm) : Modal(ModalSize::Me
 	videoMode = vm;
 	title = new TextComponent("Leander.ttf", "Input IP Address and Port", 20);
 	title->centerHorizontal(videoMode);
-	title->snapToVertical(videoMode, 8, 2);
+	title->snapToVertical(videoMode, 16, 4);
 
 	ipAddressTitle = new TextComponent("Leander.ttf", "IP Address", 18);
 	ipAddressTitle->centerHorizontal(videoMode);
-	ipAddressTitle->snapToVertical(videoMode, 8, 3);
+	ipAddressTitle->snapToVertical(videoMode, 16, 6);
 
 	ipAddressInput = new TextComponent("Leander.ttf", "", 18, sf::Color::Green);
 	ipAddressInput->centerHorizontal(videoMode);
-	ipAddressInput->snapToVertical(videoMode, 8, 4);
+	ipAddressInput->snapToVertical(videoMode, 16, 8);
 
 	float boxHeight = (50.0f / 1080.0f)*videoMode.height;
 	ipInputBox = new MoveableRectangle(sf::Vector2f(0.2f * videoMode.width, boxHeight), sf::Color::Black);
 	ipInputBox->centerHorizontal(videoMode);
-	ipInputBox->snapToVertical(videoMode, 8, 4);
+	ipInputBox->snapToVertical(videoMode, 16, 8);
 
 	portTitle = new TextComponent("Leander.ttf", "Port", 18);
 	portTitle->centerHorizontal(videoMode);
-	portTitle->snapToVertical(videoMode, 8, 5);
+	portTitle->snapToVertical(videoMode, 16, 10);
 
 	portInput = new TextComponent("Leander.ttf", "", 18, sf::Color::Green);
 	portInput->centerHorizontal(videoMode);
-	portInput->snapToVertical(videoMode, 8, 6);
+	portInput->snapToVertical(videoMode, 16, 12);
 
 	portInputBox = new MoveableRectangle(sf::Vector2f(0.2f * videoMode.width, boxHeight), sf::Color::Black);
 	portInputBox->centerHorizontal(videoMode);
-	portInputBox->snapToVertical(videoMode, 8, 6);
+	portInputBox->snapToVertical(videoMode, 16, 12);
 
 	boxHighlighter = new MoveableRectangle(sf::Vector2f(0.2f * videoMode.width + 5, boxHeight+5), sf::Color::Red);
 	boxHighlighter->centerHorizontal(videoMode);
-	boxHighlighter->snapToVertical(videoMode, 8, 4);
+	boxHighlighter->snapToVertical(videoMode, 16, 8);
 
 	okButton = new TextComponent("Leander.ttf", "OK", 25);
 	okButton->centerHorizontal(videoMode);
-	okButton->snapToVertical(videoMode, 8, 7);
+	okButton->snapToVertical(videoMode, 16, 13);
+
+	serverButton = new TextComponent("Leander.ttf", "Server", 18);
+	serverButton->snapToHorizontal(videoMode, 8, 4);
+	serverButton->snapToVertical(videoMode, 16, 5);
+
+	clientButton = new TextComponent("Leander.ttf", "Client", 18);
+	clientButton->snapToHorizontal(videoMode, 8, 5);
+	clientButton->snapToVertical(videoMode, 16, 5);
+
 	isIpInputSelected = true;
 	isReady = false;
+	isServer = true;
 }
 
 IpAddressInputModal::~IpAddressInputModal()
@@ -59,6 +69,10 @@ IpAddressInputModal::~IpAddressInputModal()
 	portInput = nullptr;
 	delete boxHighlighter;
 	boxHighlighter = nullptr;
+	delete serverButton;
+	serverButton = nullptr;
+	delete clientButton;
+	clientButton = nullptr;
 }
 
 void IpAddressInputModal::drawTo(sf::RenderWindow& window)
@@ -74,6 +88,8 @@ void IpAddressInputModal::drawTo(sf::RenderWindow& window)
 	portInputBox->drawTo(window);
 	portInput->drawTo(window);
 	okButton->drawTo(window);
+	serverButton->drawTo(window);
+	clientButton->drawTo(window);
 }
 
 void IpAddressInputModal::updateState()

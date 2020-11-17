@@ -25,6 +25,8 @@ private:
 	TextComponent* portTitle;
 	TextComponent* portInput;
 	TextComponent* okButton;
+	TextComponent* serverButton;
+	TextComponent* clientButton;
 
 	//Text Input Component
 	std::string currentIpAddress;
@@ -38,6 +40,7 @@ private:
 	MoveableRectangle* boxHighlighter;
 	bool isIpInputSelected;
 	bool isReady;
+	bool isServer;
 };
 
 #endif // !IP_ADDRESS_INPUT_MODAL_H

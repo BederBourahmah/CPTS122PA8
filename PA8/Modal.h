@@ -4,9 +4,9 @@
 #include "ModalSize.h"
 #include <SFML/Graphics.hpp>
 #include "ModalBorder.h"
-#include "MoveableComponent.h"
+#include "GUIComponent.h"
 
-class Modal : public MoveableComponent
+class Modal : public GUIComponent
 {
 public:
 	Modal(ModalSize s, sf::VideoMode vm);
@@ -16,9 +16,7 @@ public:
 
 private:
 	void updatePosition();
-	bool loadModalBackgroundTexture();
 	bool loadModalBackground();
-	sf::Texture backgroundTexture;
 	sf::RectangleShape background;
 	sf::VideoMode videoMode;
 	float getWidthByModalSize();

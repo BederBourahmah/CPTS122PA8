@@ -19,6 +19,7 @@ protected:
 	sf::Texture bottomRightDoubleBorder;
 	sf::Texture leftDoubleBorder;
 	sf::Texture rightDoubleBorder;
+	sf::Texture modalBackground;
 
 	static const unsigned short cornerDoubleBorderSquareLength = 24;
 	static const unsigned short longDoubleBorderThickness = 17;

@@ -35,21 +35,11 @@ void Modal::updatePosition()
 	background.setPosition(centerPosX, centerPosY);
 }
 
-bool Modal::loadModalBackgroundTexture()
-{
-	if (!backgroundTexture.loadFromFile("assets/modal_background.jpg"))
-	{
-		return false;
-	}
-	return true;
-}
-
 bool Modal::loadModalBackground()
 {
-	if (!loadModalBackgroundTexture()) return false;
 	float modalWidth = getWidthByModalSize() - 17;
 	float modalHeight = (float)videoMode.height * 0.75f - 17;
-	background.setTexture(&backgroundTexture);
+	background.setTexture(&modalBackground);
 	background.setSize(sf::Vector2f(modalWidth, modalHeight));
 	background.setOrigin(modalWidth/2, modalHeight/2);
 	return true;

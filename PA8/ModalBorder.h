@@ -20,15 +20,6 @@ private:
 	sf::RectangleShape bottomBorder;
 	sf::RectangleShape leftBorder;
 	sf::RectangleShape rightBorder;
-
-	sf::Sprite topSprite;
-	sf::Texture topTexture;
-	sf::Sprite leftSprite;
-	sf::Texture leftTexture;
-	sf::Sprite rightSprite;
-	sf::Texture rightTexture;
-	sf::Sprite bottomSprite;
-	sf::Texture bottomTexture;
 };
 
 #endif // !MODAL_BORDER_H

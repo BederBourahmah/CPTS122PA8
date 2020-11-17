@@ -51,4 +51,9 @@ GUIComponent::GUIComponent()
 		std::cout << "Failed to load right_double_border texture." << std::endl;
 	}
 	rightDoubleBorder.setRepeated(true);
+
+	if (!modalBackground.loadFromFile("assets/modal_background.jpg"))
+	{
+		std::cout << "Failed to load modal_background texture." << std::endl;
+	}
 }

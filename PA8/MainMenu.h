@@ -9,6 +9,7 @@
 #include "MainMenuSelection.h"
 #include "IpAddressInputModal.h"
 #include "TcpServer.h"
+#include "TcpClient.h"
 
 class MainMenu : public Screen
 {
@@ -40,6 +41,7 @@ private:
 	void handleKeyPressEvent(sf::Event event);
 	IpAddressInputModal* modal;
 	TcpServer* server;
+	TcpClient* client;
 };
 
 #endif // !MAIN_MENU_H

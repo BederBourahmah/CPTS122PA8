@@ -18,6 +18,7 @@ public:
 	bool getIsReady();
 	std::string getAddress();
 	unsigned short getPort();
+	bool getIsServer();
 private:
 	TextComponent* title;
 	TextComponent* ipAddressTitle;

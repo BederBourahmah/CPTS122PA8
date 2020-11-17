@@ -2,6 +2,7 @@
 #define TCP_CLIENT_H
 
 #include <SFML/Network.hpp>
+#include <iostream>
 
 class TcpClient
 {

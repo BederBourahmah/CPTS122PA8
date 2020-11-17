@@ -50,7 +50,7 @@ IpAddressInputModal::IpAddressInputModal(sf::VideoMode vm) : Modal(ModalSize::Me
 
 	isIpInputSelected = true;
 	isReady = false;
-	isServer = true;
+	isServer = false;
 }
 
 IpAddressInputModal::~IpAddressInputModal()
@@ -79,11 +79,15 @@ void IpAddressInputModal::drawTo(sf::RenderWindow& window)
 {
 	Modal::drawTo(window);
 	title->drawTo(window);
-	ipAddressTitle->drawTo(window);
 	ipAddressInput->centerHorizontal(videoMode);
 	boxHighlighter->drawTo(window);
-	ipInputBox->drawTo(window);
-	ipAddressInput->drawTo(window);
+	if (!isServer)
+	{
+		ipAddressTitle->drawTo(window);
+		ipInputBox->drawTo(window);
+		ipAddressInput->drawTo(window);
+	}
+	
 	portTitle->drawTo(window);
 	portInputBox->drawTo(window);
 	portInput->drawTo(window);
@@ -104,23 +108,39 @@ void IpAddressInputModal::processMouseClick(sf::Vector2i mousePosition)
 
 	if (portInputBox->isPositionInMyArea(mousePosition))
 	{
-		boxHighlighter->snapToVertical(videoMode, 8, 6);
+		boxHighlighter->snapToVertical(videoMode, 16, 12);
 		isIpInputSelected = false;
 		return;
 	}
 
 	if (ipInputBox->isPositionInMyArea(mousePosition))
 	{
-		boxHighlighter->snapToVertical(videoMode, 8, 4);
+		boxHighlighter->snapToVertical(videoMode, 16, 8);
 		isIpInputSelected = true;
 		return;
 	}
 
 	if (okButton->isPositionInMyArea(mousePosition))
 	{
-		if (currentIpAddress.empty() || currentPort.empty()) return;
+		if (currentPort.empty()) return;
+		if (!isServer && currentIpAddress.empty()) return;
 
 		isReady = true;
+		return;
+	}
+
+	if (serverButton->isPositionInMyArea(mousePosition))
+	{
+		isServer = true;
+		boxHighlighter->snapToVertical(videoMode, 16, 12);
+		isIpInputSelected = false;
+		currentIpAddress.clear();
+		return;
+	}
+
+	if (clientButton->isPositionInMyArea(mousePosition))
+	{
+		isServer = false;
 		return;
 	}
 }
@@ -180,6 +200,11 @@ unsigned short IpAddressInputModal::getPort()
 	}
 
 	return (unsigned short)intValue;
+}
+
+bool IpAddressInputModal::getIsServer()
+{
+	return isServer;
 }
 
 void IpAddressInputModal::handleTextEnteredEvent(sf::Uint32 enteredChar)

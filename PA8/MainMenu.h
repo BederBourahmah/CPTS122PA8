@@ -7,7 +7,7 @@
 #include "Screen.h"
 #include "Screens.h"
 #include "MainMenuSelection.h"
-#include "Modal.h"
+#include "IpAddressInputModal.h"
 
 class MainMenu : public Screen
 {
@@ -23,6 +23,7 @@ public:
 	bool shouldExitGame();
 	Screens getSelectedScreen();
 	void handleEvents(sf::RenderWindow& window);
+	void updateState();
 private:
 	TextComponent* sideScrollerText;
 	TextComponent* swarmDefenderText;
@@ -36,7 +37,7 @@ private:
 	bool loadMainMenuBackgroundTexture();
 	bool loadMainMenuBackgroundSprite(sf::VideoMode const videoMode);
 	void handleKeyPressEvent(sf::Event event);
-	Modal* modal;
+	IpAddressInputModal* modal;
 };
 
 #endif // !MAIN_MENU_H

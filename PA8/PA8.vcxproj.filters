@@ -37,6 +37,12 @@
     <Filter Include="Header Files\Network">
       <UniqueIdentifier>{25d4d89a-5d18-4eac-9878-91f67e35a3c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\UserInterface\Modals">
+      <UniqueIdentifier>{d6a2a180-52a6-4b17-97ac-0e82b0429f61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UserInterface\Modals">
+      <UniqueIdentifier>{a5882a4a-535d-4439-bdd4-67207c785f9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="Modal.cpp">
       <Filter>Source Files\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="IpAddressInputModal.cpp">
+      <Filter>Source Files\UserInterface\Modals</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="Modal.h">
       <Filter>Header Files\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="IpAddressInputModal.h">
+      <Filter>Header Files\UserInterface\Modals</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

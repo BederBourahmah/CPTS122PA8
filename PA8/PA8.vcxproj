@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GUIComponent.cpp" />
+    <ClCompile Include="IpAddressInputModal.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MenuSelector.cpp" />
@@ -167,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIComponent.h" />
+    <ClInclude Include="IpAddressInputModal.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MainMenuSelection.h" />
     <ClInclude Include="MenuSelector.h" />

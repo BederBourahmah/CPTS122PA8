@@ -21,7 +21,7 @@ MainMenu::MainMenu(sf::VideoMode const videoMode)
 		std::cout << "Failed to load background sprite." << std::endl;
 	}
 	selectedScreen = Screens::MainMenu;
-	modal = nullptr;
+	modal = new IpAddressInputModal(videoMode);
 }
 
 MainMenu::~MainMenu()
@@ -79,6 +79,8 @@ void MainMenu::moveSelectorUp()
 
 void MainMenu::processKeyboardInput()
 {
+	if (modal != nullptr) return;
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
 		switch (currentSelection)
@@ -101,6 +103,8 @@ void MainMenu::processKeyboardInput()
 
 void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 {
+	if (modal != nullptr) return;
+
 	if (sideScrollerText->isPositionInMyArea(mouseWindowPosition))
 	{
 		currentSelection = MainMenuSelection::SideScroller;
@@ -125,6 +129,7 @@ void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 
 void MainMenu::processMouseClick()
 {
+	if (modal != nullptr) return;
 	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
 
 	sf::Vector2i mousePosition = sf::Mouse::getPosition();
@@ -165,6 +170,12 @@ Screens MainMenu::getSelectedScreen()
 
 void MainMenu::handleEvents(sf::RenderWindow& window)
 {
+	if (modal != nullptr)
+	{
+		modal->handleEvents(window);
+		return;
+	}
+
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
@@ -175,6 +186,11 @@ void MainMenu::handleEvents(sf::RenderWindow& window)
 			handleKeyPressEvent(event);
 		}
 	}
+}
+
+void MainMenu::updateState()
+{
+	if (modal != nullptr) modal->updateState();
 }
 
 void MainMenu::updateSelectorPosition()

@@ -11,6 +11,7 @@ public:
 
 	void updatePosition();
 	void drawTo(sf::RenderWindow& window);
+
 private:
 	sf::RectangleShape topLeftBorder;
 	sf::RectangleShape bottomLeftBorder;

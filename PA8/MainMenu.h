@@ -42,6 +42,9 @@ private:
 	IpAddressInputModal* modal;
 	TcpServer* server;
 	TcpClient* client;
+	void handleConnectToNetwork();
+	bool isAttemptingToConnect;
+	void attemptConnection();
 };
 
 #endif // !MAIN_MENU_H

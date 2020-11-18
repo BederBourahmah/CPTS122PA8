@@ -11,15 +11,23 @@ TcpServer::TcpServer(unsigned short port)
 	}
 
 	listener->setBlocking(false);
-
-	listenerStatus = listener->accept(client);
-
-	if (listenerStatus != sf::Socket::Done)
-	{
-		std::cout << "Failed to accept TCP client on port " << port << std::endl;
-	}
+	listenerStatus = sf::Socket::NotReady;
+	didConnect = false;
 }
 
 TcpServer::~TcpServer()
 {
+}
+
+void TcpServer::attemptToConnect()
+{
+	listenerStatus = sf::Socket::NotReady;
+	listenerStatus = listener->accept(client);
+
+	didConnect = listenerStatus == sf::Socket::Done;
+}
+
+bool TcpServer::getDidConnect()
+{
+	return didConnect;
 }

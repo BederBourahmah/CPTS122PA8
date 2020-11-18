@@ -24,6 +24,7 @@ MainMenu::MainMenu(sf::VideoMode const videoMode)
 	modal = new IpAddressInputModal(videoMode);
 	server = nullptr;
 	client = nullptr;
+	isAttemptingToConnect = false;
 }
 
 MainMenu::~MainMenu()
@@ -196,26 +197,18 @@ void MainMenu::handleEvents(sf::RenderWindow& window)
 
 void MainMenu::updateState()
 {
+	if (isAttemptingToConnect)
+	{
+		attemptConnection();
+		return;
+	}
+
 	if (modal != nullptr)
 	{
 		modal->updateState();
 		if (modal->getIsReady())
 		{
-			std::string addr = modal->getAddress();
-			unsigned int port = modal->getPort();
-			bool isServer = modal->getIsServer();
-			std::cout << addr << " : " << port << std::endl;
-			if (isServer)
-			{
-				server = new TcpServer(port);
-			}
-			else {
-				client = new TcpClient(addr, port);
-			}
-			//TODO attempt to connect to network client
-			delete modal;
-			modal = nullptr;
-
+			handleConnectToNetwork();
 		}
 	}
 }
@@ -277,4 +270,33 @@ void MainMenu::handleKeyPressEvent(sf::Event event)
 		moveSelectorUp();
 		return;
 	}
+}
+
+void MainMenu::handleConnectToNetwork()
+{
+	std::string addr = modal->getAddress();
+	unsigned int port = modal->getPort();
+	bool isServer = modal->getIsServer();
+	if (isServer)
+	{
+		server = new TcpServer(port);
+	}
+	else {
+		client = new TcpClient(addr, port);
+	}
+	
+	isAttemptingToConnect = true;
+	delete modal;
+	modal = nullptr;
+}
+
+void MainMenu::attemptConnection()
+{
+	std::cout << "attemptConnection";
+	if (server != nullptr)
+	{
+		server->attemptToConnect();
+		if (server->getDidConnect()) isAttemptingToConnect = false;
+	}
+	return;
 }

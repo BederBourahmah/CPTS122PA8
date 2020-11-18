@@ -22,7 +22,7 @@ MainMenu::MainMenu(sf::VideoMode const vm)
 		std::cout << "Failed to load background sprite." << std::endl;
 	}
 	selectedScreen = Screens::MainMenu;
-	modal = new IpAddressInputModal(videoMode);
+	networkConnectionModal = new IpAddressInputModal(videoMode);
 	server = nullptr;
 	client = nullptr;
 	isAttemptingToConnect = false;
@@ -54,9 +54,9 @@ void MainMenu::drawTo(sf::RenderWindow &window)
 	swarmDefenderText->drawTo(window);
 	exitText->drawTo(window);
 	selector->drawTo(window);
-	if (modal != nullptr)
+	if (networkConnectionModal != nullptr)
 	{
-		modal->drawTo(window);
+		networkConnectionModal->drawTo(window);
 	}
 	if (loadingModal != nullptr)
 	{
@@ -94,7 +94,7 @@ void MainMenu::moveSelectorUp()
 
 void MainMenu::processKeyboardInput()
 {
-	if (modal != nullptr) return;
+	if (isMenuDisabled()) return;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
@@ -118,7 +118,7 @@ void MainMenu::processKeyboardInput()
 
 void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 {
-	if (modal != nullptr) return;
+	if (isMenuDisabled()) return;
 
 	if (sideScrollerText->isPositionInMyArea(mouseWindowPosition))
 	{
@@ -144,7 +144,7 @@ void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 
 void MainMenu::processMouseClick()
 {
-	if (modal != nullptr) return;
+	if (isMenuDisabled()) return;
 	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
 
 	sf::Vector2i mousePosition = sf::Mouse::getPosition();
@@ -185,9 +185,9 @@ Screens MainMenu::getSelectedScreen()
 
 void MainMenu::handleEvents(sf::RenderWindow& window)
 {
-	if (modal != nullptr)
+	if (networkConnectionModal != nullptr)
 	{
-		modal->handleEvents(window);
+		networkConnectionModal->handleEvents(window);
 		return;
 	}
 
@@ -212,10 +212,10 @@ void MainMenu::updateState()
 		return;
 	}
 
-	if (modal != nullptr)
+	if (networkConnectionModal != nullptr)
 	{
-		modal->updateState();
-		if (modal->getIsReady())
+		networkConnectionModal->updateState();
+		if (networkConnectionModal->getIsReady())
 		{
 			handleConnectToNetwork();
 		}
@@ -283,9 +283,9 @@ void MainMenu::handleKeyPressEvent(sf::Event event)
 
 void MainMenu::handleConnectToNetwork()
 {
-	std::string addr = modal->getAddress();
-	unsigned int port = modal->getPort();
-	bool isServer = modal->getIsServer();
+	std::string addr = networkConnectionModal->getAddress();
+	unsigned int port = networkConnectionModal->getPort();
+	bool isServer = networkConnectionModal->getIsServer();
 	if (isServer)
 	{
 		server = new TcpServer(port);
@@ -296,8 +296,8 @@ void MainMenu::handleConnectToNetwork()
 	loadingModal = new LoadingModal(videoMode);
 	
 	isAttemptingToConnect = true;
-	delete modal;
-	modal = nullptr;
+	delete networkConnectionModal;
+	networkConnectionModal = nullptr;
 }
 
 void MainMenu::attemptConnection()
@@ -313,4 +313,9 @@ void MainMenu::attemptConnection()
 		}
 	}
 	return;
+}
+
+bool MainMenu::isMenuDisabled()
+{
+	return loadingModal != nullptr || networkConnectionModal != nullptr;
 }

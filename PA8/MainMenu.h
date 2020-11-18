@@ -40,7 +40,7 @@ private:
 	bool loadMainMenuBackgroundTexture();
 	bool loadMainMenuBackgroundSprite(sf::VideoMode const videoMode);
 	void handleKeyPressEvent(sf::Event event);
-	IpAddressInputModal* modal;
+	IpAddressInputModal* networkConnectionModal;
 	TcpServer* server;
 	TcpClient* client;
 	void handleConnectToNetwork();
@@ -48,6 +48,7 @@ private:
 	void attemptConnection();
 	LoadingModal* loadingModal;
 	sf::VideoMode videoMode;
+	bool isMenuDisabled();
 };
 
 #endif // !MAIN_MENU_H

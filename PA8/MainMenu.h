@@ -11,6 +11,7 @@
 #include "TcpServer.h"
 #include "TcpClient.h"
 #include "LoadingModal.h"
+#include "SingleOrMultiplayerModal.h"
 
 class MainMenu : public Screen
 {
@@ -49,6 +50,7 @@ private:
 	LoadingModal* loadingModal;
 	sf::VideoMode videoMode;
 	bool isMenuDisabled();
+	SingleOrMultiplayerModal* singVsMultiModal;
 };
 
 #endif // !MAIN_MENU_H

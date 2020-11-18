@@ -22,11 +22,12 @@ MainMenu::MainMenu(sf::VideoMode const vm)
 		std::cout << "Failed to load background sprite." << std::endl;
 	}
 	selectedScreen = Screens::MainMenu;
-	networkConnectionModal = new IpAddressInputModal(videoMode);
+	networkConnectionModal = nullptr;
 	server = nullptr;
 	client = nullptr;
 	isAttemptingToConnect = false;
 	loadingModal = nullptr;
+	singVsMultiModal = nullptr;
 }
 
 MainMenu::~MainMenu()
@@ -45,6 +46,8 @@ MainMenu::~MainMenu()
 	client = nullptr;
 	delete loadingModal;
 	loadingModal = nullptr;
+	delete singVsMultiModal;
+	singVsMultiModal = nullptr;
 }
 
 void MainMenu::drawTo(sf::RenderWindow &window)
@@ -54,14 +57,11 @@ void MainMenu::drawTo(sf::RenderWindow &window)
 	swarmDefenderText->drawTo(window);
 	exitText->drawTo(window);
 	selector->drawTo(window);
-	if (networkConnectionModal != nullptr)
-	{
-		networkConnectionModal->drawTo(window);
-	}
-	if (loadingModal != nullptr)
-	{
-		loadingModal->drawTo(window);
-	}
+	if (networkConnectionModal != nullptr) networkConnectionModal->drawTo(window);
+		
+	if (loadingModal != nullptr) loadingModal->drawTo(window);
+
+	if (singVsMultiModal != nullptr) singVsMultiModal->drawTo(window);
 }
 
 void MainMenu::moveSelectorDown()
@@ -158,9 +158,7 @@ void MainMenu::processMouseClick()
 
 	if (swarmDefenderText->isPositionInMyArea(mousePosition))
 	{
-		currentSelection = MainMenuSelection::SwarmDefender;
-		updateSelectorPosition();
-		selectedScreen = Screens::SwarmDefense;
+		singVsMultiModal = new SingleOrMultiplayerModal(videoMode);
 		return;
 	}
 
@@ -191,6 +189,12 @@ void MainMenu::handleEvents(sf::RenderWindow& window)
 		return;
 	}
 
+	if (singVsMultiModal != nullptr)
+	{
+		singVsMultiModal->handleEvents(window);
+		return;
+	}
+
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
@@ -218,6 +222,29 @@ void MainMenu::updateState()
 		if (networkConnectionModal->getIsReady())
 		{
 			handleConnectToNetwork();
+		}
+	}
+
+	if (singVsMultiModal != nullptr)
+	{
+		if (singVsMultiModal->getIsReady())
+		{
+			if (singVsMultiModal->getIsSinglePlayer())
+			{
+				delete singVsMultiModal;
+				singVsMultiModal = nullptr;
+				currentSelection = MainMenuSelection::SwarmDefender;
+				updateSelectorPosition();
+				selectedScreen = Screens::SwarmDefense;
+				return;
+			}
+			else
+			{
+				networkConnectionModal = new IpAddressInputModal(videoMode);
+				delete singVsMultiModal;
+				singVsMultiModal = nullptr;
+				return;
+			}
 		}
 	}
 }
@@ -317,5 +344,5 @@ void MainMenu::attemptConnection()
 
 bool MainMenu::isMenuDisabled()
 {
-	return loadingModal != nullptr || networkConnectionModal != nullptr;
+	return loadingModal != nullptr || networkConnectionModal != nullptr || singVsMultiModal != nullptr;
 }

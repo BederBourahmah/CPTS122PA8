@@ -88,7 +88,10 @@
       <Filter>Source Files\Network</Filter>
     </ClCompile>
     <ClCompile Include="LoadingModal.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\UserInterface\Modals</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleOrMultiplayerModal.cpp">
+      <Filter>Source Files\UserInterface\Modals</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,7 +153,10 @@
       <Filter>Header Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="LoadingModal.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\UserInterface\Modals</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleOrMultiplayerModal.h">
+      <Filter>Header Files\UserInterface\Modals</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

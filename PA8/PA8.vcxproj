@@ -162,6 +162,7 @@
     <ClCompile Include="MoveableRectangle.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="SideScroller.cpp" />
+    <ClCompile Include="SingleOrMultiplayerModal.cpp" />
     <ClCompile Include="SwarmDefense.cpp" />
     <ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TcpServer.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="Screens.h" />
     <ClInclude Include="SideScroller.h" />
+    <ClInclude Include="SingleOrMultiplayerModal.h" />
     <ClInclude Include="SwarmDefense.h" />
     <ClInclude Include="TcpClient.h" />
     <ClInclude Include="TcpServer.h" />

@@ -6,8 +6,8 @@ const static float backgroundHeight = 2304;
 Modal::Modal(ModalSize s, sf::VideoMode vm)
 {
 	videoMode = vm;
-	totalHeight = (float)videoMode.height * 0.75f;
 	size = s;
+	totalHeight = getHeightByModalSize();
 	border = new ModalBorder(getWidthByModalSize(), totalHeight);
 	loadModalBackground();
 	totalWidth = getWidthByModalSize();
@@ -38,7 +38,7 @@ void Modal::updatePosition()
 bool Modal::loadModalBackground()
 {
 	float modalWidth = getWidthByModalSize() - 17;
-	float modalHeight = (float)videoMode.height * 0.75f - 17;
+	float modalHeight = getHeightByModalSize() - 17;
 	background.setTexture(&modalBackground);
 	background.setSize(sf::Vector2f(modalWidth, modalHeight));
 	background.setOrigin(modalWidth/2, modalHeight/2);
@@ -58,6 +58,20 @@ float Modal::getWidthByModalSize()
 	case ModalSize::ExtraLarge:
 	default:
 		return (float)videoMode.width * 0.75f;
+	}
+}
+
+float Modal::getHeightByModalSize()
+{
+	switch (size)
+	{
+	case ModalSize::Small:
+		return (float)videoMode.height * 0.5f;
+	case ModalSize::Medium:
+	case ModalSize::Large:
+	case ModalSize::ExtraLarge:
+	default:
+		return (float)videoMode.height * 0.75f;
 	}
 }
 

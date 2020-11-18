@@ -10,11 +10,12 @@
 #include "IpAddressInputModal.h"
 #include "TcpServer.h"
 #include "TcpClient.h"
+#include "LoadingModal.h"
 
 class MainMenu : public Screen
 {
 public:
-	MainMenu(sf::VideoMode const);
+	MainMenu(sf::VideoMode const vm);
 	~MainMenu();
 	void drawTo(sf::RenderWindow &window);
 	void moveSelectorDown();
@@ -45,6 +46,8 @@ private:
 	void handleConnectToNetwork();
 	bool isAttemptingToConnect;
 	void attemptConnection();
+	LoadingModal* loadingModal;
+	sf::VideoMode videoMode;
 };
 
 #endif // !MAIN_MENU_H

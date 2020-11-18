@@ -2,8 +2,9 @@
 #include "VideoHelpers.h"
 #include <iostream>
 
-MainMenu::MainMenu(sf::VideoMode const videoMode)
+MainMenu::MainMenu(sf::VideoMode const vm)
 {
+	videoMode = vm;
 	sideScrollerText = new TextComponent("Leander.ttf", "Side Scroller Game");
 	swarmDefenderText = new TextComponent("Leander.ttf", "Swarm Defender Game");
 	exitText = new TextComponent("Leander.ttf", "Exit Game");
@@ -25,6 +26,7 @@ MainMenu::MainMenu(sf::VideoMode const videoMode)
 	server = nullptr;
 	client = nullptr;
 	isAttemptingToConnect = false;
+	loadingModal = nullptr;
 }
 
 MainMenu::~MainMenu()
@@ -41,6 +43,8 @@ MainMenu::~MainMenu()
 	server = nullptr;
 	delete client;
 	client = nullptr;
+	delete loadingModal;
+	loadingModal = nullptr;
 }
 
 void MainMenu::drawTo(sf::RenderWindow &window)
@@ -53,6 +57,10 @@ void MainMenu::drawTo(sf::RenderWindow &window)
 	if (modal != nullptr)
 	{
 		modal->drawTo(window);
+	}
+	if (loadingModal != nullptr)
+	{
+		loadingModal->drawTo(window);
 	}
 }
 
@@ -199,6 +207,7 @@ void MainMenu::updateState()
 {
 	if (isAttemptingToConnect)
 	{
+		loadingModal->updateState();
 		attemptConnection();
 		return;
 	}
@@ -284,6 +293,7 @@ void MainMenu::handleConnectToNetwork()
 	else {
 		client = new TcpClient(addr, port);
 	}
+	loadingModal = new LoadingModal(videoMode);
 	
 	isAttemptingToConnect = true;
 	delete modal;
@@ -292,11 +302,15 @@ void MainMenu::handleConnectToNetwork()
 
 void MainMenu::attemptConnection()
 {
-	std::cout << "attemptConnection";
 	if (server != nullptr)
 	{
 		server->attemptToConnect();
-		if (server->getDidConnect()) isAttemptingToConnect = false;
+		if (server->getDidConnect())
+		{
+			isAttemptingToConnect = false;
+			delete loadingModal;
+			loadingModal = nullptr;
+		}
 	}
 	return;
 }

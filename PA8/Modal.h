@@ -20,8 +20,10 @@ private:
 	sf::RectangleShape background;
 	sf::VideoMode videoMode;
 	float getWidthByModalSize();
+	float getHeightByModalSize();
 	float getInnerLeftFromCenter();
 	float getInnerTopFromCenter();
+
 	ModalSize size;
 	ModalBorder* border;
 };

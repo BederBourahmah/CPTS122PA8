@@ -12,7 +12,6 @@
 #include "TcpClient.h"
 #include "LoadingModal.h"
 #include "SingleOrMultiplayerModal.h"
-//void(ScreenManager::*)(std::string addr, unsigned int port, bool isServer)
 
 class ScreenManager;
 

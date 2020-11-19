@@ -9,11 +9,19 @@
 #include <random>
 #include <queue>
 
+class ScreenManager;
+
 class SwarmDefense : public Screen
 {
 public:
 
-	SwarmDefense(sf::VideoMode vm, bool mp);
+	SwarmDefense(
+		sf::VideoMode vm,
+		bool mp,
+		ScreenManager* manager,
+		void(ScreenManager::* sendEnemiesCallback)(sf::Uint16 numberOfEnemies),
+		sf::Uint16(ScreenManager::* getEnemiesCallback)()
+		);
 	~SwarmDefense();
 
 	void drawTo(sf::RenderWindow& window);
@@ -40,6 +48,9 @@ private:
 	void checkForCollisions();
 	bool isGameOver;
 	bool isMultiplayer;
+	ScreenManager* parentManager;
+	void(ScreenManager::* onSendEnemies)(sf::Uint16 numberOfEnemies);
+	sf::Uint16(ScreenManager::* onGetEnemies)();
 };
 
 #endif // !SWARM_DEFENSE_H

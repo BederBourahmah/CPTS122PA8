@@ -4,7 +4,13 @@ const static float enemyVelocity = 0.1f;
 static const std::string scorePrefix = "Score: ";
 static const std::string healthPrefix = "Health: ";
 
-SwarmDefense::SwarmDefense(sf::VideoMode vm, bool mp)
+SwarmDefense::SwarmDefense(
+	sf::VideoMode vm,
+	bool mp,
+	ScreenManager* manager,
+	void(ScreenManager::* sendEnemiesCallback)(sf::Uint16 numberOfEnemies),
+	sf::Uint16(ScreenManager::* getEnemiesCallback)()
+	)
 {
 	videoMode = vm;
 	playerBase = new MoveableRectangle(sf::Vector2f(vm.height*0.1f, vm.height * 0.1f), sf::Color::Green);
@@ -22,6 +28,9 @@ SwarmDefense::SwarmDefense(sf::VideoMode vm, bool mp)
 	health = 100;
 	isGameOver = false;
 	isMultiplayer = mp;
+	parentManager = manager;
+	onSendEnemies = sendEnemiesCallback;
+	onGetEnemies = getEnemiesCallback;
 }
 
 SwarmDefense::~SwarmDefense()
@@ -153,7 +162,7 @@ void SwarmDefense::generateEnemy()
 
 void SwarmDefense::destroyEnemies()
 {
-	unsigned short enemiesDestroyed = 0;
+	sf::Uint16 enemiesDestroyed = 0;
 	while (!enemiesToDestroy.empty())
 	{
 		if (enemies.empty())
@@ -178,10 +187,16 @@ void SwarmDefense::destroyEnemies()
 
 	if (isMultiplayer)
 	{
-		return;
+		((*parentManager).*onSendEnemies)(enemiesDestroyed*2);
+		enemiesDestroyed = ((*parentManager).*onGetEnemies)();
+	}
+	else
+	{
+		enemiesDestroyed *= 2;
 	}
 
-	for (int i = 0; i < enemiesDestroyed*2; i++)
+
+	for (int i = 0; i < enemiesDestroyed; i++)
 	{
 		generateEnemy();
 	}

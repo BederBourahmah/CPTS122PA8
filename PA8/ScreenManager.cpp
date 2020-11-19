@@ -123,6 +123,13 @@ sf::Uint16 ScreenManager::getEnemiesFromOpponent()
 	return 0;
 }
 
+void ScreenManager::sendEnemiesToOpponent(sf::Uint16 enemiesToSend)
+{
+	if (server != nullptr) server->sendEnemiesToOpponent(enemiesToSend);
+
+	if (client != nullptr) client->sendEnemiesToOpponent(enemiesToSend);
+}
+
 void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 {
 	switch (selectedScreen)
@@ -131,7 +138,7 @@ void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 		mainMenu = new MainMenu(videoMode, this, &ScreenManager::handleConnectToNetwork);
 		break;
 	case Screens::SwarmDefense:
-		swarmDefense = new SwarmDefense(videoMode, isMultiplayer());
+		swarmDefense = new SwarmDefense(videoMode, isMultiplayer(), this, &ScreenManager::sendEnemiesToOpponent, &ScreenManager::getEnemiesFromOpponent);
 		break;
 	case Screens::SideScroller:
 		sideScroller = new SideScroller(videoMode);

@@ -22,6 +22,7 @@ public:
 	void handleConnectToNetwork(std::string addr, unsigned int port, bool isServer);
 	void drawTo(sf::RenderWindow& window);
 	sf::Uint16 getEnemiesFromOpponent();
+	void sendEnemiesToOpponent(sf::Uint16 enemiesToSend);
 
 private:
 	MainMenu* mainMenu;

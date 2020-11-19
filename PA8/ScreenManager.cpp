@@ -3,15 +3,25 @@
 ScreenManager::ScreenManager(sf::VideoMode vm)
 {
 	videoMode = vm;
-	mainMenu = new MainMenu(videoMode);
+	mainMenu = new MainMenu(videoMode, this, &ScreenManager::handleConnectToNetwork);
 	currentScreen = Screens::MainMenu;
 	sideScroller = nullptr;
 	swarmDefense = nullptr;
+	server = nullptr;
+	client = nullptr;
+	loadingModal = nullptr;
+	isAttemptingToConnect = false;
 }
 
 ScreenManager::~ScreenManager()
 {
 	deleteAllScreens();
+	delete server;
+	server = nullptr;
+	delete client;
+	client = nullptr;
+	delete loadingModal;
+	loadingModal = nullptr;
 }
 
 Screen* ScreenManager::getCurrentScreen()
@@ -33,6 +43,13 @@ void ScreenManager::updateState()
 {
 	Screen* currentScreenPtr = getCurrentScreen();
 	if (currentScreenPtr == nullptr) return;
+
+	if (isAttemptingToConnect && loadingModal != nullptr)
+	{
+		loadingModal->updateState();
+		attemptConnection();
+		return;
+	}
 
 	currentScreenPtr->processKeyboardInput();
 	currentScreenPtr->processMousePosition(sf::Mouse::getPosition());
@@ -76,12 +93,33 @@ bool ScreenManager::shouldExitGame()
 	return false;
 }
 
+void ScreenManager::handleConnectToNetwork(std::string addr, unsigned int port, bool isServer)
+{
+	if (isServer)
+	{
+		server = new TcpServer(port);
+		isAttemptingToConnect = true;
+	}
+	else {
+		client = new TcpClient(addr, port);
+	}
+	loadingModal = new LoadingModal(videoMode);
+
+}
+
+void ScreenManager::drawTo(sf::RenderWindow& window)
+{
+	getCurrentScreen()->drawTo(window);
+
+	if (loadingModal != nullptr) loadingModal->drawTo(window);
+}
+
 void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 {
 	switch (selectedScreen)
 	{
 	case Screens::MainMenu:
-		mainMenu = new MainMenu(videoMode);
+		mainMenu = new MainMenu(videoMode, this, &ScreenManager::handleConnectToNetwork);
 		break;
 	case Screens::SwarmDefense:
 		swarmDefense = new SwarmDefense(videoMode);
@@ -119,4 +157,17 @@ void ScreenManager::switchToSelectedScreen(Screens selectedScreen)
 	deleteAllScreens();
 	initializeSelectedScreen(selectedScreen);
 	currentScreen = selectedScreen;
+}
+
+void ScreenManager::attemptConnection()
+{
+	if (server == nullptr) return;
+
+	server->attemptToConnect();
+	if (server->getDidConnect())
+	{
+		isAttemptingToConnect = false;
+		delete loadingModal;
+		loadingModal = nullptr;
+	}
 }

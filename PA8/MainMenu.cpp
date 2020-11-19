@@ -2,7 +2,7 @@
 #include "VideoHelpers.h"
 #include <iostream>
 
-MainMenu::MainMenu(sf::VideoMode const vm)
+MainMenu::MainMenu(sf::VideoMode const vm, ScreenManager *manager, void(ScreenManager::* connectToNetworkCallback)(std::string addr, unsigned int port, bool isServer))
 {
 	videoMode = vm;
 	sideScrollerText = new TextComponent("Leander.ttf", "Side Scroller Game");
@@ -25,9 +25,10 @@ MainMenu::MainMenu(sf::VideoMode const vm)
 	networkConnectionModal = nullptr;
 	server = nullptr;
 	client = nullptr;
-	isAttemptingToConnect = false;
 	loadingModal = nullptr;
 	singVsMultiModal = nullptr;
+	onConnectToNetwork = connectToNetworkCallback;
+	parentManager = manager;
 }
 
 MainMenu::~MainMenu()
@@ -209,13 +210,6 @@ void MainMenu::handleEvents(sf::RenderWindow& window)
 
 void MainMenu::updateState()
 {
-	if (isAttemptingToConnect)
-	{
-		loadingModal->updateState();
-		attemptConnection();
-		return;
-	}
-
 	if (networkConnectionModal != nullptr)
 	{
 		networkConnectionModal->updateState();
@@ -313,36 +307,13 @@ void MainMenu::handleConnectToNetwork()
 	std::string addr = networkConnectionModal->getAddress();
 	unsigned int port = networkConnectionModal->getPort();
 	bool isServer = networkConnectionModal->getIsServer();
-	if (isServer)
-	{
-		server = new TcpServer(port);
-	}
-	else {
-		client = new TcpClient(addr, port);
-	}
-	loadingModal = new LoadingModal(videoMode);
+	((*parentManager).*onConnectToNetwork)(addr, port, isServer);
 	
-	isAttemptingToConnect = true;
 	delete networkConnectionModal;
 	networkConnectionModal = nullptr;
 }
 
-void MainMenu::attemptConnection()
-{
-	if (server != nullptr)
-	{
-		server->attemptToConnect();
-		if (server->getDidConnect())
-		{
-			isAttemptingToConnect = false;
-			delete loadingModal;
-			loadingModal = nullptr;
-		}
-	}
-	return;
-}
-
 bool MainMenu::isMenuDisabled()
 {
-	return loadingModal != nullptr || networkConnectionModal != nullptr || singVsMultiModal != nullptr;
+	return loadingModal != nullptr || networkConnectionModal != nullptr || singVsMultiModal != nullptr || isLoading;
 }

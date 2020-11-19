@@ -29,7 +29,7 @@ int main()
 
         screenManager.getCurrentScreen()->handleEvents(window);
         window.clear();
-        screenManager.getCurrentScreen()->drawTo(window);
+        screenManager.drawTo(window);
         window.display();
     }
 

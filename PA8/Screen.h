@@ -13,6 +13,13 @@ public:
 	virtual bool shouldExitGame() = 0;
 	virtual void handleEvents(sf::RenderWindow& window) = 0;
 	virtual void updateState() = 0;
+	virtual void setIsLoading(bool newStatus)
+	{
+		isLoading = newStatus;
+	}
+
+protected:
+	bool isLoading = false;
 };
 
 #endif // !SCREEN_H

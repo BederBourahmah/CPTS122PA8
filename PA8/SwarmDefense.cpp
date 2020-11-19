@@ -7,7 +7,7 @@ static const std::string healthPrefix = "Health: ";
 SwarmDefense::SwarmDefense(sf::VideoMode vm)
 {
 	videoMode = vm;
-	playerBase = new MoveableRectangle(sf::Vector2f(vm.height*0.1, vm.height * 0.1), sf::Color::Green);
+	playerBase = new MoveableRectangle(sf::Vector2f(vm.height*0.1f, vm.height * 0.1f), sf::Color::Green);
 	playerBase->centerHorizontal(videoMode);
 	playerBase->centerVertical(videoMode);
 	shouldGoBackToMainMenu = false;
@@ -102,7 +102,7 @@ void SwarmDefense::updateState()
 
 	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
-		(*i)->shiftTowards(videoMode.width / 2, videoMode.height / 2, enemyVelocity);
+		(*i)->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, enemyVelocity);
 	}
 
 	checkForCollisions();

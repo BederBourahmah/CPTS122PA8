@@ -37,6 +37,7 @@ private:
 	LoadingModal* loadingModal;
 	bool isAttemptingToConnect;
 	void attemptConnection();
+	bool isMultiplayer();
 };
 
 #endif // !SCREEN_MANAGER_H

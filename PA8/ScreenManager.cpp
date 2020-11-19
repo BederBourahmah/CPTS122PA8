@@ -122,7 +122,7 @@ void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 		mainMenu = new MainMenu(videoMode, this, &ScreenManager::handleConnectToNetwork);
 		break;
 	case Screens::SwarmDefense:
-		swarmDefense = new SwarmDefense(videoMode);
+		swarmDefense = new SwarmDefense(videoMode, isMultiplayer());
 		break;
 	case Screens::SideScroller:
 		sideScroller = new SideScroller(videoMode);
@@ -169,5 +169,11 @@ void ScreenManager::attemptConnection()
 		isAttemptingToConnect = false;
 		delete loadingModal;
 		loadingModal = nullptr;
+		switchToSelectedScreen(Screens::SwarmDefense);
 	}
+}
+
+bool ScreenManager::isMultiplayer()
+{
+	return server != nullptr || client != nullptr;
 }

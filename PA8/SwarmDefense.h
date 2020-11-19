@@ -13,7 +13,7 @@ class SwarmDefense : public Screen
 {
 public:
 
-	SwarmDefense(sf::VideoMode vm);
+	SwarmDefense(sf::VideoMode vm, bool mp);
 	~SwarmDefense();
 
 	void drawTo(sf::RenderWindow& window);
@@ -39,6 +39,7 @@ private:
 	void destroyEnemies();
 	void checkForCollisions();
 	bool isGameOver;
+	bool isMultiplayer;
 };
 
 #endif // !SWARM_DEFENSE_H

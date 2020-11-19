@@ -4,7 +4,7 @@ const static float enemyVelocity = 0.1f;
 static const std::string scorePrefix = "Score: ";
 static const std::string healthPrefix = "Health: ";
 
-SwarmDefense::SwarmDefense(sf::VideoMode vm)
+SwarmDefense::SwarmDefense(sf::VideoMode vm, bool mp)
 {
 	videoMode = vm;
 	playerBase = new MoveableRectangle(sf::Vector2f(vm.height*0.1f, vm.height * 0.1f), sf::Color::Green);
@@ -21,6 +21,7 @@ SwarmDefense::SwarmDefense(sf::VideoMode vm)
 	displayedHealth->setColor(sf::Color::Green);
 	health = 100;
 	isGameOver = false;
+	isMultiplayer = mp;
 }
 
 SwarmDefense::~SwarmDefense()
@@ -152,6 +153,7 @@ void SwarmDefense::generateEnemy()
 
 void SwarmDefense::destroyEnemies()
 {
+	unsigned short enemiesDestroyed = 0;
 	while (!enemiesToDestroy.empty())
 	{
 		if (enemies.empty())
@@ -171,7 +173,16 @@ void SwarmDefense::destroyEnemies()
 
 		enemies.erase(itemToDelete);
 		enemiesToDestroy.pop();
-		generateEnemy();
+		enemiesDestroyed++;
+	}
+
+	if (isMultiplayer)
+	{
+		return;
+	}
+
+	for (int i = 0; i < enemiesDestroyed*2; i++)
+	{
 		generateEnemy();
 	}
 }

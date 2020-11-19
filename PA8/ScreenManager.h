@@ -21,6 +21,7 @@ public:
 	bool shouldExitGame();
 	void handleConnectToNetwork(std::string addr, unsigned int port, bool isServer);
 	void drawTo(sf::RenderWindow& window);
+	sf::Uint16 getEnemiesFromOpponent();
 
 private:
 	MainMenu* mainMenu;

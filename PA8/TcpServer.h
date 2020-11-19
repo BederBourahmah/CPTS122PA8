@@ -11,6 +11,8 @@ public:
 
 	void attemptToConnect();
 	bool getDidConnect();
+	void sendEnemiesToOpponent(sf::Uint16 numberOfEnemiesToSend);
+	sf::Uint16 getEnemiesFromOpponent();
 
 private:
 	sf::TcpListener* listener;

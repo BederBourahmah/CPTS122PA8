@@ -114,6 +114,15 @@ void ScreenManager::drawTo(sf::RenderWindow& window)
 	if (loadingModal != nullptr) loadingModal->drawTo(window);
 }
 
+sf::Uint16 ScreenManager::getEnemiesFromOpponent()
+{
+	if (server != nullptr) return server->getEnemiesFromOpponent();
+
+	if (client != nullptr) return client->getEnemiesFromOpponent();
+
+	return 0;
+}
+
 void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 {
 	switch (selectedScreen)

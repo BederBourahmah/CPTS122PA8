@@ -12,6 +12,8 @@ public:
 
 	void checkConnection();
 	bool getDidConnect();
+	void sendEnemiesToOpponent(sf::Uint16 numberOfEnemiesToSend);
+	sf::Uint16 getEnemiesFromOpponent();
 
 private:
 	sf::TcpSocket* socket;

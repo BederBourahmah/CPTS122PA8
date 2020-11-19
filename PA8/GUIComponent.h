@@ -1,3 +1,5 @@
+//test
+
 #ifndef GUI_COMPONENT_H
 #define GUI_COMPONENT_H
 

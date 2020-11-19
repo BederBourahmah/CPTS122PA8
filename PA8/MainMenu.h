@@ -7,11 +7,16 @@
 #include "Screen.h"
 #include "Screens.h"
 #include "MainMenuSelection.h"
+#include "IpAddressInputModal.h"
+#include "TcpServer.h"
+#include "TcpClient.h"
+#include "LoadingModal.h"
+#include "SingleOrMultiplayerModal.h"
 
 class MainMenu : public Screen
 {
 public:
-	MainMenu(sf::VideoMode const);
+	MainMenu(sf::VideoMode const vm);
 	~MainMenu();
 	void drawTo(sf::RenderWindow &window);
 	void moveSelectorDown();
@@ -22,6 +27,7 @@ public:
 	bool shouldExitGame();
 	Screens getSelectedScreen();
 	void handleEvents(sf::RenderWindow& window);
+	void updateState();
 private:
 	TextComponent* sideScrollerText;
 	TextComponent* swarmDefenderText;
@@ -35,6 +41,16 @@ private:
 	bool loadMainMenuBackgroundTexture();
 	bool loadMainMenuBackgroundSprite(sf::VideoMode const videoMode);
 	void handleKeyPressEvent(sf::Event event);
+	IpAddressInputModal* networkConnectionModal;
+	TcpServer* server;
+	TcpClient* client;
+	void handleConnectToNetwork();
+	bool isAttemptingToConnect;
+	void attemptConnection();
+	LoadingModal* loadingModal;
+	sf::VideoMode videoMode;
+	bool isMenuDisabled();
+	SingleOrMultiplayerModal* singVsMultiModal;
 };
 
 #endif // !MAIN_MENU_H

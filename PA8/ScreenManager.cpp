@@ -37,6 +37,7 @@ void ScreenManager::updateState()
 	currentScreenPtr->processKeyboardInput();
 	currentScreenPtr->processMousePosition(sf::Mouse::getPosition());
 	currentScreenPtr->processMouseClick();
+	currentScreenPtr->updateState();
 
 	if (currentScreen == Screens::MainMenu)
 	{
@@ -46,7 +47,6 @@ void ScreenManager::updateState()
 	
 	if (currentScreen == Screens::SideScroller)
 	{
-		((SideScroller*)currentScreenPtr)->updateState();
 		if (currentScreenPtr->shouldExitGame())
 		{
 			switchToSelectedScreen(Screens::MainMenu);
@@ -61,8 +61,6 @@ void ScreenManager::updateState()
 			switchToSelectedScreen(Screens::MainMenu);
 			return;
 		}
-
-		((SwarmDefense*)currentScreenPtr)->updateState();
 	}
 }
 

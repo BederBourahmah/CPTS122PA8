@@ -11,6 +11,25 @@ public:
 
 protected:
 	sf::Texture baseTexture;
+	sf::Texture topDoubleBorder;
+	sf::Texture bottomDoubleBorder;
+	sf::Texture topLeftDoubleBorder;
+	sf::Texture bottomLeftDoubleBorder;
+	sf::Texture topRightDoubleBorder;
+	sf::Texture bottomRightDoubleBorder;
+	sf::Texture leftDoubleBorder;
+	sf::Texture rightDoubleBorder;
+	sf::Texture modalBackground;
+	sf::Texture topLeftSingleBorder;
+	sf::Texture bottomLeftSingleBorder;
+	sf::Texture topRightSingleBorder;
+	sf::Texture bottomRightSingleBorder;
+
+	static const unsigned short cornerDoubleBorderSquareLength = 24;
+	static const unsigned short longDoubleBorderThickness = 17;
+	static const unsigned short verticalDoubleBorderLength = 55;
+	static const unsigned short horizontalDoubleBorderLength = 73;
+	static const int cornerSingleBorderSquareLength = 19;
 };
 
 #endif // !GUI_COMPONENT_H

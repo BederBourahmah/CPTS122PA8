@@ -98,13 +98,13 @@ void ScreenManager::handleConnectToNetwork(std::string addr, unsigned int port, 
 	if (isServer)
 	{
 		server = new TcpServer(port);
-		isAttemptingToConnect = true;
 	}
 	else {
 		client = new TcpClient(addr, port);
 	}
-	loadingModal = new LoadingModal(videoMode);
 
+	isAttemptingToConnect = true;
+	loadingModal = new LoadingModal(videoMode);
 }
 
 void ScreenManager::drawTo(sf::RenderWindow& window)
@@ -161,16 +161,30 @@ void ScreenManager::switchToSelectedScreen(Screens selectedScreen)
 
 void ScreenManager::attemptConnection()
 {
-	if (server == nullptr) return;
+	if (server != nullptr)
+	{
+		server->attemptToConnect();
+		if (server->getDidConnect())
+		{
+			isAttemptingToConnect = false;
+			delete loadingModal;
+			loadingModal = nullptr;
+			switchToSelectedScreen(Screens::SwarmDefense);
+		}
+		return;
+	}
 
-	server->attemptToConnect();
-	if (server->getDidConnect())
+	if (client == nullptr) return;
+	
+	client->checkConnection();
+	if (client->getDidConnect())
 	{
 		isAttemptingToConnect = false;
 		delete loadingModal;
 		loadingModal = nullptr;
 		switchToSelectedScreen(Screens::SwarmDefense);
 	}
+	
 }
 
 bool ScreenManager::isMultiplayer()

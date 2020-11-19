@@ -14,7 +14,6 @@ public:
 
 private:
 	sf::TcpListener* listener;
-	sf::Socket::Status listenerStatus;
 	sf::TcpSocket client;
 	bool didConnect;
 };

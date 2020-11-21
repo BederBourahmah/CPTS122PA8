@@ -190,18 +190,18 @@ void SwarmDefense::destroyEnemies()
 	{
 		if (enemiesDestroyed > enemiesCollided)
 		{
-			((*parentManager).*onSendEnemies)((enemiesDestroyed - enemiesCollided) * 2);
+			((*parentManager).*onSendEnemies)(enemiesDestroyed - enemiesCollided);
 		}
 		
 		enemiesCollided += ((*parentManager).*onGetEnemies)();
 	}
 	else
 	{
-		enemiesCollided = enemiesDestroyed * 2;
+		enemiesCollided = enemiesDestroyed;
 	}
 
 
-	for (int i = 0; i < enemiesCollided; i++)
+	for (int i = 0; i < enemiesCollided * 2; i++)
 	{
 		generateEnemy();
 	}

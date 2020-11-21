@@ -90,10 +90,6 @@ void SwarmDefense::processMousePosition(sf::Vector2i mouseWindowPosition)
 {
 }
 
-void SwarmDefense::processMouseClick()
-{
-}
-
 bool SwarmDefense::shouldExitGame()
 {
 	return shouldGoBackToMainMenu;
@@ -191,7 +187,15 @@ void SwarmDefense::destroyEnemies()
 	{
 		if (enemies.empty())
 		{
-			enemiesToDestroy.pop();
+			try
+			{
+				enemiesToDestroy.pop();
+			}
+			catch (const std::exception& ex)
+			{
+				std::cout << "Error during pop when 'enemies' is empty: " << ex.what() << std::endl;
+			}
+			
 			continue;
 		}
 
@@ -204,8 +208,24 @@ void SwarmDefense::destroyEnemies()
 			++itemToDelete;
 		}
 
-		enemies.erase(itemToDelete);
-		enemiesToDestroy.pop();
+		try
+		{
+			enemies.erase(itemToDelete);
+		}
+		catch (const std::exception& ex)
+		{
+			std::cout << "Error during erase of an enemy: " << ex.what() << std::endl;
+		}
+
+		try
+		{
+			enemiesToDestroy.pop();
+		}
+		catch (const std::exception& ex)
+		{
+			std::cout << "Error during pop after erasing enemy: " << ex.what() << std::endl;
+		}
+		
 		enemiesDestroyed++;
 	}
 

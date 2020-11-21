@@ -9,6 +9,7 @@
 #include <random>
 #include <queue>
 #include <cmath>
+#include <iostream>
 
 class ScreenManager;
 
@@ -28,7 +29,6 @@ public:
 	void drawTo(sf::RenderWindow& window);
 	void processKeyboardInput();
 	void processMousePosition(sf::Vector2i mouseWindowPosition);
-	void processMouseClick();
 	bool shouldExitGame();
 	void handleEvents(sf::RenderWindow& window);
 	void updateState();

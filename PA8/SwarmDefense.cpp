@@ -1,6 +1,6 @@
 #include "SwarmDefense.h"
 
-const static float enemyVelocity = 0.1f;
+const static float enemyVelocity = 0.0001f;
 static const std::string scorePrefix = "Score: ";
 static const std::string healthPrefix = "Health: ";
 static const std::string coinsPrefix = "Coins: ";
@@ -42,6 +42,8 @@ SwarmDefense::SwarmDefense(
 	onSendEnemies = sendEnemiesCallback;
 	onGetEnemies = getEnemiesCallback;
 	enemiesCollided = 0;
+	unitOfDistance = hypotf((float)videoMode.height, (float)videoMode.width)*0.01f;
+	clock.restart();
 }
 
 SwarmDefense::~SwarmDefense()
@@ -128,12 +130,13 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 void SwarmDefense::updateState()
 {
 	if (isGameOver) return;
+	timeElapsed = clock.restart();
 	
 	destroyEnemies();
 
 	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
-		(*i)->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, enemyVelocity);
+		(*i)->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, distanceTravelled());
 	}
 
 	checkForCollisions();
@@ -245,6 +248,11 @@ void SwarmDefense::checkForCollisions()
 		}
 
 	}
+}
+
+float SwarmDefense::distanceTravelled()
+{
+	return (float)timeElapsed.asMicroseconds() * enemyVelocity;
 }
 
 void SwarmDefense::purchase(int price) {

@@ -113,13 +113,13 @@ public:
 		updatePosition();
 	}
 
-	void shiftTowards(float x, float y, float velocity)
+	void shiftTowards(float x, float y, float distanceToShift)
 	{
 		float diffX = centerPosX - x;
 		float diffY = centerPosY - y;
 		float angle = std::atanf(diffX / diffY);
 		float distance = std::hypotf(diffX, diffY);
-		distance -= velocity;
+		distance -= distanceToShift;
 		if (distance <= 0)
 		{
 			centerPosX = x;

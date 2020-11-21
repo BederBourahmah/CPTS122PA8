@@ -8,6 +8,7 @@
 #include <list>
 #include <random>
 #include <queue>
+#include <cmath>
 
 class ScreenManager;
 
@@ -55,6 +56,10 @@ private:
 	ScreenManager* parentManager;
 	void(ScreenManager::* onSendEnemies)(sf::Uint16 numberOfEnemies);
 	sf::Uint16(ScreenManager::* onGetEnemies)();
+	float unitOfDistance;
+	float distanceTravelled();
+	sf::Clock clock;
+	sf::Time timeElapsed;
 };
 
 #endif // !SWARM_DEFENSE_H

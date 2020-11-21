@@ -3,6 +3,8 @@
 const static float enemyVelocity = 0.1f;
 static const std::string scorePrefix = "Score: ";
 static const std::string healthPrefix = "Health: ";
+static const std::string coinsPrefix = "Coins: ";
+
 
 SwarmDefense::SwarmDefense(
 	sf::VideoMode vm,
@@ -19,12 +21,20 @@ SwarmDefense::SwarmDefense(
 	shouldGoBackToMainMenu = false;
 	currentEnemyId = INT16_MIN;
 	generateEnemy();
+	
+	//
 	displayedScore = new TextComponent("Leander.ttf", scorePrefix + std::to_string(score), 50);
 	displayedScore->snapToVertical(videoMode, 10, 1);
 	displayedScore->setColor(sf::Color::Green);
+	
 	displayedHealth = new TextComponent("Leander.ttf", healthPrefix + std::to_string(health), 50);
 	displayedHealth->snapToVertical(videoMode, 10, 2);
 	displayedHealth->setColor(sf::Color::Green);
+
+	displayedCoins = new TextComponent("Leander.ttf", coinsPrefix + std::to_string(coins), 50);
+	displayedCoins->snapToVertical(videoMode, 10, 3);
+	displayedCoins->setColor(sf::Color::Green);
+
 	health = 100;
 	isGameOver = false;
 	isMultiplayer = mp;
@@ -40,18 +50,26 @@ SwarmDefense::~SwarmDefense()
 	playerBase = nullptr;
 	delete displayedScore;
 	displayedScore = nullptr;
+	delete displayedCoins;
+	displayedCoins = nullptr;
 }
 
 void SwarmDefense::drawTo(sf::RenderWindow& window)
 {
 	std::string newScore = std::to_string(score);
 	std::string newHealth = std::to_string(health);
+	std::string newCoins = std::to_string(coins);
 
 	displayedScore->setText(scorePrefix + newScore);
 	displayedHealth->setText(healthPrefix + newHealth);
+	displayedCoins->setText(coinsPrefix + newCoins);
+
+
 	playerBase->drawTo(window);
 	displayedScore->drawTo(window);
 	displayedHealth->drawTo(window);
+	displayedCoins->drawTo(window);
+
 	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
 		(*i)->drawTo(window);
@@ -98,6 +116,8 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 					{
 						enemiesToDestroy.push((*i)->getId());
 						score++;
+						coins = coins + 10;
+
 					}
 				}
 			}
@@ -225,4 +245,9 @@ void SwarmDefense::checkForCollisions()
 		}
 
 	}
+}
+
+void SwarmDefense::purchase(int price) {
+	coins = coins - price;
+	//Add purchasing mechanism for shop later.
 }

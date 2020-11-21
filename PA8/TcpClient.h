@@ -3,6 +3,7 @@
 
 #include <SFML/Network.hpp>
 #include <iostream>
+#include <queue>
 
 class TcpClient
 {
@@ -10,17 +11,19 @@ public:
 	TcpClient(std::string addr, unsigned short prt);
 	~TcpClient();
 
-	void checkConnection();
-	bool getDidConnect();
-	void sendEnemiesToOpponent(sf::Uint16 numberOfEnemiesToSend);
+	bool getIsConnected();
+	void enqueueEnemies(sf::Uint16 numberOfEnemiesToSend);
+	void sendFrontOfQueue();
 	sf::Uint16 getEnemiesFromOpponent();
 
 private:
 	sf::TcpSocket* socket;
 	sf::Socket::Status socketStatus;
-	bool didConnect;
+	sf::Socket::Status senderStatus;
+	bool isConnected;
 	std::string address;
 	unsigned short port;
+	std::queue<sf::Packet> packetQueue;
 };
 
 #endif // !TCP_CLIENT_H

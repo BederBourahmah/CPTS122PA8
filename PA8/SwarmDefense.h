@@ -40,6 +40,7 @@ private:
 	std::list<MoveableRectangle*> enemies;
 	void generateEnemy();
 	std::queue<int> enemiesToDestroy;
+	int enemiesCollided;
 	TextComponent* displayedScore;
 	TextComponent* displayedHealth;
 	unsigned int score;

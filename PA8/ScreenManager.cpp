@@ -79,6 +79,10 @@ void ScreenManager::updateState()
 			return;
 		}
 	}
+
+	if (client != nullptr) client->sendFrontOfQueue();
+
+	if (server != nullptr) server->sendFrontOfQueue();
 }
 
 bool ScreenManager::shouldExitGame()
@@ -125,9 +129,9 @@ sf::Uint16 ScreenManager::getEnemiesFromOpponent()
 
 void ScreenManager::sendEnemiesToOpponent(sf::Uint16 enemiesToSend)
 {
-	if (server != nullptr) server->sendEnemiesToOpponent(enemiesToSend);
+	if (server != nullptr) server->enqueueEnemies(enemiesToSend);
 
-	if (client != nullptr) client->sendEnemiesToOpponent(enemiesToSend);
+	if (client != nullptr) client->enqueueEnemies(enemiesToSend);
 }
 
 void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
@@ -192,8 +196,8 @@ void ScreenManager::attemptConnection()
 
 	if (client == nullptr) return;
 	
-	client->checkConnection();
-	if (client->getDidConnect())
+	client->sendFrontOfQueue();
+	if (client->getIsConnected())
 	{
 		isAttemptingToConnect = false;
 		delete loadingModal;

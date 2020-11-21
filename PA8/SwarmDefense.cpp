@@ -31,6 +31,7 @@ SwarmDefense::SwarmDefense(
 	parentManager = manager;
 	onSendEnemies = sendEnemiesCallback;
 	onGetEnemies = getEnemiesCallback;
+	enemiesCollided = 0;
 }
 
 SwarmDefense::~SwarmDefense()
@@ -187,19 +188,25 @@ void SwarmDefense::destroyEnemies()
 
 	if (isMultiplayer)
 	{
-		((*parentManager).*onSendEnemies)(enemiesDestroyed*2);
-		enemiesDestroyed = ((*parentManager).*onGetEnemies)();
+		if (enemiesDestroyed > enemiesCollided)
+		{
+			((*parentManager).*onSendEnemies)((enemiesDestroyed - enemiesCollided) * 2);
+		}
+		
+		enemiesCollided += ((*parentManager).*onGetEnemies)();
 	}
 	else
 	{
-		enemiesDestroyed *= 2;
+		enemiesCollided = enemiesDestroyed * 2;
 	}
 
 
-	for (int i = 0; i < enemiesDestroyed; i++)
+	for (int i = 0; i < enemiesCollided; i++)
 	{
 		generateEnemy();
 	}
+	
+	enemiesCollided = 0;
 }
 
 void SwarmDefense::checkForCollisions()
@@ -210,6 +217,7 @@ void SwarmDefense::checkForCollisions()
 		{
 			enemiesToDestroy.push((*i)->getId());
 			health--;
+			enemiesCollided++;
 			if (health == 0)
 			{
 				isGameOver = true;

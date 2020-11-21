@@ -22,6 +22,8 @@ SingleOrMultiplayerModal::~SingleOrMultiplayerModal()
 	singlePlayerButton = nullptr;
 	delete multiPlayerButton;
 	multiPlayerButton = nullptr;
+	delete cancelButton;
+	cancelButton = nullptr;
 }
 
 void SingleOrMultiplayerModal::drawTo(sf::RenderWindow& window)

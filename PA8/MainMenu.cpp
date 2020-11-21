@@ -192,6 +192,13 @@ void MainMenu::updateState()
 		if (networkConnectionModal->getIsReady())
 		{
 			handleConnectToNetwork();
+			return;
+		}
+
+		if (networkConnectionModal->getIsCancelling())
+		{
+			delete networkConnectionModal;
+			networkConnectionModal = nullptr;
 		}
 	}
 

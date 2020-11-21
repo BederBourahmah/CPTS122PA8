@@ -19,6 +19,8 @@ public:
 	std::string getAddress();
 	unsigned short getPort();
 	bool getIsServer();
+	bool getIsCancelling();
+
 private:
 	TextComponent* title;
 	TextComponent* ipAddressTitle;
@@ -28,6 +30,7 @@ private:
 	TextComponent* okButton;
 	TextComponent* serverButton;
 	TextComponent* clientButton;
+	TextComponent* cancelButton;
 
 	//Text Input Component
 	std::string currentIpAddress;
@@ -42,6 +45,7 @@ private:
 	bool isIpInputSelected;
 	bool isReady;
 	bool isServer;
+	bool isCancelling;
 };
 
 #endif // !IP_ADDRESS_INPUT_MODAL_H

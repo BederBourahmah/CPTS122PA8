@@ -37,8 +37,12 @@ IpAddressInputModal::IpAddressInputModal(sf::VideoMode vm) : Modal(ModalSize::Me
 	boxHighlighter->snapToVertical(videoMode, 16, 8);
 
 	okButton = new TextComponent("Leander.ttf", "OK", 25);
-	okButton->centerHorizontal(videoMode);
+	okButton->snapToHorizontal(videoMode, 8, 4);
 	okButton->snapToVertical(videoMode, 16, 13);
+
+	cancelButton = new TextComponent("Leander.ttf", "Cancel", 25);
+	cancelButton->snapToHorizontal(videoMode, 8, 5);
+	cancelButton->snapToVertical(videoMode, 16, 13);
 
 	serverButton = new TextComponent("Leander.ttf", "Server", 18);
 	serverButton->snapToHorizontal(videoMode, 8, 4);
@@ -51,6 +55,7 @@ IpAddressInputModal::IpAddressInputModal(sf::VideoMode vm) : Modal(ModalSize::Me
 	isIpInputSelected = true;
 	isReady = false;
 	isServer = false;
+	isCancelling = false;
 }
 
 IpAddressInputModal::~IpAddressInputModal()
@@ -73,6 +78,8 @@ IpAddressInputModal::~IpAddressInputModal()
 	serverButton = nullptr;
 	delete clientButton;
 	clientButton = nullptr;
+	delete cancelButton;
+	cancelButton = nullptr;
 }
 
 void IpAddressInputModal::drawTo(sf::RenderWindow& window)
@@ -94,6 +101,7 @@ void IpAddressInputModal::drawTo(sf::RenderWindow& window)
 	okButton->drawTo(window);
 	serverButton->drawTo(window);
 	clientButton->drawTo(window);
+	cancelButton->drawTo(window);
 }
 
 void IpAddressInputModal::updateState()
@@ -141,6 +149,12 @@ void IpAddressInputModal::processMouseClick(sf::Vector2i mousePosition)
 	if (clientButton->isPositionInMyArea(mousePosition))
 	{
 		isServer = false;
+		return;
+	}
+
+	if (cancelButton->isPositionInMyArea(mousePosition))
+	{
+		isCancelling = true;
 		return;
 	}
 }
@@ -205,6 +219,11 @@ unsigned short IpAddressInputModal::getPort()
 bool IpAddressInputModal::getIsServer()
 {
 	return isServer;
+}
+
+bool IpAddressInputModal::getIsCancelling()
+{
+	return isCancelling;
 }
 
 void IpAddressInputModal::handleTextEnteredEvent(sf::Uint32 enteredChar)

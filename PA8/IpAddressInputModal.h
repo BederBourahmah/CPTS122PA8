@@ -13,7 +13,6 @@ public:
 	
 	void drawTo(sf::RenderWindow& window);
 	void updateState();
-	void processMouseClick(sf::Vector2i mousePosition);
 	void handleEvents(sf::RenderWindow& window);
 	bool getIsReady();
 	std::string getAddress();
@@ -31,8 +30,9 @@ private:
 	TextComponent* serverButton;
 	TextComponent* clientButton;
 	TextComponent* cancelButton;
+	
+	void processMouseClick(sf::Vector2i mousePosition);
 
-	//Text Input Component
 	std::string currentIpAddress;
 	std::string currentPort;
 	void handleTextEnteredEvent(sf::Uint32 enteredChar);

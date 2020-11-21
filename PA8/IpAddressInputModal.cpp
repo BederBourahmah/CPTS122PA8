@@ -112,8 +112,6 @@ void IpAddressInputModal::updateState()
 
 void IpAddressInputModal::processMouseClick(sf::Vector2i mousePosition)
 {
-	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
-
 	if (portInputBox->isPositionInMyArea(mousePosition))
 	{
 		boxHighlighter->snapToVertical(videoMode, 16, 12);
@@ -175,7 +173,7 @@ void IpAddressInputModal::handleEvents(sf::RenderWindow& window)
 			continue;
 		}
 
-		if (event.type == sf::Event::MouseButtonPressed)
+		if (event.type == sf::Event::MouseButtonReleased)
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{

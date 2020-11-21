@@ -23,6 +23,7 @@ public:
 	bool shouldExitGame();
 	void handleEvents(sf::RenderWindow& window);
 	void updateState();
+	void purchase(int Price);
 
 private:
 	int currentEnemyId;
@@ -34,7 +35,9 @@ private:
 	std::queue<int> enemiesToDestroy;
 	TextComponent* displayedScore;
 	TextComponent* displayedHealth;
+	TextComponent* displayedCoins;
 	unsigned int score;
+	unsigned int coins;
 	unsigned short int health;
 	void destroyEnemies();
 	void checkForCollisions();

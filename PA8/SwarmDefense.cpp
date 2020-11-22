@@ -15,7 +15,8 @@ SwarmDefense::SwarmDefense(
 	)
 {
 	videoMode = vm;
-	playerBase = new MoveableRectangle(sf::Vector2f(vm.height*0.1f, vm.height * 0.1f), sf::Color::Green);
+	sf::Texture txtr;
+	playerBase = new MoveableRectangle(sf::Vector2f(vm.height*0.1f, vm.height * 0.1f), "assets/castle.png");
 	playerBase->centerHorizontal(videoMode);
 	playerBase->centerVertical(videoMode);
 	shouldGoBackToMainMenu = false;

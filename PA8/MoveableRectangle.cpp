@@ -24,6 +24,23 @@ MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions, sf::Color color, s
 	id = newId;
 }
 
+MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions, std::string asset)
+{
+	shape = sf::RectangleShape(dimensions);
+	
+	if (!texture.loadFromFile(asset))
+	{
+		std::cout << "Failed to load asset " << asset << "." << std::endl;
+	}
+	shape.setTexture(&texture);
+	centerPosX = dimensions.x / 2;
+	centerPosY = dimensions.y / 2;
+	shape.setOrigin(centerPosX, centerPosY);
+	totalHeight = dimensions.y;
+	totalWidth = dimensions.x;
+	id = INT16_MIN;
+}
+
 void MoveableRectangle::drawTo(sf::RenderWindow& window)
 {
 	window.draw(shape);

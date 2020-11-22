@@ -2,6 +2,7 @@
 
 Enemy::Enemy(sf::VideoMode vm, int newId, sf::Texture* gTxtrs) : MoveableRectangle(sf::Vector2f(0.042f*vm.width, 0.026*vm.width))
 {
+	isMirrored = false;
 	moveToRandomEdgescreenPos(vm);
 	id = newId;
 	ghostTextures = gTxtrs;
@@ -24,7 +25,7 @@ int Enemy::getId()
 void Enemy::setTimeElapsed(sf::Int64 timeElapsed)
 {
 	microSecondsElapsed += timeElapsed;
-	if (isDying)
+	if (isDying || isAttacking)
 	{
 		refreshInterval = 200000;
 	}
@@ -52,6 +53,21 @@ bool Enemy::getIsDying()
 	return isDying;
 }
 
+bool Enemy::getDidAttack()
+{
+	return didAttack;
+}
+
+void Enemy::attack()
+{
+	isAttacking = true;
+}
+
+bool Enemy::getIsAttacking()
+{
+	return isAttacking;
+}
+
 void Enemy::animate()
 {
 	updateAnimationFrame();
@@ -64,10 +80,6 @@ void Enemy::updateAnimationFrame()
 	{
 		switch (currentAnimation)
 		{
-		case GhostAnimation::TailUp:
-		case GhostAnimation::TailDown:
-			currentAnimation = GhostAnimation::Death1;
-			return;
 		case GhostAnimation::Death1:
 			currentAnimation = GhostAnimation::Death2;
 			return;
@@ -82,7 +94,54 @@ void Enemy::updateAnimationFrame()
 			return;
 		case GhostAnimation::Death5:
 			isDead = true;
+			return;
+		case GhostAnimation::TailDown:
+		case GhostAnimation::TailUp:
+			updateDimensions(sf::Vector2f(totalWidth * 0.85f, totalHeight * 1.2f), sf::Vector2f(-0.15f*totalWidth, 0.2f * totalHeight));
+			if (isMirrored) mirror();
+			
+			currentAnimation = GhostAnimation::Death1;
+			return;
 		default:
+			currentAnimation = GhostAnimation::Death1;
+			return;
+		}
+	}
+
+	if (isAttacking)
+	{
+		switch (currentAnimation)
+		{
+		case GhostAnimation::Attack1:
+			currentAnimation = GhostAnimation::Attack2;
+			return;
+		case GhostAnimation::Attack2:
+			currentAnimation = GhostAnimation::Attack3;
+			return;
+		case GhostAnimation::Attack3:
+			currentAnimation = GhostAnimation::Attack4;
+			return;
+		case GhostAnimation::Attack4:
+			currentAnimation = GhostAnimation::Attack5;
+			return;
+		case GhostAnimation::Attack5:
+			currentAnimation = GhostAnimation::Attack6;
+			return;
+		case GhostAnimation::Attack6:
+			currentAnimation = GhostAnimation::Attack7;
+			return;
+		case GhostAnimation::Attack7:
+			didAttack = true;
+			updateDimensions(sf::Vector2f(totalWidth * 1.0526f, totalHeight * 0.6756f), sf::Vector2f(0.0f, -0.3244f*totalHeight));
+			currentAnimation = GhostAnimation::Death1;
+			if (isMirrored) mirror();
+
+			return;
+		default:
+			updateDimensions(sf::Vector2f(totalWidth * 0.95f, totalHeight * 1.48f), sf::Vector2f(0.0f, totalHeight * 0.48f));
+			currentAnimation = GhostAnimation::Attack1;
+			if (isMirrored) mirror();
+
 			return;
 		}
 	}
@@ -134,5 +193,9 @@ void Enemy::moveToRandomEdgescreenPos(sf::VideoMode vm)
 		shiftHorizontal(shift);
 	}
 
-	if (isLeftOfCenter((float)vm.width / 2.0f)) mirror();
+	if (isLeftOfCenter((float)vm.width / 2.0f))
+	{
+		mirror();
+		isMirrored = true;
+	}
 }

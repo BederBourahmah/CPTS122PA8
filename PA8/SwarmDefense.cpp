@@ -55,6 +55,41 @@ SwarmDefense::SwarmDefense(
 		std::cout << "Failed to load ghostDeath5 texture." << std::endl;
 	}
 
+	if (!ghostTextures[(int)GhostAnimation::Attack1].loadFromFile("assets/ghostAttack1.png"))
+	{
+		std::cout << "Failed to load ghostAttack1 texture." << std::endl;
+	}
+
+	if (!ghostTextures[(int)GhostAnimation::Attack2].loadFromFile("assets/ghostAttack2.png"))
+	{
+		std::cout << "Failed to load ghostAttack2 texture." << std::endl;
+	}
+
+	if (!ghostTextures[(int)GhostAnimation::Attack3].loadFromFile("assets/ghostAttack3.png"))
+	{
+		std::cout << "Failed to load ghostAttack3 texture." << std::endl;
+	}
+
+	if (!ghostTextures[(int)GhostAnimation::Attack4].loadFromFile("assets/ghostAttack4.png"))
+	{
+		std::cout << "Failed to load ghostAttack4 texture." << std::endl;
+	}
+
+	if (!ghostTextures[(int)GhostAnimation::Attack5].loadFromFile("assets/ghostAttack5.png"))
+	{
+		std::cout << "Failed to load ghostAttack5 texture." << std::endl;
+	}
+
+	if (!ghostTextures[(int)GhostAnimation::Attack6].loadFromFile("assets/ghostAttack6.png"))
+	{
+		std::cout << "Failed to load ghostAttack6 texture." << std::endl;
+	}
+
+	if (!ghostTextures[(int)GhostAnimation::Attack7].loadFromFile("assets/ghostAttack7.png"))
+	{
+		std::cout << "Failed to load ghostAttack7 texture." << std::endl;
+	}
+
 	playerBase = new MoveableRectangle(sf::Vector2f(vm.height*0.1f, vm.height * 0.1f), &castleTexture);
 	playerBase->centerHorizontal(videoMode);
 	playerBase->centerVertical(videoMode);
@@ -152,10 +187,12 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 					if ((*i)->isPositionInMyArea(event.mouseButton.x, event.mouseButton.y))
 					{
 						//enemiesToDestroy.push((*i)->getId());
+						if (!(*i)->getIsDying())
+						{
+							score++;
+							coins += 10;
+						}
 						(*i)->die();
-						score++;
-						coins = coins + 10;
-
 					}
 				}
 			}
@@ -172,14 +209,30 @@ void SwarmDefense::updateState()
 
 	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
+		if (!(*i)->getIsDying())
+		{
+			if (!(*i)->getIsAttacking())
+			{
+				(*i)->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, distanceTravelled());
+			}
+
+			if ((*i)->getDidAttack())
+			{
+				health--;
+				enemiesCollided++;
+				(*i)->die();
+				if (health == 0)
+				{
+					isGameOver = true;
+				}
+			}
+		}
+
 		if ((*i)->getIsDead())
 		{
 			enemiesToDestroy.push((*i)->getId());
 		}
-		else if (!(*i)->getIsDying())
-		{
-			(*i)->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, distanceTravelled());
-		}
+
 		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 
@@ -279,13 +332,7 @@ void SwarmDefense::checkForCollisions()
 	{
 		if ((*i)->didCollideWithOtherComponent(*playerBase))
 		{
-			enemiesToDestroy.push((*i)->getId());
-			health--;
-			enemiesCollided++;
-			if (health == 0)
-			{
-				isGameOver = true;
-			}
+			(*i)->attack();
 		}
 
 	}

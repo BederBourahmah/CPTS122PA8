@@ -17,6 +17,9 @@ public:
 	void die();
 	bool getIsDead();
 	bool getIsDying();
+	bool getDidAttack();
+	void attack();
+	bool getIsAttacking();
 
 private:
 	void moveToRandomEdgescreenPos(sf::VideoMode vm);
@@ -27,8 +30,11 @@ private:
 	void animate();
 	bool isDying;
 	bool isDead;
+	bool isAttacking;
+	bool didAttack;
 	void updateAnimationFrame();
 	sf::Int64 refreshInterval;
+	bool isMirrored;
 };
 
 #endif // !ENEMY_H

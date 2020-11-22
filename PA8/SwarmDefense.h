@@ -63,7 +63,7 @@ private:
 	sf::Clock clock;
 	sf::Time timeElapsed;
 	sf::Texture castleTexture;
-	sf::Texture ghostTextures[7];
+	sf::Texture ghostTextures[14];
 };
 
 #endif // !SWARM_DEFENSE_H

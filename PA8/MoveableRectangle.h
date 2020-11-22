@@ -19,6 +19,9 @@ public:
 	void mirror();
 	bool isLeftOfCenter(float center);
 
+protected:
+	void updateDimensions(sf::Vector2f dimensions, sf::Vector2f originOffset);
+
 private:
 	sf::RectangleShape shape;
 	void updatePosition();

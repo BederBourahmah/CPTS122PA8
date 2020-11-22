@@ -8,14 +8,16 @@
 class MoveableRectangle : public MoveableComponent
 {
 public:
+	MoveableRectangle(sf::Vector2f dimensions);
 	MoveableRectangle(sf::Vector2f dimensions, sf::Color color);
-	MoveableRectangle(sf::Vector2f dimensions, sf::Color color, short int newId);
-	MoveableRectangle(sf::Vector2f dimensions, std::string asset);
+	MoveableRectangle(sf::Vector2f dimensions, const sf::Texture* txtr);
 	void drawTo(sf::RenderWindow& window);
 
 	bool didCollideWithOtherComponent(MoveableRectangle otherComponent);
 
-	int getId();
+	void setTexture(const sf::Texture* newTexture);
+	void mirror();
+	bool isLeftOfCenter(float center);
 
 private:
 	sf::RectangleShape shape;
@@ -35,10 +37,6 @@ private:
 	{
 		return componentA.getBottomPosYToCenter() >= componentB.getTopPosYToCenter() && componentA.getTopPosYToCenter() <= componentB.getBottomPosYToCenter();
 	}
-
-	int id;
-
-	sf::Texture texture;
 };
 
 #endif // !MOVEABLE_RECTANGLE_H

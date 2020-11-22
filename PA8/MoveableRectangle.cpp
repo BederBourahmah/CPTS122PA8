@@ -1,5 +1,15 @@
 #include "MoveableRectangle.h"
 
+MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions)
+{
+	shape = sf::RectangleShape(dimensions);
+	centerPosX = dimensions.x / 2;
+	centerPosY = dimensions.y / 2;
+	shape.setOrigin(centerPosX, centerPosY);
+	totalHeight = dimensions.y;
+	totalWidth = dimensions.x;
+}
+
 MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions, sf::Color color)
 {
 	shape = sf::RectangleShape(dimensions);
@@ -9,36 +19,18 @@ MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions, sf::Color color)
 	shape.setOrigin(centerPosX, centerPosY);
 	totalHeight = dimensions.y;
 	totalWidth = dimensions.x;
-	id = INT16_MIN;
 }
 
-MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions, sf::Color color, short int newId)
-{
-	shape = sf::RectangleShape(dimensions);
-	shape.setFillColor(color);
-	centerPosX = dimensions.x / 2;
-	centerPosY = dimensions.y / 2;
-	shape.setOrigin(centerPosX, centerPosY);
-	totalHeight = dimensions.y;
-	totalWidth = dimensions.x;
-	id = newId;
-}
-
-MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions, std::string asset)
+MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions, const sf::Texture* txtr)
 {
 	shape = sf::RectangleShape(dimensions);
 	
-	if (!texture.loadFromFile(asset))
-	{
-		std::cout << "Failed to load asset " << asset << "." << std::endl;
-	}
-	shape.setTexture(&texture);
+	shape.setTexture(txtr);
 	centerPosX = dimensions.x / 2;
 	centerPosY = dimensions.y / 2;
 	shape.setOrigin(centerPosX, centerPosY);
 	totalHeight = dimensions.y;
 	totalWidth = dimensions.x;
-	id = INT16_MIN;
 }
 
 void MoveableRectangle::drawTo(sf::RenderWindow& window)
@@ -51,9 +43,19 @@ bool MoveableRectangle::didCollideWithOtherComponent(MoveableRectangle otherComp
 	return didComponentsCollide(*this, otherComponent);
 }
 
-int MoveableRectangle::getId()
+void MoveableRectangle::setTexture(const sf::Texture* newTexture)
 {
-	return id;
+	shape.setTexture(newTexture);
+}
+
+void MoveableRectangle::mirror()
+{
+	shape.setScale(-1.0f, 1.0f);
+}
+
+bool MoveableRectangle::isLeftOfCenter(float center)
+{
+	return centerPosX < center;
 }
 
 void MoveableRectangle::updatePosition()

@@ -43,6 +43,12 @@
     <Filter Include="Header Files\UserInterface\Modals">
       <UniqueIdentifier>{a5882a4a-535d-4439-bdd4-67207c785f9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameObjects">
+      <UniqueIdentifier>{4f30b360-8c5b-4b6a-b7ca-39ef05ed50ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjects">
+      <UniqueIdentifier>{00a41844-6fe3-4517-9107-4b1b22358ef5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -92,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="SingleOrMultiplayerModal.cpp">
       <Filter>Source Files\UserInterface\Modals</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="SingleOrMultiplayerModal.h">
       <Filter>Header Files\UserInterface\Modals</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

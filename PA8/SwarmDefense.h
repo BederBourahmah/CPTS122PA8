@@ -10,6 +10,7 @@
 #include <queue>
 #include <cmath>
 #include <iostream>
+#include "Enemy.h"
 
 class ScreenManager;
 
@@ -39,7 +40,7 @@ private:
 	MoveableRectangle* playerBase;
 	sf::VideoMode videoMode;
 	bool shouldGoBackToMainMenu;
-	std::list<MoveableRectangle*> enemies;
+	std::list<Enemy*> enemies;
 	void generateEnemy();
 	std::queue<int> enemiesToDestroy;
 	int enemiesCollided;
@@ -60,6 +61,8 @@ private:
 	float distanceTravelled();
 	sf::Clock clock;
 	sf::Time timeElapsed;
+	sf::Texture castleTexture;
+	sf::Texture ghostTextures[1];
 };
 
 #endif // !SWARM_DEFENSE_H

@@ -15,15 +15,23 @@ SwarmDefense::SwarmDefense(
 	)
 {
 	videoMode = vm;
-	sf::Texture txtr;
-	playerBase = new MoveableRectangle(sf::Vector2f(vm.height*0.1f, vm.height * 0.1f), "assets/castle.png");
+	if (!castleTexture.loadFromFile("assets/castle.png"))
+	{
+		std::cout << "Failed to load castle texture." << std::endl;
+	}
+
+	if (!ghostTextures[0].loadFromFile("assets/ghostTailUp.png"))
+	{
+		std::cout << "Failed to load ghostTailUp texture." << std::endl;
+	}
+
+	playerBase = new MoveableRectangle(sf::Vector2f(vm.height*0.1f, vm.height * 0.1f), &castleTexture);
 	playerBase->centerHorizontal(videoMode);
 	playerBase->centerVertical(videoMode);
 	shouldGoBackToMainMenu = false;
 	currentEnemyId = INT16_MIN;
 	generateEnemy();
 	
-	//
 	displayedScore = new TextComponent("Leander.ttf", scorePrefix + std::to_string(score), 50);
 	displayedScore->snapToVertical(videoMode, 10, 1);
 	displayedScore->setColor(sf::Color::Green);
@@ -36,7 +44,7 @@ SwarmDefense::SwarmDefense(
 	displayedCoins->snapToVertical(videoMode, 10, 3);
 	displayedCoins->setColor(sf::Color::Green);
 
-	health = 100;
+	health = 1000;
 	isGameOver = false;
 	isMultiplayer = mp;
 	parentManager = manager;
@@ -73,7 +81,7 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 	displayedHealth->drawTo(window);
 	displayedCoins->drawTo(window);
 
-	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
 		(*i)->drawTo(window);
 	}
@@ -109,7 +117,7 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
-				for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+				for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 				{
 					if ((*i)->isPositionInMyArea(event.mouseButton.x, event.mouseButton.y))
 					{
@@ -131,7 +139,7 @@ void SwarmDefense::updateState()
 	
 	destroyEnemies();
 
-	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
 		(*i)->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, distanceTravelled());
 	}
@@ -141,44 +149,15 @@ void SwarmDefense::updateState()
 
 void SwarmDefense::generateEnemy()
 {
-	float enemySideLength = 0.025f * (float)videoMode.height;
-	std::random_device rdev{};
-	static std::default_random_engine randomEngine{ rdev() };
-	static std::uniform_real_distribution<float> realDistribution{ 0.00f , 1.00f };
-	static std::uniform_int_distribution<int> integerDistrubution{ 0,1 };
-	float randomPercent = realDistribution(randomEngine);
-	bool isDown = (bool)integerDistrubution(randomEngine);
-	bool isRight = (bool)integerDistrubution(randomEngine);
-	bool isVerticalShift = (bool)integerDistrubution(randomEngine);
-	MoveableRectangle* newEnemy = new MoveableRectangle(sf::Vector2f(enemySideLength, enemySideLength), sf::Color::Cyan, currentEnemyId++);
-	if (isDown)
+	Enemy* newEnemy = new Enemy(videoMode, currentEnemyId++, ghostTextures);
+	try
 	{
-		newEnemy->snapToBottomOffScreen(videoMode);
+		enemies.push_front(newEnemy);
 	}
-	else {
-		newEnemy->snapToTopOffScreen();
-	}
-
-	if (isRight)
+	catch (const std::exception& ex)
 	{
-		newEnemy->snapToRightOffScreen(videoMode);
+		std::cout << "Failed to generate enemy: " << ex.what() << std::endl;
 	}
-	else {
-		newEnemy->snapToLeftOffScreen();
-	}
-
-	float shift = 0;
-	if (isVerticalShift)
-	{
-		shift = isDown ? -randomPercent * videoMode.height : randomPercent * videoMode.height;
-		newEnemy->shiftVertical(shift);
-	}
-	else {
-		shift = isRight ? -randomPercent * videoMode.width : randomPercent * videoMode.width;
-		newEnemy->shiftHorizontal(shift);
-	}
-
-	enemies.push_back(newEnemy);
 }
 
 void SwarmDefense::destroyEnemies()
@@ -201,12 +180,14 @@ void SwarmDefense::destroyEnemies()
 		}
 
 		int idToDelete = enemiesToDestroy.front();
-		std::list<MoveableRectangle*>::iterator itemToDelete = enemies.begin();
-		for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+		std::list<Enemy*>::iterator itemToDelete = enemies.begin();
+		for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 		{
-			if ((*i)->getId() == idToDelete) break;
-
-			++itemToDelete;
+			if ((*i)->getId() == idToDelete)
+			{
+				itemToDelete = i;
+				delete (*i);
+			}
 		}
 
 		try
@@ -255,7 +236,7 @@ void SwarmDefense::destroyEnemies()
 
 void SwarmDefense::checkForCollisions()
 {
-	for (std::list<MoveableRectangle*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
 		if ((*i)->didCollideWithOtherComponent(*playerBase))
 		{

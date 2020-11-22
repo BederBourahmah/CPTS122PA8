@@ -14,13 +14,21 @@ public:
 
 	int getId();
 	void setTimeElapsed(sf::Int64 timeElapsed);
-	void animate();
+	void die();
+	bool getIsDead();
+	bool getIsDying();
+
 private:
 	void moveToRandomEdgescreenPos(sf::VideoMode vm);
 	int id;
 	sf::Texture* ghostTextures;
 	sf::Int64 microSecondsElapsed;
 	GhostAnimation currentAnimation;
+	void animate();
+	bool isDying;
+	bool isDead;
+	void updateAnimationFrame();
+	sf::Int64 refreshInterval;
 };
 
 #endif // !ENEMY_H

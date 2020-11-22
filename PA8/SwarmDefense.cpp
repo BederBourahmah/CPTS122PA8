@@ -30,6 +30,31 @@ SwarmDefense::SwarmDefense(
 		std::cout << "Failed to load ghostTailDown texture." << std::endl;
 	}
 
+	if (!ghostTextures[(int)GhostAnimation::Death1].loadFromFile("assets/ghostDeath1.png"))
+	{
+		std::cout << "Failed to load ghostDeath1 texture." << std::endl;
+	}
+
+	if (!ghostTextures[(int)GhostAnimation::Death2].loadFromFile("assets/ghostDeath2.png"))
+	{
+		std::cout << "Failed to load ghostDeath2 texture." << std::endl;
+	}
+
+	if (!ghostTextures[(int)GhostAnimation::Death3].loadFromFile("assets/ghostDeath3.png"))
+	{
+		std::cout << "Failed to load ghostDeath3 texture." << std::endl;
+	}
+
+	if (!ghostTextures[(int)GhostAnimation::Death4].loadFromFile("assets/ghostDeath4.png"))
+	{
+		std::cout << "Failed to load ghostDeath4 texture." << std::endl;
+	}
+
+	if (!ghostTextures[(int)GhostAnimation::Death5].loadFromFile("assets/ghostDeath5.png"))
+	{
+		std::cout << "Failed to load ghostDeath5 texture." << std::endl;
+	}
+
 	playerBase = new MoveableRectangle(sf::Vector2f(vm.height*0.1f, vm.height * 0.1f), &castleTexture);
 	playerBase->centerHorizontal(videoMode);
 	playerBase->centerVertical(videoMode);
@@ -126,7 +151,8 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 				{
 					if ((*i)->isPositionInMyArea(event.mouseButton.x, event.mouseButton.y))
 					{
-						enemiesToDestroy.push((*i)->getId());
+						//enemiesToDestroy.push((*i)->getId());
+						(*i)->die();
 						score++;
 						coins = coins + 10;
 
@@ -146,7 +172,14 @@ void SwarmDefense::updateState()
 
 	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
-		(*i)->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, distanceTravelled());
+		if ((*i)->getIsDead())
+		{
+			enemiesToDestroy.push((*i)->getId());
+		}
+		else if (!(*i)->getIsDying())
+		{
+			(*i)->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, distanceTravelled());
+		}
 		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 

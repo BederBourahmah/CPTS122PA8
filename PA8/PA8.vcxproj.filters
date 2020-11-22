@@ -170,5 +170,8 @@
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="GhostAnimation.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

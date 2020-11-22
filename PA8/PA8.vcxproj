@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GhostAnimation.h" />
     <ClInclude Include="GUIComponent.h" />
     <ClInclude Include="IpAddressInputModal.h" />
     <ClInclude Include="LoadingModal.h" />

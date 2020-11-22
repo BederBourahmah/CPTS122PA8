@@ -20,9 +20,14 @@ SwarmDefense::SwarmDefense(
 		std::cout << "Failed to load castle texture." << std::endl;
 	}
 
-	if (!ghostTextures[0].loadFromFile("assets/ghostTailUp.png"))
+	if (!ghostTextures[(int)GhostAnimation::TailUp].loadFromFile("assets/ghostTailUp.png"))
 	{
 		std::cout << "Failed to load ghostTailUp texture." << std::endl;
+	}
+
+	if (!ghostTextures[(int)GhostAnimation::TailDown].loadFromFile("assets/ghostTailDown.png"))
+	{
+		std::cout << "Failed to load ghostTailDown texture." << std::endl;
 	}
 
 	playerBase = new MoveableRectangle(sf::Vector2f(vm.height*0.1f, vm.height * 0.1f), &castleTexture);
@@ -44,7 +49,7 @@ SwarmDefense::SwarmDefense(
 	displayedCoins->snapToVertical(videoMode, 10, 3);
 	displayedCoins->setColor(sf::Color::Green);
 
-	health = 1000;
+	health = 100;
 	isGameOver = false;
 	isMultiplayer = mp;
 	parentManager = manager;
@@ -142,6 +147,7 @@ void SwarmDefense::updateState()
 	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
 		(*i)->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, distanceTravelled());
+		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 
 	checkForCollisions();

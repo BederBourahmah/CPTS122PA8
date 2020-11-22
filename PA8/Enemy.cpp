@@ -5,7 +5,8 @@ Enemy::Enemy(sf::VideoMode vm, int newId, sf::Texture* gTxtrs) : MoveableRectang
 	moveToRandomEdgescreenPos(vm);
 	id = newId;
 	ghostTextures = gTxtrs;
-	setTexture(&gTxtrs[0]);
+	currentAnimation = GhostAnimation::TailUp;
+	setTexture(&ghostTextures[(int)currentAnimation]);
 }
 
 Enemy::~Enemy()
@@ -15,6 +16,32 @@ Enemy::~Enemy()
 int Enemy::getId()
 {
 	return id;
+}
+
+void Enemy::setTimeElapsed(sf::Int64 timeElapsed)
+{
+	microSecondsElapsed += timeElapsed;
+	if (microSecondsElapsed > 500000)
+	{
+		microSecondsElapsed -= 500000;
+		animate();
+	}
+}
+
+void Enemy::animate()
+{
+	if (currentAnimation == GhostAnimation::TailUp)
+	{
+		currentAnimation = GhostAnimation::TailDown;
+	}
+	else
+	{
+		currentAnimation = GhostAnimation::TailUp;
+	}
+
+
+
+	setTexture(&ghostTextures[(int)currentAnimation]);
 }
 
 void Enemy::moveToRandomEdgescreenPos(sf::VideoMode vm)

@@ -11,6 +11,7 @@
 #include <cmath>
 #include <iostream>
 #include "Enemy.h"
+#include "GhostAnimation.h"
 
 class ScreenManager;
 
@@ -62,7 +63,7 @@ private:
 	sf::Clock clock;
 	sf::Time timeElapsed;
 	sf::Texture castleTexture;
-	sf::Texture ghostTextures[1];
+	sf::Texture ghostTextures[2];
 };
 
 #endif // !SWARM_DEFENSE_H

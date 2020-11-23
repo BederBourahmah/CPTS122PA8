@@ -196,8 +196,12 @@ public:
 		return getRightPosXToCenter() < 0;
 	}
 
-	virtual void drawTo(sf::RenderWindow& window) = 0;
+	sf::Vector2f getCenterCoordinates()
+	{
+		return sf::Vector2f(centerPosX, centerPosY);
+	}
 
+	virtual void drawTo(sf::RenderWindow& window) = 0;
 	
 
 protected:

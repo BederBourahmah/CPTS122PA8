@@ -143,35 +143,6 @@ void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 	}
 }
 
-void MainMenu::processMouseClick()
-{
-	if (isMenuDisabled()) return;
-	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
-
-	sf::Vector2i mousePosition = sf::Mouse::getPosition();
-	if (sideScrollerText->isPositionInMyArea(mousePosition))
-	{
-		currentSelection = MainMenuSelection::SideScroller;
-		updateSelectorPosition();
-		selectedScreen = Screens::SideScroller;
-		return;
-	}
-
-	if (swarmDefenderText->isPositionInMyArea(mousePosition))
-	{
-		singVsMultiModal = new SingleOrMultiplayerModal(videoMode);
-		return;
-	}
-
-	if (exitText->isPositionInMyArea(mousePosition))
-	{
-		currentSelection = MainMenuSelection::Exit;
-		updateSelectorPosition();
-		selectedScreen = Screens::Exit;
-		return;
-	}
-}
-
 bool MainMenu::shouldExitGame()
 {
 	return selectedScreen == Screens::Exit;
@@ -205,6 +176,11 @@ void MainMenu::handleEvents(sf::RenderWindow& window)
 		{
 			handleKeyPressEvent(event);
 		}
+
+		if (event.type == sf::Event::MouseButtonReleased)
+		{
+			handleClickEvent(event);
+		}
 	}
 }
 
@@ -216,6 +192,13 @@ void MainMenu::updateState()
 		if (networkConnectionModal->getIsReady())
 		{
 			handleConnectToNetwork();
+			return;
+		}
+
+		if (networkConnectionModal->getIsCancelling())
+		{
+			delete networkConnectionModal;
+			networkConnectionModal = nullptr;
 		}
 	}
 
@@ -239,6 +222,13 @@ void MainMenu::updateState()
 				singVsMultiModal = nullptr;
 				return;
 			}
+		}
+
+		if (singVsMultiModal->getIsCancelling())
+		{
+			delete singVsMultiModal;
+			singVsMultiModal = nullptr;
+			return;
 		}
 	}
 }
@@ -316,4 +306,33 @@ void MainMenu::handleConnectToNetwork()
 bool MainMenu::isMenuDisabled()
 {
 	return loadingModal != nullptr || networkConnectionModal != nullptr || singVsMultiModal != nullptr || isLoading;
+}
+
+void MainMenu::handleClickEvent(sf::Event event)
+{
+	if (event.type != sf::Event::MouseButtonReleased || isMenuDisabled() || event.mouseButton.button != sf::Mouse::Left) return;
+
+
+	sf::Vector2i mousePosition(event.mouseButton.x, event.mouseButton.y);
+	if (sideScrollerText->isPositionInMyArea(mousePosition))
+	{
+		currentSelection = MainMenuSelection::SideScroller;
+		updateSelectorPosition();
+		selectedScreen = Screens::SideScroller;
+		return;
+	}
+
+	if (swarmDefenderText->isPositionInMyArea(mousePosition))
+	{
+		singVsMultiModal = new SingleOrMultiplayerModal(videoMode);
+		return;
+	}
+
+	if (exitText->isPositionInMyArea(mousePosition))
+	{
+		currentSelection = MainMenuSelection::Exit;
+		updateSelectorPosition();
+		selectedScreen = Screens::Exit;
+		return;
+	}
 }

@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GUIComponent.cpp" />
     <ClCompile Include="IpAddressInputModal.cpp" />
     <ClCompile Include="LoadingModal.cpp" />
@@ -169,6 +170,8 @@
     <ClCompile Include="TextComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GhostAnimation.h" />
     <ClInclude Include="GUIComponent.h" />
     <ClInclude Include="IpAddressInputModal.h" />
     <ClInclude Include="LoadingModal.h" />

@@ -5,7 +5,7 @@ ScreenManager::ScreenManager(sf::VideoMode vm)
 	videoMode = vm;
 	mainMenu = new MainMenu(videoMode, this, &ScreenManager::handleConnectToNetwork);
 	currentScreen = Screens::MainMenu;
-	sideScroller = nullptr;
+	howToPlayMenu = nullptr;
 	swarmDefense = nullptr;
 	server = nullptr;
 	client = nullptr;
@@ -30,8 +30,8 @@ Screen* ScreenManager::getCurrentScreen()
 	{
 	case Screens::MainMenu:
 		return mainMenu;
-	case Screens::SideScroller:
-		return sideScroller;
+	case Screens::HowToPlayMenu:
+		return howToPlayMenu;
 	case Screens::SwarmDefense:
 		return swarmDefense;
 	default:
@@ -61,7 +61,7 @@ void ScreenManager::updateState()
 		return;
 	}
 	
-	if (currentScreen == Screens::SideScroller)
+	if (currentScreen == Screens::HowToPlayMenu)
 	{
 		if (currentScreenPtr->shouldExitGame())
 		{
@@ -143,8 +143,8 @@ void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 	case Screens::SwarmDefense:
 		swarmDefense = new SwarmDefense(videoMode, isMultiplayer(), this, &ScreenManager::sendEnemiesToOpponent, &ScreenManager::getEnemiesFromOpponent);
 		break;
-	case Screens::SideScroller:
-		sideScroller = new SideScroller(videoMode);
+	case Screens::HowToPlayMenu: 
+		howToPlayMenu = new HowToPlayMenu(videoMode); /////
 		return;
 	case Screens::Exit:
 		break;
@@ -167,8 +167,8 @@ void ScreenManager::deleteAllScreens()
 	mainMenu = nullptr;
 	delete swarmDefense;
 	swarmDefense = nullptr;
-	delete sideScroller;
-	sideScroller = nullptr;
+	delete howToPlayMenu;
+	howToPlayMenu = nullptr;
 }
 
 void ScreenManager::switchToSelectedScreen(Screens selectedScreen)

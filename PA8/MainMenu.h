@@ -31,7 +31,7 @@ public:
 	void updateState();
 
 private:
-	TextComponent* sideScrollerText;
+	TextComponent* howToPlayText;
 	TextComponent* swarmDefenderText;
 	TextComponent* exitText;
 	MenuSelector* selector;

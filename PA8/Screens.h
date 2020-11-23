@@ -4,7 +4,7 @@
 enum class Screens
 {
 	MainMenu,
-	SideScroller,
+	HowToPlayMenu,
 	SwarmDefense,
 	Exit
 };

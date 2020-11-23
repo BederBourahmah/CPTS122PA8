@@ -99,6 +99,9 @@
     <ClCompile Include="SingleOrMultiplayerModal.cpp">
       <Filter>Source Files\UserInterface\Modals</Filter>
     </ClCompile>
+    <ClCompile Include="HowToPlayMenu.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="SingleOrMultiplayerModal.h">
       <Filter>Header Files\UserInterface\Modals</Filter>
+    </ClInclude>
+    <ClInclude Include="HowToPlayMenu.h">
+      <Filter>Header Files\Screens</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\GameObjects</Filter>

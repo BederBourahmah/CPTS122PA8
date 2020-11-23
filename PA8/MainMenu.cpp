@@ -5,17 +5,17 @@
 MainMenu::MainMenu(sf::VideoMode const vm, ScreenManager *manager, void(ScreenManager::* connectToNetworkCallback)(std::string addr, unsigned int port, bool isServer))
 {
 	videoMode = vm;
-	sideScrollerText = new TextComponent("Leander.ttf", "Side Scroller Game");
+	howToPlayText = new TextComponent("Leander.ttf", "How To Play");
 	swarmDefenderText = new TextComponent("Leander.ttf", "Swarm Defender Game");
 	exitText = new TextComponent("Leander.ttf", "Exit Game");
 	selector = new MenuSelector(swarmDefenderText->getWidth(), swarmDefenderText->getHeight());
-	sideScrollerText->centerHorizontal(videoMode);
-	sideScrollerText->snapToVertical(videoMode, 5, 2);
+	howToPlayText->centerHorizontal(videoMode);
+	howToPlayText->snapToVertical(videoMode, 5, 3);
 	swarmDefenderText->centerHorizontal(videoMode);
-	swarmDefenderText->snapToVertical(videoMode, 5, 3);
+	swarmDefenderText->snapToVertical(videoMode, 5, 2);
 	exitText->centerHorizontal(videoMode);
 	exitText->snapToVertical(videoMode, 5, 4);
-	currentSelection = MainMenuSelection::SideScroller;
+	currentSelection = MainMenuSelection::HowToPlayMenu;
 	updateSelectorPosition();
 	if (!loadMainMenuBackgroundSprite(videoMode))
 	{
@@ -33,8 +33,8 @@ MainMenu::MainMenu(sf::VideoMode const vm, ScreenManager *manager, void(ScreenMa
 
 MainMenu::~MainMenu()
 {
-	delete sideScrollerText;
-	sideScrollerText = nullptr;
+	delete howToPlayText;
+	howToPlayText = nullptr;
 	delete swarmDefenderText;
 	swarmDefenderText = nullptr;
 	delete exitText;
@@ -54,7 +54,7 @@ MainMenu::~MainMenu()
 void MainMenu::drawTo(sf::RenderWindow &window)
 {
 	window.draw(backgroundSprite);
-	sideScrollerText->drawTo(window);
+	howToPlayText->drawTo(window);
 	swarmDefenderText->drawTo(window);
 	exitText->drawTo(window);
 	selector->drawTo(window);
@@ -67,7 +67,7 @@ void MainMenu::drawTo(sf::RenderWindow &window)
 
 void MainMenu::moveSelectorDown()
 {
-	if (currentSelection == MainMenuSelection::SideScroller)
+	if (currentSelection == MainMenuSelection::HowToPlayMenu)
 	{
 		currentSelection = MainMenuSelection::SwarmDefender;
 		updateSelectorPosition();
@@ -88,7 +88,7 @@ void MainMenu::moveSelectorUp()
 		return;
 	}
 
-	currentSelection = MainMenuSelection::SideScroller;
+	currentSelection = MainMenuSelection::HowToPlayMenu;
 	updateSelectorPosition();
 	return;
 }
@@ -101,8 +101,8 @@ void MainMenu::processKeyboardInput()
 	{
 		switch (currentSelection)
 		{
-		case MainMenuSelection::SideScroller:
-			selectedScreen = Screens::SideScroller;
+		case MainMenuSelection::HowToPlayMenu:
+			selectedScreen = Screens::HowToPlayMenu;
 			break;
 		case MainMenuSelection::SwarmDefender:
 			selectedScreen = Screens::SwarmDefense;
@@ -121,9 +121,9 @@ void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 {
 	if (isMenuDisabled()) return;
 
-	if (sideScrollerText->isPositionInMyArea(mouseWindowPosition))
+	if (howToPlayText->isPositionInMyArea(mouseWindowPosition))
 	{
-		currentSelection = MainMenuSelection::SideScroller;
+		currentSelection = MainMenuSelection::HowToPlayMenu;
 		updateSelectorPosition();
 		return;
 	}
@@ -139,6 +139,35 @@ void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 	{
 		currentSelection = MainMenuSelection::Exit;
 		updateSelectorPosition();
+		return;
+	}
+}
+
+void MainMenu::processMouseClick()
+{
+	if (isMenuDisabled()) return;
+	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
+
+	sf::Vector2i mousePosition = sf::Mouse::getPosition();
+	if (howToPlayText->isPositionInMyArea(mousePosition))
+	{
+		currentSelection = MainMenuSelection::HowToPlayMenu;
+		updateSelectorPosition();
+		selectedScreen = Screens::HowToPlayMenu;
+		return;
+	}
+
+	if (swarmDefenderText->isPositionInMyArea(mousePosition))
+	{
+		singVsMultiModal = new SingleOrMultiplayerModal(videoMode);
+		return;
+	}
+
+	if (exitText->isPositionInMyArea(mousePosition))
+	{
+		currentSelection = MainMenuSelection::Exit;
+		updateSelectorPosition();
+		selectedScreen = Screens::Exit;
 		return;
 	}
 }
@@ -237,8 +266,8 @@ void MainMenu::updateSelectorPosition()
 {
 	switch (currentSelection)
 	{
-	case MainMenuSelection::SideScroller:
-		selector->moveTo(sideScrollerText->getCenterPosX(), sideScrollerText->getCenterPosY());
+	case MainMenuSelection::HowToPlayMenu:
+		selector->moveTo(howToPlayText->getCenterPosX(), howToPlayText->getCenterPosY());
 		return;
 	case MainMenuSelection::SwarmDefender:
 		selector->moveTo(swarmDefenderText->getCenterPosX(), swarmDefenderText->getCenterPosY());

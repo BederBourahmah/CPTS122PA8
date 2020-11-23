@@ -5,6 +5,7 @@
 #include "MoveableRectangle.h"
 #include "TextComponent.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <list>
 #include <random>
 #include <queue>
@@ -24,6 +25,7 @@ public:
 	void handleEvents(sf::RenderWindow& window);
 	void updateState();
 	void purchase(int Price);
+	
 
 private:
 	int currentEnemyId;
@@ -42,6 +44,7 @@ private:
 	void destroyEnemies();
 	void checkForCollisions();
 	bool isGameOver;
+	sf::Music music;
 };
 
 #endif // !SWARM_DEFENSE_H

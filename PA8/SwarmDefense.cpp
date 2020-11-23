@@ -1,4 +1,5 @@
 #include "SwarmDefense.h"
+#include <iostream>
 
 const static float enemyVelocity = 0.1f;
 static const std::string scorePrefix = "Score: ";
@@ -16,6 +17,7 @@ SwarmDefense::SwarmDefense(sf::VideoMode vm)
 	currentEnemyId = INT16_MIN;
 	generateEnemy();
 	
+	
 	//
 	displayedScore = new TextComponent("Leander.ttf", scorePrefix + std::to_string(score), 50);
 	displayedScore->snapToVertical(videoMode, 10, 1);
@@ -31,6 +33,18 @@ SwarmDefense::SwarmDefense(sf::VideoMode vm)
 
 	health = 100;
 	isGameOver = false;
+
+	std::cout << "a";
+
+
+	////Music
+	if (!music.openFromFile("assets/HHMega.ogg")) {
+		std::cout << "Music error";
+	}
+	music.play();
+
+
+
 }
 
 SwarmDefense::~SwarmDefense()
@@ -93,7 +107,10 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 	{
 		if (event.type == sf::Event::Closed) window.close();
 
-		if (isGameOver) return;
+		if (isGameOver) { 
+			music.stop();
+			return;
+		}
 
 		if (event.type == sf::Event::MouseButtonPressed)
 		{

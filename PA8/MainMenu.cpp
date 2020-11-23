@@ -15,7 +15,7 @@ MainMenu::MainMenu(sf::VideoMode const vm, ScreenManager *manager, void(ScreenMa
 	swarmDefenderText->snapToVertical(videoMode, 5, 2);
 	exitText->centerHorizontal(videoMode);
 	exitText->snapToVertical(videoMode, 5, 4);
-	currentSelection = MainMenuSelection::HowToPlayMenu;
+	currentSelection = MainMenuSelection::SwarmDefender;
 	updateSelectorPosition();
 	if (!loadMainMenuBackgroundSprite(videoMode))
 	{
@@ -67,9 +67,9 @@ void MainMenu::drawTo(sf::RenderWindow &window)
 
 void MainMenu::moveSelectorDown()
 {
-	if (currentSelection == MainMenuSelection::HowToPlayMenu)
+	if (currentSelection == MainMenuSelection::SwarmDefender)
 	{
-		currentSelection = MainMenuSelection::SwarmDefender;
+		currentSelection = MainMenuSelection::HowToPlayMenu;
 		updateSelectorPosition();
 		return;
 	}
@@ -83,12 +83,12 @@ void MainMenu::moveSelectorUp()
 {
 	if (currentSelection == MainMenuSelection::Exit)
 	{
-		currentSelection = MainMenuSelection::SwarmDefender;
+		currentSelection = MainMenuSelection::HowToPlayMenu;
 		updateSelectorPosition();
 		return;
 	}
 
-	currentSelection = MainMenuSelection::HowToPlayMenu;
+	currentSelection = MainMenuSelection::SwarmDefender;
 	updateSelectorPosition();
 	return;
 }
@@ -343,11 +343,11 @@ void MainMenu::handleClickEvent(sf::Event event)
 
 
 	sf::Vector2i mousePosition(event.mouseButton.x, event.mouseButton.y);
-	if (sideScrollerText->isPositionInMyArea(mousePosition))
+	if (howToPlayText->isPositionInMyArea(mousePosition))
 	{
-		currentSelection = MainMenuSelection::SideScroller;
+		currentSelection = MainMenuSelection::HowToPlayMenu;
 		updateSelectorPosition();
-		selectedScreen = Screens::SideScroller;
+		selectedScreen = Screens::HowToPlayMenu;
 		return;
 	}
 

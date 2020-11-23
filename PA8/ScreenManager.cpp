@@ -70,7 +70,7 @@ void ScreenManager::updateState()
 		return;
 	}
 
-	if (currentScreen == Screens::SwarmDefense)
+	if (currentScreen == Screens::SwarmDefense || currentScreen == Screens::HowToPlayMenu)
 	{
 		if (currentScreenPtr->shouldExitGame())
 		{

@@ -25,6 +25,7 @@ public:
 	void moveSelectorUp();
 	void processKeyboardInput();
 	void processMousePosition(sf::Vector2i mouseWindowPosition);
+	void processMouseClick();
 	bool shouldExitGame();
 	Screens getSelectedScreen();
 	void handleEvents(sf::RenderWindow& window);

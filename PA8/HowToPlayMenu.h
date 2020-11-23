@@ -16,23 +16,24 @@
 class HowToPlayMenu : public Screen
 {
 private:
-	TextComponent* rulesText;
+	TextComponent* rulesTextHeader;
+	TextComponent* rulesTextBody;
 	MenuSelector* selector;
 	TextComponent* returnText;
 	sf::Sprite backgroundSprite;
 	sf::Texture backgroundTexture;
 	Screens selectedScreen;
 	MainMenuSelection currentSelection;
-	bool isMenuDisabled();
 	void updateSelectorPosition();
 	SingleOrMultiplayerModal* singVsMultiModal;
 	void handleKeyPressEvent(sf::Event event);
 	bool isAttemptingToConnect;
-	void attemptConnection();
-	void handleConnectToNetwork();
 	sf::VideoMode videoMode;
 	TcpServer* server;
 	TcpClient* client;
+	bool shouldGoBackToMainMenu;
+	bool loadRulesMenuBackgroundTexture();
+	bool loadRulesMenuBackgroundSprite(sf::VideoMode const videoMode);
 
 public:	
 	HowToPlayMenu(sf::VideoMode const vm);

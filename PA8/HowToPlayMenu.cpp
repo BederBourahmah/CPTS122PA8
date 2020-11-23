@@ -2,39 +2,54 @@
 
 HowToPlayMenu::HowToPlayMenu(sf::VideoMode const vm)
 {
-
+	videoMode = vm;
+	rulesTextHeader = new TextComponent("Leander.ttf", "HOW TO PLAY");
+	rulesTextBody = new TextComponent("Leander.ttf", "Ghosts are attacking the castle!\n Click on them to shoot, but\n don't let them get too close!\n");
+	returnText = new TextComponent("Leander.ttf", "Return");
+	selector = new MenuSelector(returnText->getWidth(), returnText->getHeight());
+	rulesTextHeader->centerHorizontal(videoMode);
+	rulesTextHeader->snapToVertical(videoMode, 5, 1);
+	rulesTextBody->centerHorizontal(videoMode);
+	rulesTextBody->snapToVertical(videoMode, 5, 3);
+	returnText->centerHorizontal(videoMode);
+	returnText->snapToVertical(videoMode, 5, 5);
+	if (!loadRulesMenuBackgroundSprite(videoMode))
+	{
+		std::cout << "Failed to load background sprite." << std::endl;
+	}
 }
 
 HowToPlayMenu::~HowToPlayMenu()
 {
-
+	delete rulesTextHeader;
+	rulesTextHeader = nullptr;
+	delete rulesTextBody;
+	rulesTextBody = nullptr;
+	delete returnText;
+	returnText = nullptr;
+	delete selector;
+	selector = nullptr;
 }
-
 
 void HowToPlayMenu::drawTo(sf::RenderWindow& window)
 {
 	window.draw(backgroundSprite);
-	rulesText->drawTo(window);
+	rulesTextHeader->drawTo(window);
+	rulesTextBody->drawTo(window);
+	returnText->drawTo(window);
 	selector->drawTo(window);
 }
 
 void HowToPlayMenu::processKeyboardInput()
 {
-	if (isMenuDisabled()) return;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
-		if (currentSelection == MainMenuSelection::Exit)
-		{
-			selectedScreen = Screens::Exit;
-		}
+		shouldGoBackToMainMenu = true;
 	}
 }
 
 void HowToPlayMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 {
-	if (isMenuDisabled()) return;
-
 	if (returnText->isPositionInMyArea(mouseWindowPosition))
 	{
 		currentSelection = MainMenuSelection::Exit;
@@ -45,13 +60,12 @@ void HowToPlayMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 
 void HowToPlayMenu::processMouseClick()
 {
-	if (isMenuDisabled()) return;
 	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
 
 	sf::Vector2i mousePosition = sf::Mouse::getPosition();
 	if (returnText->isPositionInMyArea(mousePosition))
 	{
-		currentSelection = MainMenuSelection::Exit;
+		currentSelection = MainMenuSelection::Exit; /////
 		updateSelectorPosition();
 		selectedScreen = Screens::Exit;
 		return;
@@ -60,7 +74,7 @@ void HowToPlayMenu::processMouseClick()
 
 bool HowToPlayMenu::shouldExitGame()
 {
-	return false;
+	return shouldGoBackToMainMenu;
 }
 
 void HowToPlayMenu::handleEvents(sf::RenderWindow& window)
@@ -85,49 +99,7 @@ void HowToPlayMenu::handleEvents(sf::RenderWindow& window)
 
 void HowToPlayMenu::updateState()
 {
-	if (isAttemptingToConnect)
-	{
-		loadingModal->updateState();
-		attemptConnection();
-		return;
-	}
-
-	if (networkConnectionModal != nullptr)
-	{
-		networkConnectionModal->updateState();
-		if (networkConnectionModal->getIsReady())
-		{
-			handleConnectToNetwork();
-		}
-	}
-
-	if (singVsMultiModal != nullptr)
-	{
-		if (singVsMultiModal->getIsReady())
-		{
-			if (singVsMultiModal->getIsSinglePlayer())
-			{
-				delete singVsMultiModal;
-				singVsMultiModal = nullptr;
-				currentSelection = MainMenuSelection::SwarmDefender;
-				updateSelectorPosition();
-				selectedScreen = Screens::SwarmDefense;
-				return;
-			}
-			else
-			{
-				networkConnectionModal = new IpAddressInputModal(videoMode);
-				delete singVsMultiModal;
-				singVsMultiModal = nullptr;
-				return;
-			}
-		}
-	}
-}
-
-bool HowToPlayMenu::isMenuDisabled()
-{
-	return loadingModal != nullptr || networkConnectionModal != nullptr || singVsMultiModal != nullptr;
+	
 }
 
 void HowToPlayMenu::updateSelectorPosition()
@@ -155,40 +127,6 @@ void HowToPlayMenu::handleKeyPressEvent(sf::Event event)
 	}
 }
 
-void HowToPlayMenu::attemptConnection()
-{
-	if (server != nullptr)
-	{
-		server->attemptToConnect();
-		if (server->getDidConnect())
-		{
-			isAttemptingToConnect = false;
-			delete loadingModal;
-			loadingModal = nullptr;
-		}
-	}
-	return;
-}
-
-void HowToPlayMenu::handleConnectToNetwork()
-{
-	std::string addr = networkConnectionModal->getAddress();
-	unsigned int port = networkConnectionModal->getPort();
-	bool isServer = networkConnectionModal->getIsServer();
-	if (isServer)
-	{
-		server = new TcpServer(port);
-	}
-	else {
-		client = new TcpClient(addr, port);
-	}
-	loadingModal = new LoadingModal(videoMode);
-
-	isAttemptingToConnect = true;
-	delete networkConnectionModal;
-	networkConnectionModal = nullptr;
-}
-
 Screens HowToPlayMenu::getSelectedScreen()
 {
 	return selectedScreen;
@@ -202,7 +140,7 @@ void HowToPlayMenu::moveSelectorDown()
 		updateSelectorPosition();
 		return;
 	}
-
+	
 	currentSelection = MainMenuSelection::Exit;
 	updateSelectorPosition();
 	return;
@@ -220,4 +158,28 @@ void HowToPlayMenu::moveSelectorUp()
 	currentSelection = MainMenuSelection::Exit;
 	updateSelectorPosition();
 	return;
+}
+
+bool HowToPlayMenu::loadRulesMenuBackgroundTexture()
+{
+	if (!backgroundTexture.loadFromFile("assets/main_menu_background.jpg"))
+	{
+		return false;
+	}
+	return true;
+}
+
+const static float backgroundWidth = 3071;
+const static float backgroundHeight = 2299;
+
+bool HowToPlayMenu::loadRulesMenuBackgroundSprite(sf::VideoMode const videoMode)
+{
+	if (!loadRulesMenuBackgroundTexture())
+	{
+		return false;
+	}
+
+	backgroundSprite.setTexture(backgroundTexture);
+	backgroundSprite.setScale((float)videoMode.width / backgroundWidth, (float)videoMode.height / backgroundHeight);
+	return true;
 }

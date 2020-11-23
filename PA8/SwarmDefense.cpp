@@ -37,13 +37,28 @@ SwarmDefense::SwarmDefense(sf::VideoMode vm)
 	std::cout << "a";
 
 
+	//Sounds
+
+	if (!Hit.loadFromFile("assets/Hit.wav")) {
+		std::cout << "Hit sound error";
+	}
+		
+	if (!Explosion.loadFromFile("assets/Explosion.wav")) {
+		std::cout << "Exp sound error";
+	}
+
+	if (!Lose.loadFromFile("assets/Lose.wav")) {
+		std::cout << "Lose sound error";
+	}
+
 	////Music
 	if (!music.openFromFile("assets/HHMega.ogg")) {
 		std::cout << "Music error";
 	}
+	music.setVolume(40);
 	music.play();
 
-
+	
 
 }
 
@@ -109,6 +124,8 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 
 		if (isGameOver) { 
 			music.stop();
+			sound.setBuffer(Lose);
+			sound.play();
 			return;
 		}
 
@@ -120,9 +137,13 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 				{
 					if ((*i)->isPositionInMyArea(event.mouseButton.x, event.mouseButton.y))
 					{
+						
 						enemiesToDestroy.push((*i)->getId());
 						score++;
 						coins = coins + 10;
+						//Hit sound
+						sound.setBuffer(Hit);
+						sound.play();
 
 					}
 				}
@@ -191,6 +212,8 @@ void SwarmDefense::destroyEnemies()
 {
 	while (!enemiesToDestroy.empty())
 	{
+		
+
 		if (enemies.empty())
 		{
 			enemiesToDestroy.pop();
@@ -208,6 +231,9 @@ void SwarmDefense::destroyEnemies()
 
 		enemies.erase(itemToDelete);
 		enemiesToDestroy.pop();
+
+
+
 		generateEnemy();
 		generateEnemy();
 	}
@@ -221,6 +247,11 @@ void SwarmDefense::checkForCollisions()
 		{
 			enemiesToDestroy.push((*i)->getId());
 			health--;
+
+			//Play explosion sound
+			sound.setBuffer(Explosion);
+			sound.play();
+
 			if (health == 0)
 			{
 				isGameOver = true;

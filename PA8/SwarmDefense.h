@@ -44,7 +44,13 @@ private:
 	void destroyEnemies();
 	void checkForCollisions();
 	bool isGameOver;
+
+	//Audio
 	sf::Music music;
+	sf::SoundBuffer Hit;
+	sf::SoundBuffer Explosion;
+	sf::SoundBuffer Lose;
+	sf::Sound sound; //To hold various soundbuffers
 };
 
 #endif // !SWARM_DEFENSE_H

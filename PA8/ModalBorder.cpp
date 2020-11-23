@@ -21,23 +21,27 @@ ModalBorder::ModalBorder(float width, float height)
     bottomRightBorder.setOrigin(cornerDoubleBorderSquareLength, cornerDoubleBorderSquareLength);
     bottomRightBorder.setSize(sf::Vector2f(cornerDoubleBorderSquareLength, cornerDoubleBorderSquareLength));
 
+    auto borderWidth = (int)width - 2 * cornerDoubleBorderSquareLength;
+
     topBorder.setTexture(&topDoubleBorder);
-    topBorder.setTextureRect(sf::IntRect(0, 0, width - 2 * cornerDoubleBorderSquareLength, longDoubleBorderThickness));
+    topBorder.setTextureRect(sf::IntRect(0, 0, borderWidth, longDoubleBorderThickness));
     topBorder.setOrigin((width - 2 * cornerDoubleBorderSquareLength) / (float)2, 0);
     topBorder.setSize(sf::Vector2f(width-2* cornerDoubleBorderSquareLength, longDoubleBorderThickness));
 
     bottomBorder.setTexture(&bottomDoubleBorder);
-    bottomBorder.setTextureRect(sf::IntRect(0, 0, width - 2 * cornerDoubleBorderSquareLength, longDoubleBorderThickness));
+    bottomBorder.setTextureRect(sf::IntRect(0, 0, borderWidth, longDoubleBorderThickness));
     bottomBorder.setOrigin((width - 2 * cornerDoubleBorderSquareLength) / (float)2, longDoubleBorderThickness);
     bottomBorder.setSize(sf::Vector2f(width - 2 * cornerDoubleBorderSquareLength, longDoubleBorderThickness));
 
+    auto borderHeight = (int)height - 2 * cornerDoubleBorderSquareLength;
+
     leftBorder.setTexture(&leftDoubleBorder);
-    leftBorder.setTextureRect(sf::IntRect(0, 0, longDoubleBorderThickness, height - 2 * cornerDoubleBorderSquareLength));
+    leftBorder.setTextureRect(sf::IntRect(0, 0, longDoubleBorderThickness, borderHeight));
     leftBorder.setOrigin(0, (height - 2 * cornerDoubleBorderSquareLength) / (float)2);
     leftBorder.setSize(sf::Vector2f(longDoubleBorderThickness, height - 2 * cornerDoubleBorderSquareLength));
 
     rightBorder.setTexture(&rightDoubleBorder);
-    rightBorder.setTextureRect(sf::IntRect(0, 0, longDoubleBorderThickness, height - 2 * cornerDoubleBorderSquareLength));
+    rightBorder.setTextureRect(sf::IntRect(0, 0, longDoubleBorderThickness, borderHeight));
     rightBorder.setOrigin(longDoubleBorderThickness, (height - 2 * cornerDoubleBorderSquareLength) / (float)2);
     rightBorder.setSize(sf::Vector2f(longDoubleBorderThickness, height - 2 * cornerDoubleBorderSquareLength));
 

@@ -19,7 +19,6 @@ public:
 	void drawTo(sf::RenderWindow& window);
 	void processKeyboardInput();
 	void processMousePosition(sf::Vector2i mouseWindowPosition);
-	void processMouseClick();
 	bool shouldExitGame();
 	void updateState();
 	void handleEvents(sf::RenderWindow& window);

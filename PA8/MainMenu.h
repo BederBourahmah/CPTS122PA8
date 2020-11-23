@@ -13,21 +13,23 @@
 #include "LoadingModal.h"
 #include "SingleOrMultiplayerModal.h"
 
+class ScreenManager;
+
 class MainMenu : public Screen
 {
 public:
-	MainMenu(sf::VideoMode const vm);
+	MainMenu(sf::VideoMode const vm, ScreenManager *manager, void(ScreenManager::* connectToNetworkCallback)(std::string addr, unsigned int port, bool isServer));
 	~MainMenu();
 	void drawTo(sf::RenderWindow &window);
 	void moveSelectorDown();
 	void moveSelectorUp();
 	void processKeyboardInput();
 	void processMousePosition(sf::Vector2i mouseWindowPosition);
-	void processMouseClick();
 	bool shouldExitGame();
 	Screens getSelectedScreen();
 	void handleEvents(sf::RenderWindow& window);
 	void updateState();
+
 private:
 	TextComponent* sideScrollerText;
 	TextComponent* swarmDefenderText;
@@ -45,12 +47,13 @@ private:
 	TcpServer* server;
 	TcpClient* client;
 	void handleConnectToNetwork();
-	bool isAttemptingToConnect;
-	void attemptConnection();
 	LoadingModal* loadingModal;
 	sf::VideoMode videoMode;
 	bool isMenuDisabled();
 	SingleOrMultiplayerModal* singVsMultiModal;
+	void(ScreenManager::* onConnectToNetwork)(std::string addr, unsigned int port, bool isServer);
+	ScreenManager* parentManager;
+	void handleClickEvent(sf::Event event);
 };
 
 #endif // !MAIN_MENU_H

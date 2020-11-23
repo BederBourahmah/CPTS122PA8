@@ -14,7 +14,7 @@ LoadingModal::LoadingModal(sf::VideoMode vm) : Modal(ModalSize::Small, vm)
 	gearIcon.setTexture(&iconTexture);
 	gearIcon.setSize(sf::Vector2f(iconSize, iconSize));
 	gearIcon.setOrigin(iconSize / 2, iconSize / 2);
-	gearIcon.setPosition(videoMode.width / 2, videoMode.height / 2);
+	gearIcon.setPosition((float)videoMode.width / 2, (float)videoMode.height / 2);
 }
 
 LoadingModal::~LoadingModal()

@@ -13,12 +13,13 @@ public:
 	
 	void drawTo(sf::RenderWindow& window);
 	void updateState();
-	void processMouseClick(sf::Vector2i mousePosition);
 	void handleEvents(sf::RenderWindow& window);
 	bool getIsReady();
 	std::string getAddress();
 	unsigned short getPort();
 	bool getIsServer();
+	bool getIsCancelling();
+
 private:
 	TextComponent* title;
 	TextComponent* ipAddressTitle;
@@ -28,8 +29,10 @@ private:
 	TextComponent* okButton;
 	TextComponent* serverButton;
 	TextComponent* clientButton;
+	TextComponent* cancelButton;
+	
+	void processMouseClick(sf::Vector2i mousePosition);
 
-	//Text Input Component
 	std::string currentIpAddress;
 	std::string currentPort;
 	void handleTextEnteredEvent(sf::Uint32 enteredChar);
@@ -42,6 +45,7 @@ private:
 	bool isIpInputSelected;
 	bool isReady;
 	bool isServer;
+	bool isCancelling;
 };
 
 #endif // !IP_ADDRESS_INPUT_MODAL_H

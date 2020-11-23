@@ -53,7 +53,6 @@ void ScreenManager::updateState()
 
 	currentScreenPtr->processKeyboardInput();
 	currentScreenPtr->processMousePosition(sf::Mouse::getPosition());
-	currentScreenPtr->processMouseClick();
 	currentScreenPtr->updateState();
 
 	if (currentScreen == Screens::MainMenu)

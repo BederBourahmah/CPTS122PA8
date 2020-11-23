@@ -14,13 +14,17 @@ public:
 	void handleEvents(sf::RenderWindow& window);
 	bool getIsSinglePlayer();
 	bool getIsReady();
+	bool getIsCancelling();
+
 private:
 	TextComponent* singlePlayerButton;
 	TextComponent* multiPlayerButton;
+	TextComponent* cancelButton;
 
 	void processMouseClick(sf::Vector2i mousePosition);
 	bool isSinglePlayerSelected;
 	bool isReady;
+	bool isCancelling;
 };
 
 #endif // !SINGLE_OR_MULTIPLAYER_MODAL_H

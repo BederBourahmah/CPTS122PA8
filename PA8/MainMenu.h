@@ -25,7 +25,6 @@ public:
 	void moveSelectorUp();
 	void processKeyboardInput();
 	void processMousePosition(sf::Vector2i mouseWindowPosition);
-	void processMouseClick();
 	bool shouldExitGame();
 	Screens getSelectedScreen();
 	void handleEvents(sf::RenderWindow& window);
@@ -54,6 +53,7 @@ private:
 	SingleOrMultiplayerModal* singVsMultiModal;
 	void(ScreenManager::* onConnectToNetwork)(std::string addr, unsigned int port, bool isServer);
 	ScreenManager* parentManager;
+	void handleClickEvent(sf::Event event);
 };
 
 #endif // !MAIN_MENU_H

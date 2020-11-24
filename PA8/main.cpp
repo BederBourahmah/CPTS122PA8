@@ -18,6 +18,8 @@ int main()
     RenderWindow window(fullscreenVideoMode, "PA8", Style::Fullscreen);
     ScreenManager screenManager(fullscreenVideoMode);
 
+   
+
     while (window.isOpen())
     {
         screenManager.updateState();
@@ -32,6 +34,7 @@ int main()
         screenManager.drawTo(window);
         window.display();
     }
+
 
     return EXIT_SUCCESS;
 }

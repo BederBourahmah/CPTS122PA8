@@ -5,6 +5,7 @@
 #include "SideScroller.h"
 #include "SwarmDefense.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Screen.h"
 #include "Screens.h"
 #include "TcpClient.h"

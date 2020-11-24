@@ -1,4 +1,5 @@
 #include "SwarmDefense.h"
+#include <iostream>
 
 const static float enemyVelocity = 0.0001f;
 static const std::string scorePrefix = "Score: ";
@@ -111,6 +112,33 @@ SwarmDefense::SwarmDefense(
 
 	health = 100;
 	isGameOver = false;
+
+	std::cout << "a";
+
+
+	//Sounds
+
+	if (!Hit.loadFromFile("assets/Hit.wav")) {
+		std::cout << "Hit sound error";
+	}
+		
+	if (!Explosion.loadFromFile("assets/Explosion.wav")) {
+		std::cout << "Exp sound error";
+	}
+
+	if (!Lose.loadFromFile("assets/Lose.wav")) {
+		std::cout << "Lose sound error";
+	}
+
+	////Music
+	if (!music.openFromFile("assets/HHMega.ogg")) {
+		std::cout << "Music error";
+	}
+	music.setVolume(40);
+	music.play();
+
+	
+
 	isMultiplayer = mp;
 	parentManager = manager;
 	onSendEnemies = sendEnemiesCallback;
@@ -176,7 +204,9 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 	{
 		if (event.type == sf::Event::Closed) window.close();
 
-		if (isGameOver) return;
+		if (isGameOver) { 
+			return;
+		}
 
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
@@ -191,6 +221,10 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 						{
 							score++;
 							coins += 10;
+
+							//Hit sound
+							sound.setBuffer(Hit);
+							sound.play();
 						}
 						(*i)->die();
 					}
@@ -202,7 +236,15 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 
 void SwarmDefense::updateState()
 {
-	if (isGameOver) return;
+	if (isGameOver) { 
+		if (!isGameOverMusic) {
+			isGameOverMusic = true;
+			music.stop();
+			sound.setBuffer(Lose);
+			sound.play();
+		}
+		return; 
+	}
 	timeElapsed = clock.restart();
 	
 	destroyEnemies();
@@ -217,10 +259,16 @@ void SwarmDefense::updateState()
 			}
 
 			if ((*i)->getDidAttack())
+
 			{
 				health--;
 				enemiesCollided++;
 				(*i)->die();
+
+				//Play explosion sound
+				sound.setBuffer(Explosion);
+				sound.play();
+
 				if (health == 0)
 				{
 					isGameOver = true;
@@ -257,6 +305,8 @@ void SwarmDefense::destroyEnemies()
 	sf::Uint16 enemiesDestroyed = 0;
 	while (!enemiesToDestroy.empty())
 	{
+		
+
 		if (enemies.empty())
 		{
 			try
@@ -333,6 +383,8 @@ void SwarmDefense::checkForCollisions()
 		if ((*i)->didCollideWithOtherComponent(*playerBase))
 		{
 			(*i)->attack();
+
+			
 		}
 
 	}

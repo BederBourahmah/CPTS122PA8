@@ -205,9 +205,12 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 		if (event.type == sf::Event::Closed) window.close();
 
 		if (isGameOver) { 
-			music.stop();
-			sound.setBuffer(Lose);
-			sound.play();
+			if (!isGameOverMusic) {
+				isGameOverMusic = true;
+				music.stop();
+				sound.setBuffer(Lose);
+				sound.play();
+			}
 			return;
 		}
 
@@ -239,7 +242,15 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 
 void SwarmDefense::updateState()
 {
-	if (isGameOver) return;
+	if (isGameOver) { 
+		if (!isGameOverMusic) {
+			isGameOverMusic = true;
+			music.stop();
+			sound.setBuffer(Lose);
+			sound.play();
+		}
+		return; 
+	}
 	timeElapsed = clock.restart();
 	
 	destroyEnemies();
@@ -254,10 +265,16 @@ void SwarmDefense::updateState()
 			}
 
 			if ((*i)->getDidAttack())
+
 			{
 				health--;
 				enemiesCollided++;
 				(*i)->die();
+
+				//Play explosion sound
+				sound.setBuffer(Explosion);
+				sound.play();
+
 				if (health == 0)
 				{
 					isGameOver = true;
@@ -373,9 +390,7 @@ void SwarmDefense::checkForCollisions()
 		{
 			(*i)->attack();
 
-			//Play explosion sound
-			sound.setBuffer(Explosion);
-			sound.play();
+			
 		}
 
 	}

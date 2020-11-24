@@ -73,6 +73,7 @@ private:
 	sf::SoundBuffer Explosion;
 	sf::SoundBuffer Lose;
 	sf::Sound sound; //To hold various soundbuffers
+	bool isGameOverMusic = false;//Stores whether or not game over music is playing
 };
 
 #endif // !SWARM_DEFENSE_H

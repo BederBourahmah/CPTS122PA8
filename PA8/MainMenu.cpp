@@ -2,7 +2,7 @@
 #include "VideoHelpers.h"
 #include <iostream>
 
-MainMenu::MainMenu(sf::VideoMode const vm)
+MainMenu::MainMenu(sf::VideoMode const vm, ScreenManager *manager, void(ScreenManager::* connectToNetworkCallback)(std::string addr, unsigned int port, bool isServer))
 {
 	videoMode = vm;
 	sideScrollerText = new TextComponent("Leander.ttf", "Side Scroller Game");
@@ -25,9 +25,10 @@ MainMenu::MainMenu(sf::VideoMode const vm)
 	networkConnectionModal = nullptr;
 	server = nullptr;
 	client = nullptr;
-	isAttemptingToConnect = false;
 	loadingModal = nullptr;
 	singVsMultiModal = nullptr;
+	onConnectToNetwork = connectToNetworkCallback;
+	parentManager = manager;
 }
 
 MainMenu::~MainMenu()
@@ -142,35 +143,6 @@ void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 	}
 }
 
-void MainMenu::processMouseClick()
-{
-	if (isMenuDisabled()) return;
-	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
-
-	sf::Vector2i mousePosition = sf::Mouse::getPosition();
-	if (sideScrollerText->isPositionInMyArea(mousePosition))
-	{
-		currentSelection = MainMenuSelection::SideScroller;
-		updateSelectorPosition();
-		selectedScreen = Screens::SideScroller;
-		return;
-	}
-
-	if (swarmDefenderText->isPositionInMyArea(mousePosition))
-	{
-		singVsMultiModal = new SingleOrMultiplayerModal(videoMode);
-		return;
-	}
-
-	if (exitText->isPositionInMyArea(mousePosition))
-	{
-		currentSelection = MainMenuSelection::Exit;
-		updateSelectorPosition();
-		selectedScreen = Screens::Exit;
-		return;
-	}
-}
-
 bool MainMenu::shouldExitGame()
 {
 	return selectedScreen == Screens::Exit;
@@ -204,24 +176,29 @@ void MainMenu::handleEvents(sf::RenderWindow& window)
 		{
 			handleKeyPressEvent(event);
 		}
+
+		if (event.type == sf::Event::MouseButtonReleased)
+		{
+			handleClickEvent(event);
+		}
 	}
 }
 
 void MainMenu::updateState()
 {
-	if (isAttemptingToConnect)
-	{
-		loadingModal->updateState();
-		attemptConnection();
-		return;
-	}
-
 	if (networkConnectionModal != nullptr)
 	{
 		networkConnectionModal->updateState();
 		if (networkConnectionModal->getIsReady())
 		{
 			handleConnectToNetwork();
+			return;
+		}
+
+		if (networkConnectionModal->getIsCancelling())
+		{
+			delete networkConnectionModal;
+			networkConnectionModal = nullptr;
 		}
 	}
 
@@ -245,6 +222,13 @@ void MainMenu::updateState()
 				singVsMultiModal = nullptr;
 				return;
 			}
+		}
+
+		if (singVsMultiModal->getIsCancelling())
+		{
+			delete singVsMultiModal;
+			singVsMultiModal = nullptr;
+			return;
 		}
 	}
 }
@@ -313,36 +297,42 @@ void MainMenu::handleConnectToNetwork()
 	std::string addr = networkConnectionModal->getAddress();
 	unsigned int port = networkConnectionModal->getPort();
 	bool isServer = networkConnectionModal->getIsServer();
-	if (isServer)
-	{
-		server = new TcpServer(port);
-	}
-	else {
-		client = new TcpClient(addr, port);
-	}
-	loadingModal = new LoadingModal(videoMode);
+	((*parentManager).*onConnectToNetwork)(addr, port, isServer);
 	
-	isAttemptingToConnect = true;
 	delete networkConnectionModal;
 	networkConnectionModal = nullptr;
 }
 
-void MainMenu::attemptConnection()
-{
-	if (server != nullptr)
-	{
-		server->attemptToConnect();
-		if (server->getDidConnect())
-		{
-			isAttemptingToConnect = false;
-			delete loadingModal;
-			loadingModal = nullptr;
-		}
-	}
-	return;
-}
-
 bool MainMenu::isMenuDisabled()
 {
-	return loadingModal != nullptr || networkConnectionModal != nullptr || singVsMultiModal != nullptr;
+	return loadingModal != nullptr || networkConnectionModal != nullptr || singVsMultiModal != nullptr || isLoading;
+}
+
+void MainMenu::handleClickEvent(sf::Event event)
+{
+	if (event.type != sf::Event::MouseButtonReleased || isMenuDisabled() || event.mouseButton.button != sf::Mouse::Left) return;
+
+
+	sf::Vector2i mousePosition(event.mouseButton.x, event.mouseButton.y);
+	if (sideScrollerText->isPositionInMyArea(mousePosition))
+	{
+		currentSelection = MainMenuSelection::SideScroller;
+		updateSelectorPosition();
+		selectedScreen = Screens::SideScroller;
+		return;
+	}
+
+	if (swarmDefenderText->isPositionInMyArea(mousePosition))
+	{
+		singVsMultiModal = new SingleOrMultiplayerModal(videoMode);
+		return;
+	}
+
+	if (exitText->isPositionInMyArea(mousePosition))
+	{
+		currentSelection = MainMenuSelection::Exit;
+		updateSelectorPosition();
+		selectedScreen = Screens::Exit;
+		return;
+	}
 }

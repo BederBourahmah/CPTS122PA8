@@ -71,10 +71,6 @@ void SideScroller::processMousePosition(sf::Vector2i mouseWindowPosition)
 {
 }
 
-void SideScroller::processMouseClick()
-{
-}
-
 bool SideScroller::shouldExitGame()
 {
 	return shouldGoBackToMainMenu;

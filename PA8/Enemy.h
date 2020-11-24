@@ -13,6 +13,11 @@ class Enemy : public MoveableRectangle
 {
 public:
 	/// <summary>
+	/// Do not use this default constructor. It will cause undefined behavior.
+	/// </summary>
+	Enemy() {}
+
+	/// <summary>
 	/// Always use this constructor and never the default constructor. This is the only constructor that will correctly initialize the
 	/// enemy position and size and animation textures.
 	/// </summary>

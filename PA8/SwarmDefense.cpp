@@ -205,12 +205,6 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 		if (event.type == sf::Event::Closed) window.close();
 
 		if (isGameOver) { 
-			if (!isGameOverMusic) {
-				isGameOverMusic = true;
-				music.stop();
-				sound.setBuffer(Lose);
-				sound.play();
-			}
 			return;
 		}
 

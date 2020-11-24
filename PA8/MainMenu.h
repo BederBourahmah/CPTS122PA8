@@ -154,13 +154,46 @@ private:
 	/// </summary>
 	IpAddressInputModal* networkConnectionModal;
 
+	/// <summary>
+	/// Handles the user's request to connect to the network, calling the callback function passed in to the constructor.
+	/// </summary>
 	void handleConnectToNetwork();
+
+	/// <summary>
+	/// A pointer to the loading modal.
+	/// </summary>
 	LoadingModal* loadingModal;
+
+	/// <summary>
+	/// The video mode that will render this screen.
+	/// </summary>
 	sf::VideoMode videoMode;
+
+	/// <summary>
+	/// Is set to true when the options in the menu are disabled, such as when a modal appears.
+	/// </summary>
+	/// <returns>True when all main menu options are disabled.</returns>
 	bool isMenuDisabled();
+
+	/// <summary>
+	/// A pointer to the single or multiplayer selection modal.
+	/// </summary>
 	SingleOrMultiplayerModal* singVsMultiModal;
+
+	/// <summary>
+	/// The callback function for connecting to the network.
+	/// </summary>
 	void(ScreenManager::* onConnectToNetwork)(std::string addr, unsigned int port, bool isServer);
+
+	/// <summary>
+	/// The parent ScreenManager that has this screen as one of its members as well as the callback functions.
+	/// </summary>
 	ScreenManager* parentManager;
+
+	/// <summary>
+	/// Handles a click event.
+	/// </summary>
+	/// <param name="event">A click event.</param>
 	void handleClickEvent(sf::Event event);
 };
 

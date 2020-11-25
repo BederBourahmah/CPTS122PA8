@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GUIComponent.cpp" />
+    <ClCompile Include="HowToPlayMenu.cpp" />
     <ClCompile Include="IpAddressInputModal.cpp" />
     <ClCompile Include="LoadingModal.cpp" />
     <ClCompile Include="main.cpp" />
@@ -162,7 +163,6 @@
     <ClCompile Include="ModalBorder.cpp" />
     <ClCompile Include="MoveableRectangle.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
-    <ClCompile Include="SideScroller.cpp" />
     <ClCompile Include="SingleOrMultiplayerModal.cpp" />
     <ClCompile Include="SwarmDefense.cpp" />
     <ClCompile Include="TcpClient.cpp" />
@@ -173,6 +173,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GhostAnimation.h" />
     <ClInclude Include="GUIComponent.h" />
+    <ClInclude Include="HowToPlayMenu.h" />
     <ClInclude Include="IpAddressInputModal.h" />
     <ClInclude Include="LoadingModal.h" />
     <ClInclude Include="MainMenu.h" />
@@ -186,7 +187,6 @@
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="Screens.h" />
-    <ClInclude Include="SideScroller.h" />
     <ClInclude Include="SingleOrMultiplayerModal.h" />
     <ClInclude Include="SwarmDefense.h" />
     <ClInclude Include="TcpClient.h" />

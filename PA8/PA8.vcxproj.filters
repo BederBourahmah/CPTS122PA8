@@ -69,9 +69,6 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="SideScroller.cpp">
-      <Filter>Source Files\Screens</Filter>
-    </ClCompile>
     <ClCompile Include="MoveableRectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -98,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="SingleOrMultiplayerModal.cpp">
       <Filter>Source Files\UserInterface\Modals</Filter>
+    </ClCompile>
+    <ClCompile Include="HowToPlayMenu.cpp">
+      <Filter>Source Files\Screens</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\GameObjects</Filter>
@@ -134,9 +134,6 @@
     <ClInclude Include="MainMenuSelection.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
-    <ClInclude Include="SideScroller.h">
-      <Filter>Header Files\Screens</Filter>
-    </ClInclude>
     <ClInclude Include="MoveableRectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -166,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="SingleOrMultiplayerModal.h">
       <Filter>Header Files\UserInterface\Modals</Filter>
+    </ClInclude>
+    <ClInclude Include="HowToPlayMenu.h">
+      <Filter>Header Files\Screens</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\GameObjects</Filter>

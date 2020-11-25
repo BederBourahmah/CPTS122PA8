@@ -2,7 +2,7 @@
 #define SCREEN_MANAGER_H
 
 #include "MainMenu.h"
-#include "SideScroller.h"
+#include "HowToPlayMenu.h"
 #include "SwarmDefense.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -27,7 +27,7 @@ public:
 
 private:
 	MainMenu* mainMenu;
-	SideScroller* sideScroller;
+	HowToPlayMenu* howToPlayMenu;
 	SwarmDefense* swarmDefense;
 	Screens currentScreen;
 	void initializeSelectedScreen(Screens selectedScreen);

@@ -39,6 +39,7 @@ void HowToPlayMenu::drawTo(sf::RenderWindow& window)
 	rulesTextHeader->drawTo(window);
 	rulesTextBody->drawTo(window);
 	returnText->drawTo(window);
+	selector->drawTo(window);
 }
 
 void HowToPlayMenu::processKeyboardInput()

@@ -79,23 +79,41 @@ bool HowToPlayMenu::shouldExitGame()
 
 void HowToPlayMenu::handleEvents(sf::RenderWindow& window)
 {
-	if (singVsMultiModal != nullptr)
-	{
-		singVsMultiModal->handleEvents(window);
-		return;
-	}
-
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
-		if (event.type == sf::Event::Closed) window.close();
-
 		if (event.type == sf::Event::KeyPressed)
 		{
 			handleKeyPressEvent(event);
 		}
+
+		if (event.type == sf::Event::MouseButtonReleased)
+		{
+			handleClickEvent(event);
+		}
 	}
 }
+
+void HowToPlayMenu::handleClickEvent(sf::Event event)
+{
+	if (event.type != sf::Event::MouseButtonReleased || isMenuDisabled() || event.mouseButton.button != sf::Mouse::Left) 
+		return;
+
+	sf::Vector2i mousePosition(event.mouseButton.x, event.mouseButton.y);
+	if (returnText->isPositionInMyArea(mousePosition))
+	{
+		shouldGoBackToMainMenu = true;
+		currentSelection = MainMenuSelection::SwarmDefender;
+		updateSelectorPosition();
+		selectedScreen = Screens::MainMenu;
+	}
+}
+
+bool HowToPlayMenu::isMenuDisabled()
+{
+	return singVsMultiModal != nullptr || isLoading;
+}
+
 
 void HowToPlayMenu::updateState()
 {
@@ -112,7 +130,8 @@ void HowToPlayMenu::updateSelectorPosition()
 
 void HowToPlayMenu::handleKeyPressEvent(sf::Event event)
 {
-	if (event.type != sf::Event::KeyPressed) return;
+	if (event.type != sf::Event::KeyPressed) 
+		return;
 
 	if (event.key.code == sf::Keyboard::Down)
 	{
@@ -134,13 +153,6 @@ Screens HowToPlayMenu::getSelectedScreen()
 
 void HowToPlayMenu::moveSelectorDown()
 {
-	if (currentSelection == MainMenuSelection::Exit)
-	{
-		currentSelection = MainMenuSelection::Exit;
-		updateSelectorPosition();
-		return;
-	}
-	
 	currentSelection = MainMenuSelection::Exit;
 	updateSelectorPosition();
 	return;
@@ -148,13 +160,6 @@ void HowToPlayMenu::moveSelectorDown()
 
 void HowToPlayMenu::moveSelectorUp()
 {
-	if (currentSelection == MainMenuSelection::Exit)
-	{
-		currentSelection = MainMenuSelection::Exit;
-		updateSelectorPosition();
-		return;
-	}
-
 	currentSelection = MainMenuSelection::Exit;
 	updateSelectorPosition();
 	return;

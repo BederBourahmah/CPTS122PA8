@@ -34,6 +34,8 @@ private:
 	bool shouldGoBackToMainMenu;
 	bool loadRulesMenuBackgroundTexture();
 	bool loadRulesMenuBackgroundSprite(sf::VideoMode const videoMode);
+	void handleClickEvent(sf::Event event);
+	bool isMenuDisabled();
 
 public:	
 	HowToPlayMenu(sf::VideoMode const vm);

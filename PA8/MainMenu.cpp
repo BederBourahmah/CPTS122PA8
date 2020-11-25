@@ -339,8 +339,8 @@ bool MainMenu::isMenuDisabled()
 
 void MainMenu::handleClickEvent(sf::Event event)
 {
-	if (event.type != sf::Event::MouseButtonReleased || isMenuDisabled() || event.mouseButton.button != sf::Mouse::Left) return;
-
+	if (event.type != sf::Event::MouseButtonReleased || isMenuDisabled() || event.mouseButton.button != sf::Mouse::Left) 
+		return;
 
 	sf::Vector2i mousePosition(event.mouseButton.x, event.mouseButton.y);
 	if (howToPlayText->isPositionInMyArea(mousePosition))

@@ -26,7 +26,6 @@ public:
 	~HowToPlayMenu();
 	void drawTo(sf::RenderWindow& window);
 	void processKeyboardInput();
-	void processMouseClick();
 	void processMousePosition(sf::Vector2i mouseWindowPosition);
 	void updateState();
 	bool shouldExitGame();

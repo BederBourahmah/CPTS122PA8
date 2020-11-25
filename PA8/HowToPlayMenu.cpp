@@ -44,17 +44,6 @@ void HowToPlayMenu::drawTo(sf::RenderWindow& window)
 
 void HowToPlayMenu::processKeyboardInput()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-	{
-		shouldGoBackToMainMenu = true;
-	}
-}
-
-void HowToPlayMenu::processMouseClick()
-{
-	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
-
-	shouldGoBackToMainMenu = true;
 }
 
 bool HowToPlayMenu::shouldExitGame()

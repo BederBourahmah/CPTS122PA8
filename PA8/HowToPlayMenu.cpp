@@ -4,7 +4,7 @@ HowToPlayMenu::HowToPlayMenu(sf::VideoMode const vm)
 {
 	videoMode = vm;
 	rulesTextHeader = new TextComponent("Leander.ttf", "HOW TO PLAY");
-	rulesTextBody = new TextComponent("Leander.ttf", "Ghosts are attacking the castle!\n Click on them to shoot, but\n don't let them get too close!\n");
+	rulesTextBody = new TextComponent("Leander.ttf", "Ghosts are attacking the castle!\n Click on them to shoot, but\n do not let them get too close!\n");
 	returnText = new TextComponent("Leander.ttf", "Return");
 	selector = new MenuSelector(returnText->getWidth(), returnText->getHeight());
 	rulesTextHeader->centerHorizontal(videoMode);

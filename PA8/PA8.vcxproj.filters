@@ -69,9 +69,6 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="SideScroller.cpp">
-      <Filter>Source Files\Screens</Filter>
-    </ClCompile>
     <ClCompile Include="MoveableRectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -136,9 +133,6 @@
     </ClInclude>
     <ClInclude Include="MainMenuSelection.h">
       <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="SideScroller.h">
-      <Filter>Header Files\Screens</Filter>
     </ClInclude>
     <ClInclude Include="MoveableRectangle.h">
       <Filter>Header Files</Filter>

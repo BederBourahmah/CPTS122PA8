@@ -143,35 +143,6 @@ void MainMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
 	}
 }
 
-void MainMenu::processMouseClick()
-{
-	if (isMenuDisabled()) return;
-	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
-
-	sf::Vector2i mousePosition = sf::Mouse::getPosition();
-	if (howToPlayText->isPositionInMyArea(mousePosition))
-	{
-		currentSelection = MainMenuSelection::HowToPlayMenu;
-		updateSelectorPosition();
-		selectedScreen = Screens::HowToPlayMenu;
-		return;
-	}
-
-	if (swarmDefenderText->isPositionInMyArea(mousePosition))
-	{
-		singVsMultiModal = new SingleOrMultiplayerModal(videoMode);
-		return;
-	}
-
-	if (exitText->isPositionInMyArea(mousePosition))
-	{
-		currentSelection = MainMenuSelection::Exit;
-		updateSelectorPosition();
-		selectedScreen = Screens::Exit;
-		return;
-	}
-}
-
 bool MainMenu::shouldExitGame()
 {
 	return selectedScreen == Screens::Exit;

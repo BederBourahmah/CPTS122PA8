@@ -25,12 +25,7 @@ class SwarmDefense : public Screen
 {
 public:
 	/// <summary>
-	/// Do not use this constructor. It will cause undefined behavior.
-	/// </summary>
-	SwarmDefense(){}
-
-	/// <summary>
-	/// Only use this constructor. It initializes several critical internal members.
+	/// Initializes several critical internal members.
 	/// </summary>
 	/// <param name="vm">The video mode that will render this screen.</param>
 	/// <param name="mp">Whether the game is in multiplayer mode.</param>

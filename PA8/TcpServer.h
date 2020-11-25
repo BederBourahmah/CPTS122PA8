@@ -11,12 +11,7 @@ class TcpServer
 {
 public:
 	/// <summary>
-	/// Do not use this default constructor. It will caused undefined behavior.
-	/// </summary>
-	TcpServer() {}
-
-	/// <summary>
-	/// Only use this constructor. It sets the port which this server will listen to for incoming client connections.
+	/// Initializes the port which this server will listen to for incoming client connections.
 	/// </summary>
 	/// <param name="port">The port this server will listen to for incoming client connections.</param>
 	TcpServer(unsigned short port);

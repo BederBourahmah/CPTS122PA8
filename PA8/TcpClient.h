@@ -12,12 +12,6 @@ class TcpClient
 {
 public:
 	/// <summary>
-	/// Do not use this default constructor. It will cause undefined behavior.
-	/// </summary>
-	TcpClient() {}
-
-	/// <summary>
-	/// Only use this constructor as the default constructor will produce unexpected results.
 	/// This initializes the address and port of the server.
 	/// </summary>
 	/// <param name="addr">The IP address of the server.</param>

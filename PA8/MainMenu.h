@@ -19,12 +19,7 @@ class MainMenu : public Screen
 {
 public:
 	/// <summary>
-	/// Do not use this default constructor. It will cause undefined behavior.
-	/// </summary>
-	MainMenu() {}
-
-	/// <summary>
-	/// Only use this constructor. It will set the values of internal copy of the video mode, a pointer to the parent screen manager, and a callback function for
+	/// Initializes the internal copy of the video mode, a pointer to the parent screen manager, and a callback function for
 	/// connecting to the network.
 	/// </summary>
 	/// <param name="vm">The video mode that will render this screen.</param>

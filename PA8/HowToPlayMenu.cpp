@@ -1,6 +1,6 @@
 #include "HowToPlayMenu.h"
 
-HowToPlayMenu::HowToPlayMenu(sf::VideoMode const vm)
+HowToPlayMenu::HowToPlayMenu(sf::VideoMode const vm, sf::RenderWindow& window)
 {
 	videoMode = vm;
 	rulesTextHeader = new TextComponent("Leander.ttf", "HOW TO PLAY");
@@ -17,6 +17,11 @@ HowToPlayMenu::HowToPlayMenu(sf::VideoMode const vm)
 	{
 		std::cout << "Failed to load background sprite." << std::endl;
 	}
+	window.draw(backgroundSprite);
+	rulesTextHeader->drawTo(window);
+	rulesTextBody->drawTo(window);
+	returnText->drawTo(window);
+	selector->drawTo(window);
 }
 
 HowToPlayMenu::~HowToPlayMenu()
@@ -31,15 +36,6 @@ HowToPlayMenu::~HowToPlayMenu()
 	selector = nullptr;
 }
 
-void HowToPlayMenu::drawTo(sf::RenderWindow& window)
-{
-	window.draw(backgroundSprite);
-	rulesTextHeader->drawTo(window);
-	rulesTextBody->drawTo(window);
-	returnText->drawTo(window);
-	selector->drawTo(window);
-}
-
 void HowToPlayMenu::processKeyboardInput()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -48,28 +44,11 @@ void HowToPlayMenu::processKeyboardInput()
 	}
 }
 
-void HowToPlayMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
-{
-	if (returnText->isPositionInMyArea(mouseWindowPosition))
-	{
-		currentSelection = MainMenuSelection::Exit;
-		updateSelectorPosition();
-		return;
-	}
-}
-
 void HowToPlayMenu::processMouseClick()
 {
 	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) return;
 
-	sf::Vector2i mousePosition = sf::Mouse::getPosition();
-	if (returnText->isPositionInMyArea(mousePosition))
-	{
-		currentSelection = MainMenuSelection::Exit; /////
-		updateSelectorPosition();
-		selectedScreen = Screens::Exit;
-		return;
-	}
+	shouldGoBackToMainMenu = true;
 }
 
 bool HowToPlayMenu::shouldExitGame()
@@ -84,85 +63,14 @@ void HowToPlayMenu::handleEvents(sf::RenderWindow& window)
 	{
 		if (event.type == sf::Event::KeyPressed)
 		{
-			handleKeyPressEvent(event);
+			shouldGoBackToMainMenu = true;
 		}
 
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
-			handleClickEvent(event);
+			shouldGoBackToMainMenu = true;
 		}
 	}
-}
-
-void HowToPlayMenu::handleClickEvent(sf::Event event)
-{
-	if (event.type != sf::Event::MouseButtonReleased || isMenuDisabled() || event.mouseButton.button != sf::Mouse::Left) 
-		return;
-
-	sf::Vector2i mousePosition(event.mouseButton.x, event.mouseButton.y);
-	if (returnText->isPositionInMyArea(mousePosition))
-	{
-		shouldGoBackToMainMenu = true;
-		currentSelection = MainMenuSelection::SwarmDefender;
-		updateSelectorPosition();
-		selectedScreen = Screens::MainMenu;
-	}
-}
-
-bool HowToPlayMenu::isMenuDisabled()
-{
-	return singVsMultiModal != nullptr || isLoading;
-}
-
-
-void HowToPlayMenu::updateState()
-{
-	
-}
-
-void HowToPlayMenu::updateSelectorPosition()
-{
-	if (currentSelection == MainMenuSelection::Exit)
-	{
-		selector->moveTo(returnText->getCenterPosX(), returnText->getCenterPosY());
-	}
-}
-
-void HowToPlayMenu::handleKeyPressEvent(sf::Event event)
-{
-	if (event.type != sf::Event::KeyPressed) 
-		return;
-
-	if (event.key.code == sf::Keyboard::Down)
-	{
-		moveSelectorDown();
-		return;
-	}
-
-	if (event.key.code == sf::Keyboard::Up)
-	{
-		moveSelectorUp();
-		return;
-	}
-}
-
-Screens HowToPlayMenu::getSelectedScreen()
-{
-	return selectedScreen;
-}
-
-void HowToPlayMenu::moveSelectorDown()
-{
-	currentSelection = MainMenuSelection::Exit;
-	updateSelectorPosition();
-	return;
-}
-
-void HowToPlayMenu::moveSelectorUp()
-{
-	currentSelection = MainMenuSelection::Exit;
-	updateSelectorPosition();
-	return;
 }
 
 bool HowToPlayMenu::loadRulesMenuBackgroundTexture()

@@ -144,7 +144,7 @@ void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 		swarmDefense = new SwarmDefense(videoMode, isMultiplayer(), this, &ScreenManager::sendEnemiesToOpponent, &ScreenManager::getEnemiesFromOpponent);
 		break;
 	case Screens::HowToPlayMenu: 
-		howToPlayMenu = new HowToPlayMenu(videoMode); /////
+		howToPlayMenu = new HowToPlayMenu(videoMode);
 		return;
 	case Screens::Exit:
 		break;

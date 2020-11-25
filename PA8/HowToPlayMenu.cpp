@@ -1,6 +1,6 @@
 #include "HowToPlayMenu.h"
 
-HowToPlayMenu::HowToPlayMenu(sf::VideoMode const vm, sf::RenderWindow& window)
+HowToPlayMenu::HowToPlayMenu(sf::VideoMode const vm)
 {
 	videoMode = vm;
 	rulesTextHeader = new TextComponent("Leander.ttf", "HOW TO PLAY");
@@ -17,11 +17,8 @@ HowToPlayMenu::HowToPlayMenu(sf::VideoMode const vm, sf::RenderWindow& window)
 	{
 		std::cout << "Failed to load background sprite." << std::endl;
 	}
-	window.draw(backgroundSprite);
-	rulesTextHeader->drawTo(window);
-	rulesTextBody->drawTo(window);
-	returnText->drawTo(window);
-	selector->drawTo(window);
+	
+	selector->moveTo(returnText->getCenterPosX(), returnText->getCenterPosY());;
 }
 
 HowToPlayMenu::~HowToPlayMenu()
@@ -34,6 +31,14 @@ HowToPlayMenu::~HowToPlayMenu()
 	returnText = nullptr;
 	delete selector;
 	selector = nullptr;
+}
+
+void HowToPlayMenu::drawTo(sf::RenderWindow& window)
+{
+	window.draw(backgroundSprite);
+	rulesTextHeader->drawTo(window);
+	rulesTextBody->drawTo(window);
+	returnText->drawTo(window);
 }
 
 void HowToPlayMenu::processKeyboardInput()
@@ -95,4 +100,14 @@ bool HowToPlayMenu::loadRulesMenuBackgroundSprite(sf::VideoMode const videoMode)
 	backgroundSprite.setTexture(backgroundTexture);
 	backgroundSprite.setScale((float)videoMode.width / backgroundWidth, (float)videoMode.height / backgroundHeight);
 	return true;
+}
+
+void HowToPlayMenu::processMousePosition(sf::Vector2i mouseWindowPosition)
+{
+
+}
+
+void HowToPlayMenu::updateState()
+{
+
 }

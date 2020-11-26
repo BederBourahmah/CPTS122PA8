@@ -2,9 +2,10 @@
 #define SCREEN_MANAGER_H
 
 #include "MainMenu.h"
-#include "SideScroller.h"
+#include "HowToPlayMenu.h"
 #include "SwarmDefense.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Screen.h"
 #include "Screens.h"
 #include "TcpClient.h"
@@ -74,11 +75,10 @@ private:
 	/// </summary>
 	MainMenu* mainMenu;
 
-	SideScroller* sideScroller;
-
 	/// <summary>
 	/// The sware defense screen.
 	/// </summary>
+	HowToPlayMenu* howToPlayMenu;
 	SwarmDefense* swarmDefense;
 
 	/// <summary>

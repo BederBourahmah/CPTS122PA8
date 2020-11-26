@@ -80,10 +80,7 @@ public:
 	void updateState();
 
 private:
-	/// <summary>
-	/// A pointer to the text component representing the button for selecting the side scroller game.
-	/// </summary>
-	TextComponent* sideScrollerText;
+	TextComponent* howToPlayText;
 
 	/// <summary>
 	/// A pointer to the text component representing the button for selecting the swarm defender game.

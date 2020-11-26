@@ -6,7 +6,7 @@
 /// </summary>
 enum class MainMenuSelection
 {
-	SideScroller,
+	HowToPlayMenu,
 	SwarmDefender,
 	Exit
 };

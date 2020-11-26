@@ -5,6 +5,7 @@
 #include "MoveableRectangle.h"
 #include "TextComponent.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <list>
 #include <random>
 #include <queue>
@@ -81,6 +82,7 @@ public:
 	/// </summary>
 	/// <param name="Price">The price of the current item.</param>
 	void purchase(int Price);
+	
 
 private:
 	/// <summary>
@@ -218,6 +220,14 @@ private:
 	/// An array of textures containing the images for the different ghost frames.
 	/// </summary>
 	sf::Texture ghostTextures[14];
+
+	//Audio
+	sf::Music music;
+	sf::SoundBuffer Hit;
+	sf::SoundBuffer Explosion;
+	sf::SoundBuffer Lose;
+	sf::Sound sound; //To hold various soundbuffers
+	bool isGameOverMusic = false;//Stores whether or not game over music is playing
 };
 
 #endif // !SWARM_DEFENSE_H

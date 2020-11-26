@@ -1,46 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIComponent.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="HowToPlayMenu.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="IpAddressInputModal.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadingModal.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuSelector.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Modal.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="ModalBorder.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveableRectangle.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="ScreenManager.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="SingleOrMultiplayerModal.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="SwarmDefense.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="TcpClient.cpp">
@@ -49,66 +13,48 @@
     <ClCompile Include="TcpServer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIComponent.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="IpAddressInputModal.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="HowToPlayMenu.cpp">
+      <Filter>Source\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingModal.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSelector.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Modal.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ModalBorder.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveableRectangle.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleOrMultiplayerModal.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SwarmDefense.cpp">
+      <Filter>Source\Screens</Filter>
+    </ClCompile>
     <ClCompile Include="TextComponent.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Enemy.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GhostAnimation.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIComponent.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="HowToPlayMenu.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="IpAddressInputModal.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadingModal.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenuSelection.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuSelector.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Modal.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ModalBorder.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ModalSize.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveableComponent.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveableRectangle.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Screen.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="ScreenManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Screens.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="SingleOrMultiplayerModal.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="SwarmDefense.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="TcpClient.h">
@@ -117,11 +63,65 @@
     <ClInclude Include="TcpServer.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="TextComponent.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="VideoHelpers.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="SwarmDefense.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostAnimation.h">
+      <Filter>Headers\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIComponent.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HowToPlayMenu.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="IpAddressInputModal.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Modal.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingModal.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuSelection.h">
+      <Filter>Headers\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSelector.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModalBorder.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModalSize.h">
+      <Filter>Headers\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveableComponent.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveableRectangle.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens.h">
+      <Filter>Headers\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleOrMultiplayerModal.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>Headers\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +130,21 @@
     </Filter>
     <Filter Include="Headers">
       <UniqueIdentifier>{e77562bd-1fd3-47a8-918d-ecd32ec7d1f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Screens">
+      <UniqueIdentifier>{0ebb7e36-5f21-4865-b660-7ff72f2980ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Components">
+      <UniqueIdentifier>{90922fd8-1461-49db-bffe-6b859c23834f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Enum">
+      <UniqueIdentifier>{f398ad6b-e3b7-4dfe-8ac6-61cbf7306b2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Components">
+      <UniqueIdentifier>{95be0d94-ba77-4998-9020-87bfdcf18d68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Screens">
+      <UniqueIdentifier>{db9feb8f-bc02-4831-ac26-993579f73040}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

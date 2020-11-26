@@ -227,6 +227,11 @@ private:
 	/// </summary>
 	ShopModal* shopModal;
 
+	/// <summary>
+	/// Is true when the shop modal is displayed.
+	/// </summary>
+	bool isShopModalDisplayed;
+
 	//Audio
 	sf::Music music;
 	sf::SoundBuffer Hit;

@@ -152,11 +152,6 @@ private:
 	void handleConnectToNetwork();
 
 	/// <summary>
-	/// A pointer to the loading modal.
-	/// </summary>
-	LoadingModal* loadingModal;
-
-	/// <summary>
 	/// The video mode that will render this screen.
 	/// </summary>
 	sf::VideoMode videoMode;
@@ -171,6 +166,16 @@ private:
 	/// A pointer to the single or multiplayer selection modal.
 	/// </summary>
 	SingleOrMultiplayerModal* singVsMultiModal;
+
+	/// <summary>
+	/// Is set to true when the singVsMultiModal is displayed.
+	/// </summary>
+	bool isSingleVsMultiplayerModalDisplayed;
+
+	/// <summary>
+	/// Closes the SingleOrMultiplayerModal.
+	/// </summary>
+	void closeSingleVsMultiplayerModal();
 
 	/// <summary>
 	/// The callback function for connecting to the network.

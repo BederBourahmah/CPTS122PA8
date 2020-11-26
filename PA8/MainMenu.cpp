@@ -4,6 +4,7 @@
 
 MainMenu::MainMenu(sf::VideoMode const vm, ScreenManager *manager, void(ScreenManager::* connectToNetworkCallback)(std::string addr, unsigned int port, bool isServer))
 {
+	isSingleVsMultiplayerModalDisplayed = false;
 	videoMode = vm;
 	howToPlayText = new TextComponent("Leander.ttf", "How To Play");
 	swarmDefenderText = new TextComponent("Leander.ttf", "Swarm Defender Game");
@@ -23,8 +24,7 @@ MainMenu::MainMenu(sf::VideoMode const vm, ScreenManager *manager, void(ScreenMa
 	}
 	selectedScreen = Screens::MainMenu;
 	networkConnectionModal = nullptr;
-	loadingModal = nullptr;
-	singVsMultiModal = nullptr;
+	singVsMultiModal = new SingleOrMultiplayerModal(videoMode);
 	onConnectToNetwork = connectToNetworkCallback;
 	parentManager = manager;
 }
@@ -39,8 +39,6 @@ MainMenu::~MainMenu()
 	exitText = nullptr;
 	delete selector;
 	selector = nullptr;
-	delete loadingModal;
-	loadingModal = nullptr;
 	delete singVsMultiModal;
 	singVsMultiModal = nullptr;
 }
@@ -54,9 +52,7 @@ void MainMenu::drawTo(sf::RenderWindow &window)
 	selector->drawTo(window);
 	if (networkConnectionModal != nullptr) networkConnectionModal->drawTo(window);
 		
-	if (loadingModal != nullptr) loadingModal->drawTo(window);
-
-	if (singVsMultiModal != nullptr) singVsMultiModal->drawTo(window);
+	if (isSingleVsMultiplayerModalDisplayed) singVsMultiModal->drawTo(window);
 }
 
 void MainMenu::moveSelectorDown()
@@ -155,7 +151,7 @@ void MainMenu::handleEvents(sf::RenderWindow& window)
 		return;
 	}
 
-	if (singVsMultiModal != nullptr)
+	if (isSingleVsMultiplayerModalDisplayed && singVsMultiModal != nullptr)
 	{
 		singVsMultiModal->handleEvents(window);
 		return;
@@ -196,14 +192,13 @@ void MainMenu::updateState()
 		}
 	}
 
-	if (singVsMultiModal != nullptr)
+	if (isSingleVsMultiplayerModalDisplayed && singVsMultiModal != nullptr)
 	{
 		if (singVsMultiModal->getIsReady())
 		{
 			if (singVsMultiModal->getIsSinglePlayer())
 			{
-				delete singVsMultiModal;
-				singVsMultiModal = nullptr;
+				closeSingleVsMultiplayerModal();
 				currentSelection = MainMenuSelection::SwarmDefender;
 				updateSelectorPosition();
 				selectedScreen = Screens::SwarmDefense;
@@ -212,16 +207,14 @@ void MainMenu::updateState()
 			else
 			{
 				networkConnectionModal = new IpAddressInputModal(videoMode);
-				delete singVsMultiModal;
-				singVsMultiModal = nullptr;
+				closeSingleVsMultiplayerModal();
 				return;
 			}
 		}
 
 		if (singVsMultiModal->getIsCancelling())
 		{
-			delete singVsMultiModal;
-			singVsMultiModal = nullptr;
+			closeSingleVsMultiplayerModal();
 			return;
 		}
 	}
@@ -299,7 +292,13 @@ void MainMenu::handleConnectToNetwork()
 
 bool MainMenu::isMenuDisabled()
 {
-	return loadingModal != nullptr || networkConnectionModal != nullptr || singVsMultiModal != nullptr || isLoading;
+	return networkConnectionModal != nullptr || isSingleVsMultiplayerModalDisplayed || isLoading;
+}
+
+void MainMenu::closeSingleVsMultiplayerModal()
+{
+	isSingleVsMultiplayerModalDisplayed = false;
+	singVsMultiModal->resetState();
 }
 
 void MainMenu::handleClickEvent(sf::Event event)
@@ -318,7 +317,7 @@ void MainMenu::handleClickEvent(sf::Event event)
 
 	if (swarmDefenderText->isPositionInMyArea(mousePosition))
 	{
-		singVsMultiModal = new SingleOrMultiplayerModal(videoMode);
+		isSingleVsMultiplayerModalDisplayed = true;
 		return;
 	}
 

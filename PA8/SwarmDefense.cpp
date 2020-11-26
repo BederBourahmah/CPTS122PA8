@@ -15,7 +15,7 @@ SwarmDefense::SwarmDefense(
 	sf::Uint16(ScreenManager::* getEnemiesCallback)()
 	)
 {
-	shopModal = nullptr;
+	isShopModalDisplayed = false;
 	videoMode = vm;
 	if (!castleTexture.loadFromFile("assets/castle.png"))
 	{
@@ -146,6 +146,7 @@ SwarmDefense::SwarmDefense(
 	onGetEnemies = getEnemiesCallback;
 	enemiesCollided = 0;
 	unitOfDistance = hypotf((float)videoMode.height, (float)videoMode.width)*0.01f;
+	shopModal = new ShopModal(videoMode);
 	clock.restart();
 }
 
@@ -182,7 +183,7 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 		(*i)->drawTo(window);
 	}
 
-	if (shopModal != nullptr)
+	if (isShopModalDisplayed)
 	{
 		shopModal->drawTo(window);
 	}
@@ -193,11 +194,6 @@ void SwarmDefense::processKeyboardInput()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		shouldGoBackToMainMenu = true;
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && shopModal == nullptr)
-	{
-		shopModal = new ShopModal(videoMode);
 	}
 }
 
@@ -243,6 +239,11 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 					}
 				}
 			}
+		}
+
+		if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::S)
+		{
+			isShopModalDisplayed = true;
 		}
 	}
 }

@@ -71,6 +71,13 @@ bool SingleOrMultiplayerModal::getIsCancelling()
 	return isCancelling;
 }
 
+void SingleOrMultiplayerModal::resetState()
+{
+	isReady = false;
+	isSinglePlayerSelected = true;
+	isCancelling = false;
+}
+
 void SingleOrMultiplayerModal::processMouseClick(sf::Vector2i mousePosition)
 {
 	if (singlePlayerButton->isPositionInMyArea(mousePosition))

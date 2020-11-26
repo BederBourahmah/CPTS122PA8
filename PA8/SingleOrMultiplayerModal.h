@@ -48,6 +48,11 @@ public:
 	/// <returns>True if the user wants to go back to the main menu.</returns>
 	bool getIsCancelling();
 
+	/// <summary>
+	/// Resets the state of this modal to prepare it for next render.
+	/// </summary>
+	void resetState();
+
 private:
 	/// <summary>
 	/// A pointer to the text component for the single player button.

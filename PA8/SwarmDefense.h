@@ -13,6 +13,7 @@
 #include <iostream>
 #include "Enemy.h"
 #include "GhostAnimation.h"
+#include "ShopModal.h"
 
 /// <summary>
 /// Forward declaration of screen manager.
@@ -220,6 +221,11 @@ private:
 	/// An array of textures containing the images for the different ghost frames.
 	/// </summary>
 	sf::Texture ghostTextures[14];
+
+	/// <summary>
+	/// The modal that will display the shop.
+	/// </summary>
+	ShopModal* shopModal;
 
 	//Audio
 	sf::Music music;

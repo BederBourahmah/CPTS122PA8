@@ -15,6 +15,7 @@ SwarmDefense::SwarmDefense(
 	sf::Uint16(ScreenManager::* getEnemiesCallback)()
 	)
 {
+	shopModal = nullptr;
 	videoMode = vm;
 	if (!castleTexture.loadFromFile("assets/castle.png"))
 	{
@@ -156,6 +157,8 @@ SwarmDefense::~SwarmDefense()
 	displayedScore = nullptr;
 	delete displayedCoins;
 	displayedCoins = nullptr;
+	delete shopModal;
+	shopModal = nullptr;
 }
 
 void SwarmDefense::drawTo(sf::RenderWindow& window)
@@ -178,6 +181,11 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 	{
 		(*i)->drawTo(window);
 	}
+
+	if (shopModal != nullptr)
+	{
+		shopModal->drawTo(window);
+	}
 }
 
 void SwarmDefense::processKeyboardInput()
@@ -185,6 +193,11 @@ void SwarmDefense::processKeyboardInput()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		shouldGoBackToMainMenu = true;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && shopModal == nullptr)
+	{
+		shopModal = new ShopModal(videoMode);
 	}
 }
 

@@ -23,8 +23,6 @@ MainMenu::MainMenu(sf::VideoMode const vm, ScreenManager *manager, void(ScreenMa
 	}
 	selectedScreen = Screens::MainMenu;
 	networkConnectionModal = nullptr;
-	server = nullptr;
-	client = nullptr;
 	loadingModal = nullptr;
 	singVsMultiModal = nullptr;
 	onConnectToNetwork = connectToNetworkCallback;
@@ -41,10 +39,6 @@ MainMenu::~MainMenu()
 	exitText = nullptr;
 	delete selector;
 	selector = nullptr;
-	delete server;
-	server = nullptr;
-	delete client;
-	client = nullptr;
 	delete loadingModal;
 	loadingModal = nullptr;
 	delete singVsMultiModal;

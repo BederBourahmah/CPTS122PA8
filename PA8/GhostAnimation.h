@@ -1,6 +1,9 @@
 #ifndef GHOST_ANIMATION_H
 #define GHOST_ANIMATION_H
 
+/// <summary>
+/// Enum representing the various frames of the ghost sprite animation.
+/// </summary>
 enum class GhostAnimation
 {
 	TailUp = 0,

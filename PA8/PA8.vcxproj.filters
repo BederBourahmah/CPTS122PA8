@@ -1,177 +1,150 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\Helpers">
-      <UniqueIdentifier>{a703d60a-3cad-4342-b1d4-18373b8f8b99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Enums">
-      <UniqueIdentifier>{63baa5ca-412b-4d79-83ef-450b775de412}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Screens">
-      <UniqueIdentifier>{11943980-877e-4fa9-90de-d20862ec966a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\UserInterface">
-      <UniqueIdentifier>{2c5b7aaf-cd31-4f96-893f-9ef254767d34}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\UserInterface">
-      <UniqueIdentifier>{d0007f69-afb8-4e29-b7f6-3232af3cc91c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Screens">
-      <UniqueIdentifier>{d7ef178d-5b6c-420d-a6b6-ac76e34f231c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Network">
-      <UniqueIdentifier>{e8871b04-42a5-4697-9380-a5b81bada506}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Network">
-      <UniqueIdentifier>{25d4d89a-5d18-4eac-9878-91f67e35a3c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\UserInterface\Modals">
-      <UniqueIdentifier>{d6a2a180-52a6-4b17-97ac-0e82b0429f61}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\UserInterface\Modals">
-      <UniqueIdentifier>{a5882a4a-535d-4439-bdd4-67207c785f9f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameObjects">
-      <UniqueIdentifier>{4f30b360-8c5b-4b6a-b7ca-39ef05ed50ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameObjects">
-      <UniqueIdentifier>{00a41844-6fe3-4517-9107-4b1b22358ef5}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="ScreenManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIComponent.cpp">
-      <Filter>Source Files\UserInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuSelector.cpp">
-      <Filter>Source Files\UserInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="TextComponent.cpp">
-      <Filter>Source Files\UserInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Source Files\Screens</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveableRectangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SwarmDefense.cpp">
-      <Filter>Source Files\Screens</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="TcpClient.cpp">
-      <Filter>Source Files\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="ModalBorder.cpp">
-      <Filter>Source Files\UserInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="Modal.cpp">
-      <Filter>Source Files\UserInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="IpAddressInputModal.cpp">
-      <Filter>Source Files\UserInterface\Modals</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="TcpServer.cpp">
-      <Filter>Source Files\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadingModal.cpp">
-      <Filter>Source Files\UserInterface\Modals</Filter>
-    </ClCompile>
-    <ClCompile Include="SingleOrMultiplayerModal.cpp">
-      <Filter>Source Files\UserInterface\Modals</Filter>
-    </ClCompile>
-    <ClCompile Include="HowToPlayMenu.cpp">
-      <Filter>Source Files\Screens</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\GameObjects</Filter>
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIComponent.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="IpAddressInputModal.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="HowToPlayMenu.cpp">
+      <Filter>Source\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingModal.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSelector.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Modal.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ModalBorder.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveableRectangle.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleOrMultiplayerModal.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SwarmDefense.cpp">
+      <Filter>Source\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>Source\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="VideoHelpers.h">
-      <Filter>Header Files\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Screens.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
     <ClInclude Include="ScreenManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Screen.h">
-      <Filter>Header Files\Screens</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>Header Files\Screens</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIComponent.h">
-      <Filter>Header Files\UserInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuSelector.h">
-      <Filter>Header Files\UserInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveableComponent.h">
-      <Filter>Header Files\UserInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="TextComponent.h">
-      <Filter>Header Files\UserInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenuSelection.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveableRectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SwarmDefense.h">
-      <Filter>Header Files\Screens</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="TcpClient.h">
-      <Filter>Header Files\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="ModalSize.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="ModalBorder.h">
-      <Filter>Header Files\UserInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="Modal.h">
-      <Filter>Header Files\UserInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="IpAddressInputModal.h">
-      <Filter>Header Files\UserInterface\Modals</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="TcpServer.h">
-      <Filter>Header Files\Network</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="LoadingModal.h">
-      <Filter>Header Files\UserInterface\Modals</Filter>
+    <ClInclude Include="VideoHelpers.h">
+      <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="SingleOrMultiplayerModal.h">
-      <Filter>Header Files\UserInterface\Modals</Filter>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Headers\Screens</Filter>
     </ClInclude>
-    <ClInclude Include="HowToPlayMenu.h">
-      <Filter>Header Files\Screens</Filter>
+    <ClInclude Include="Screen.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="SwarmDefense.h">
+      <Filter>Headers\Screens</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Header Files\GameObjects</Filter>
+      <Filter>Headers\Components</Filter>
     </ClInclude>
     <ClInclude Include="GhostAnimation.h">
-      <Filter>Header Files\Enums</Filter>
+      <Filter>Headers\Enum</Filter>
     </ClInclude>
+    <ClInclude Include="GUIComponent.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HowToPlayMenu.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="IpAddressInputModal.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Modal.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingModal.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuSelection.h">
+      <Filter>Headers\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSelector.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModalBorder.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ModalSize.h">
+      <Filter>Headers\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveableComponent.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveableRectangle.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens.h">
+      <Filter>Headers\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleOrMultiplayerModal.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{2508daff-0ad5-4176-bfc0-69ca19fe5bed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{e77562bd-1fd3-47a8-918d-ecd32ec7d1f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Screens">
+      <UniqueIdentifier>{0ebb7e36-5f21-4865-b660-7ff72f2980ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Components">
+      <UniqueIdentifier>{90922fd8-1461-49db-bffe-6b859c23834f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Enum">
+      <UniqueIdentifier>{f398ad6b-e3b7-4dfe-8ac6-61cbf7306b2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Components">
+      <UniqueIdentifier>{95be0d94-ba77-4998-9020-87bfdcf18d68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Screens">
+      <UniqueIdentifier>{db9feb8f-bc02-4831-ac26-993579f73040}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

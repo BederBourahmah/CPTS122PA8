@@ -48,6 +48,7 @@ ShopModal::ShopModal(
 	parent = swarmDefense;
 	onPurchaseWeapon = purchaseWeaponCallback;
 	onCloseModal = closeModalCallback;
+	currentBasicWeaponCost = 10;
 }
 
 ShopModal::~ShopModal()
@@ -98,6 +99,17 @@ void ShopModal::handleEvents(sf::RenderWindow& window)
 	}
 }
 
+void ShopModal::handlePurchaseBasicWeapon()
+{
+	if (((*parent).*onPurchaseWeapon)(currentBasicWeaponCost, WeaponType::Basic))
+	{
+		currentBasicWeaponCost *= 1.1f;
+		basicWeaponCost->setText(std::to_string(currentBasicWeaponCost));
+		return;
+	}
+
+}
+
 void ShopModal::handleClickEvent(sf::Event event)
 {
 	if (event.type != sf::Event::MouseButtonReleased || event.mouseButton.button != sf::Mouse::Left) return;
@@ -105,7 +117,7 @@ void ShopModal::handleClickEvent(sf::Event event)
 	sf::Vector2i mousePosition(event.mouseButton.x, event.mouseButton.y);
 	if (basicWeaponName->isPositionInMyArea(mousePosition))
 	{
-		((*parent).*onPurchaseWeapon)(10, WeaponType::Basic);
+		handlePurchaseBasicWeapon();
 		return;
 	}
 

@@ -101,6 +101,16 @@ private:
 	void(SwarmDefense::* onCloseModal)();
 
 	/// <summary>
+	/// Processes a user request to purchase a basic weapon.
+	/// </summary>
+	void handlePurchaseBasicWeapon();
+
+	/// <summary>
+	/// The current cost of the basic weapon.
+	/// </summary>
+	unsigned int currentBasicWeaponCost;
+
+	/// <summary>
 	/// Handles a click event.
 	/// </summary>
 	/// <param name="event">A click event.</param>

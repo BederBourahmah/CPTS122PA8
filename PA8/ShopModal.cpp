@@ -37,10 +37,6 @@ ShopModal::ShopModal(
 	basicWeaponDescription->snapToHorizontal(videoMode, 16, 9);
 	basicWeaponDescription->snapToVertical(videoMode, 16, 6);
 
-	purchaseLogBox = new MoveableRectangle(sf::Vector2f(0.15f * videoMode.width, 0.5625f * videoMode.height), sf::Color::Black);
-	purchaseLogBox->snapToHorizontal(videoMode, 16, 13);
-	purchaseLogBox->snapToVertical(videoMode, 16, 9);
-
 	exitButton = new TextComponent("Leander.ttf", "Exit", 30);
 	exitButton->centerHorizontal(videoMode);
 	exitButton->snapToVertical(videoMode, 16, 13);
@@ -67,8 +63,6 @@ ShopModal::~ShopModal()
 	basicWeaponCost = nullptr;
 	delete basicWeaponDescription;
 	basicWeaponDescription = nullptr;
-	delete purchaseLogBox;
-	purchaseLogBox = nullptr;
 	delete exitButton;
 	exitButton = nullptr;
 }
@@ -83,7 +77,6 @@ void ShopModal::drawTo(sf::RenderWindow& window)
 	weaponDescriptionTableHeader->drawTo(window);
 	basicWeaponCost->drawTo(window);
 	basicWeaponDescription->drawTo(window);
-	purchaseLogBox->drawTo(window);
 	exitButton->drawTo(window);
 }
 

@@ -76,11 +76,6 @@ private:
 	TextComponent* exitButton;
 
 	/// <summary>
-	/// The box where the purchase log will be displayed.
-	/// </summary>
-	MoveableRectangle* purchaseLogBox;
-
-	/// <summary>
 	/// The video mode that will render this component.
 	/// </summary>
 	sf::VideoMode videoMode;

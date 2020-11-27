@@ -146,7 +146,7 @@ SwarmDefense::SwarmDefense(
 	onGetEnemies = getEnemiesCallback;
 	enemiesCollided = 0;
 	unitOfDistance = hypotf((float)videoMode.height, (float)videoMode.width)*0.01f;
-	shopModal = new ShopModal(videoMode, this, &SwarmDefense::purchaseWeapon);
+	shopModal = new ShopModal(videoMode, this, &SwarmDefense::purchaseWeapon, &SwarmDefense::closeShopModal);
 	clock.restart();
 }
 
@@ -430,4 +430,9 @@ bool SwarmDefense::purchaseWeapon(unsigned int cost, WeaponType type)
 	}
 
 	return true;
+}
+
+void SwarmDefense::closeShopModal()
+{
+	isShopModalDisplayed = false;
 }

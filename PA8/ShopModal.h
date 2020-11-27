@@ -14,7 +14,12 @@ class SwarmDefense;
 class ShopModal : public Modal
 {
 public:
-	ShopModal(sf::VideoMode vm, SwarmDefense* swarmDefense, bool(SwarmDefense::* purchaseWeaponCallback)(unsigned int cost, WeaponType type));
+	ShopModal(
+		sf::VideoMode vm,
+		SwarmDefense* swarmDefense,
+		bool(SwarmDefense::* purchaseWeaponCallback)(unsigned int cost, WeaponType type),
+		void(SwarmDefense::* closeModalCallback)()
+	);
 	~ShopModal();
 
 	/// <summary>
@@ -66,6 +71,11 @@ private:
 	TextComponent* basicWeaponDescription;
 
 	/// <summary>
+	/// The text component representing the exit button.
+	/// </summary>
+	TextComponent* exitButton;
+
+	/// <summary>
 	/// The box where the purchase log will be displayed.
 	/// </summary>
 	MoveableRectangle* purchaseLogBox;
@@ -84,6 +94,11 @@ private:
 	/// The callback for purchasing a weapon.
 	/// </summary>
 	bool(SwarmDefense::* onPurchaseWeapon)(unsigned int cost, WeaponType type);
+
+	/// <summary>
+	/// The callback for closing this modal.
+	/// </summary>
+	void(SwarmDefense::* onCloseModal)();
 
 	/// <summary>
 	/// Handles a click event.

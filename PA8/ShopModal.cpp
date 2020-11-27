@@ -1,6 +1,11 @@
 #include "ShopModal.h"
 
-ShopModal::ShopModal(sf::VideoMode vm, SwarmDefense* swarmDefense, bool(SwarmDefense::* purchaseWeaponCallback)(unsigned int cost, WeaponType type)) : Modal(ModalSize::ExtraLarge, vm)
+ShopModal::ShopModal(
+	sf::VideoMode vm,
+	SwarmDefense* swarmDefense,
+	bool(SwarmDefense::* purchaseWeaponCallback)(unsigned int cost, WeaponType type),
+	void(SwarmDefense::* closeModalCallback)()
+) : Modal(ModalSize::ExtraLarge, vm)
 {
 	videoMode = vm;
 
@@ -17,7 +22,7 @@ ShopModal::ShopModal(sf::VideoMode vm, SwarmDefense* swarmDefense, bool(SwarmDef
 	weaponCostTableHeader->snapToVertical(videoMode, 16, 5);
 
 	weaponDescriptionTableHeader = new TextComponent("Leander.ttf", "Description", 30);
-	weaponDescriptionTableHeader->snapToHorizontal(videoMode, 16, 10);
+	weaponDescriptionTableHeader->snapToHorizontal(videoMode, 16, 9);
 	weaponDescriptionTableHeader->snapToVertical(videoMode, 16, 5);
 
 	basicWeaponName = new TextComponent("Leander.ttf", "Basic", 30);
@@ -29,15 +34,20 @@ ShopModal::ShopModal(sf::VideoMode vm, SwarmDefense* swarmDefense, bool(SwarmDef
 	basicWeaponCost->snapToVertical(videoMode, 16, 6);
 
 	basicWeaponDescription = new TextComponent("Leander.ttf", "Fires 1 projectile per second.", 30);
-	basicWeaponDescription->snapToHorizontal(videoMode, 16, 10);
+	basicWeaponDescription->snapToHorizontal(videoMode, 16, 9);
 	basicWeaponDescription->snapToVertical(videoMode, 16, 6);
 
-	purchaseLogBox = new MoveableRectangle(sf::Vector2f(0.70f * videoMode.width, 0.1875f * videoMode.height), sf::Color::Black);
-	purchaseLogBox->centerHorizontal(videoMode);
-	purchaseLogBox->snapToVertical(videoMode, 16, 12);
+	purchaseLogBox = new MoveableRectangle(sf::Vector2f(0.15f * videoMode.width, 0.5625f * videoMode.height), sf::Color::Black);
+	purchaseLogBox->snapToHorizontal(videoMode, 16, 13);
+	purchaseLogBox->snapToVertical(videoMode, 16, 9);
+
+	exitButton = new TextComponent("Leander.ttf", "Exit", 30);
+	exitButton->centerHorizontal(videoMode);
+	exitButton->snapToVertical(videoMode, 16, 13);
 
 	parent = swarmDefense;
 	onPurchaseWeapon = purchaseWeaponCallback;
+	onCloseModal = closeModalCallback;
 }
 
 ShopModal::~ShopModal()
@@ -58,6 +68,8 @@ ShopModal::~ShopModal()
 	basicWeaponDescription = nullptr;
 	delete purchaseLogBox;
 	purchaseLogBox = nullptr;
+	delete exitButton;
+	exitButton = nullptr;
 }
 
 void ShopModal::drawTo(sf::RenderWindow& window)
@@ -71,6 +83,7 @@ void ShopModal::drawTo(sf::RenderWindow& window)
 	basicWeaponCost->drawTo(window);
 	basicWeaponDescription->drawTo(window);
 	purchaseLogBox->drawTo(window);
+	exitButton->drawTo(window);
 }
 
 void ShopModal::handleEvents(sf::RenderWindow& window)
@@ -93,5 +106,12 @@ void ShopModal::handleClickEvent(sf::Event event)
 	if (basicWeaponName->isPositionInMyArea(mousePosition))
 	{
 		((*parent).*onPurchaseWeapon)(10, WeaponType::Basic);
+		return;
+	}
+
+	if (exitButton->isPositionInMyArea(mousePosition))
+	{
+		((*parent).*onCloseModal)();
+		return;
 	}
 }

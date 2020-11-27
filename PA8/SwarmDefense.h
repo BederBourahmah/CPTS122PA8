@@ -239,6 +239,11 @@ private:
 	/// <returns>True if the player had enough money to purchase the weapon.</returns>
 	bool purchaseWeapon(unsigned int cost, WeaponType type);
 
+	/// <summary>
+	/// Closes the shop modal;
+	/// </summary>
+	void closeShopModal();
+
 	//Audio
 	sf::Music music;
 	sf::SoundBuffer Hit;

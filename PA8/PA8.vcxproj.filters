@@ -129,6 +129,9 @@
     <ClInclude Include="ShopModal.h">
       <Filter>Headers\Components\Modals</Filter>
     </ClInclude>
+    <ClInclude Include="WeaponType.h">
+      <Filter>Headers\Enum</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

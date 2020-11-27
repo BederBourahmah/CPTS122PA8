@@ -409,6 +409,11 @@ float SwarmDefense::distanceTravelled()
 	return (float)timeElapsed.asMicroseconds() * enemyVelocity;
 }
 
+bool SwarmDefense::purchaseWeapon(unsigned int cost, WeaponType type)
+{
+	return false;
+}
+
 void SwarmDefense::purchase(int price) {
 	coins = coins - price;
 	//Add purchasing mechanism for shop later.

@@ -14,6 +14,7 @@
 #include "Enemy.h"
 #include "GhostAnimation.h"
 #include "ShopModal.h"
+#include "WeaponType.h"
 
 /// <summary>
 /// Forward declaration of screen manager.
@@ -231,6 +232,19 @@ private:
 	/// Is true when the shop modal is displayed.
 	/// </summary>
 	bool isShopModalDisplayed;
+
+	/// <summary>
+	/// A list of pointers to active weapons.
+	/// </summary>
+	std::list<void*> weapons;
+
+	/// <summary>
+	/// Purchases the provided weapon type at the provided cost.
+	/// </summary>
+	/// <param name="cost">The cost of the weapon.</param>
+	/// <param name="type">The type of weapon to purchase.</param>
+	/// <returns>True if the player had enough money to purchase the weapon.</returns>
+	bool purchaseWeapon(unsigned int cost, WeaponType type);
 
 	//Audio
 	sf::Music music;

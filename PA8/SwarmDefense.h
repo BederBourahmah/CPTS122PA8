@@ -79,13 +79,6 @@ public:
 	/// </summary>
 	void updateState();
 
-	/// <summary>
-	/// Purchases an item and decreases from the available coins.
-	/// </summary>
-	/// <param name="Price">The price of the current item.</param>
-	void purchase(int Price);
-	
-
 private:
 	/// <summary>
 	/// The ID of the next enemy to be created. Incremented each time an enemy is created.

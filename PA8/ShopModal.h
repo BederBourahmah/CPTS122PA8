@@ -4,6 +4,9 @@
 #include "Modal.h"
 #include "TextComponent.h"
 #include "MoveableRectangle.h"
+#include "WeaponType.h"
+
+class SwarmDefense;
 
 /// <summary>
 /// This class displays the weapons shop interface.
@@ -11,7 +14,7 @@
 class ShopModal : public Modal
 {
 public:
-	ShopModal(sf::VideoMode vm);
+	ShopModal(sf::VideoMode vm, SwarmDefense* swarmDefense, bool(SwarmDefense::* purchaseWeaponCallback)(unsigned int cost, WeaponType type));
 	~ShopModal();
 
 	/// <summary>
@@ -19,6 +22,12 @@ public:
 	/// </summary>
 	/// <param name="window">The window to draw to.</param>
 	void drawTo(sf::RenderWindow& window);
+
+	/// <summary>
+	/// Handles the events that have been generated for the window.
+	/// </summary>
+	/// <param name="window">The window that is generating the events.</param>
+	void handleEvents(sf::RenderWindow& window);
 
 private:
 	/// <summary>
@@ -65,6 +74,22 @@ private:
 	/// The video mode that will render this component.
 	/// </summary>
 	sf::VideoMode videoMode;
+
+	/// <summary>
+	/// A pointer to the parent component.
+	/// </summary>
+	SwarmDefense* parent;
+
+	/// <summary>
+	/// The callback for purchasing a weapon.
+	/// </summary>
+	bool(SwarmDefense::* onPurchaseWeapon)(unsigned int cost, WeaponType type);
+
+	/// <summary>
+	/// Handles a click event.
+	/// </summary>
+	/// <param name="event">A click event.</param>
+	void handleClickEvent(sf::Event event);
 };
 
 #endif // !SHOP_MODAL_H

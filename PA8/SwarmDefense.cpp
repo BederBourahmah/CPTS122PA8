@@ -146,7 +146,7 @@ SwarmDefense::SwarmDefense(
 	onGetEnemies = getEnemiesCallback;
 	enemiesCollided = 0;
 	unitOfDistance = hypotf((float)videoMode.height, (float)videoMode.width)*0.01f;
-	shopModal = new ShopModal(videoMode);
+	shopModal = new ShopModal(videoMode, this, &SwarmDefense::purchaseWeapon);
 	clock.restart();
 }
 
@@ -208,6 +208,12 @@ bool SwarmDefense::shouldExitGame()
 
 void SwarmDefense::handleEvents(sf::RenderWindow& window)
 {
+	if (isShopModalDisplayed)
+	{
+		shopModal->handleEvents(window);
+		return;
+	}
+
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
@@ -411,10 +417,17 @@ float SwarmDefense::distanceTravelled()
 
 bool SwarmDefense::purchaseWeapon(unsigned int cost, WeaponType type)
 {
-	return false;
-}
+	if (coins < cost) return false;
+	
+	switch (type)
+	{
+	case WeaponType::Basic:
+		coins -= cost;
+		//TODO: Make this generate a basic weapon and add it to the weapon list.
+		break;
+	default:
+		break;
+	}
 
-void SwarmDefense::purchase(int price) {
-	coins = coins - price;
-	//Add purchasing mechanism for shop later.
+	return true;
 }

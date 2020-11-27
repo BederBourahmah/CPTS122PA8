@@ -1,6 +1,6 @@
 #include "ShopModal.h"
 
-ShopModal::ShopModal(sf::VideoMode vm) : Modal(ModalSize::ExtraLarge, vm)
+ShopModal::ShopModal(sf::VideoMode vm, SwarmDefense* swarmDefense, bool(SwarmDefense::* purchaseWeaponCallback)(unsigned int cost, WeaponType type)) : Modal(ModalSize::ExtraLarge, vm)
 {
 	videoMode = vm;
 
@@ -35,6 +35,9 @@ ShopModal::ShopModal(sf::VideoMode vm) : Modal(ModalSize::ExtraLarge, vm)
 	purchaseLogBox = new MoveableRectangle(sf::Vector2f(0.70f * videoMode.width, 0.1875f * videoMode.height), sf::Color::Black);
 	purchaseLogBox->centerHorizontal(videoMode);
 	purchaseLogBox->snapToVertical(videoMode, 16, 12);
+
+	parent = swarmDefense;
+	onPurchaseWeapon = purchaseWeaponCallback;
 }
 
 ShopModal::~ShopModal()
@@ -68,4 +71,27 @@ void ShopModal::drawTo(sf::RenderWindow& window)
 	basicWeaponCost->drawTo(window);
 	basicWeaponDescription->drawTo(window);
 	purchaseLogBox->drawTo(window);
+}
+
+void ShopModal::handleEvents(sf::RenderWindow& window)
+{
+	sf::Event event;
+	while (window.pollEvent(event))
+	{
+		if (event.type == sf::Event::MouseButtonReleased)
+		{
+			handleClickEvent(event);
+		}
+	}
+}
+
+void ShopModal::handleClickEvent(sf::Event event)
+{
+	if (event.type != sf::Event::MouseButtonReleased || event.mouseButton.button != sf::Mouse::Left) return;
+
+	sf::Vector2i mousePosition(event.mouseButton.x, event.mouseButton.y);
+	if (basicWeaponName->isPositionInMyArea(mousePosition))
+	{
+		((*parent).*onPurchaseWeapon)(10, WeaponType::Basic);
+	}
 }

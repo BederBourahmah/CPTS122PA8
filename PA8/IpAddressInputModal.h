@@ -66,6 +66,11 @@ public:
 	/// <returns>True if the user wants to go back to main menu without connecting on the network.</returns>
 	bool getIsCancelling();
 
+	/// <summary>
+	/// Resets the state of this modal so it start fresh on next render.
+	/// </summary>
+	void resetState();
+
 private:
 	/// <summary>
 	/// A pointer to the text component displaying the title of the modal.

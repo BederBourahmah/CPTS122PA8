@@ -173,9 +173,19 @@ private:
 	bool isSingleVsMultiplayerModalDisplayed;
 
 	/// <summary>
+	/// Is set to true when the networkConnectionModal is displayed.
+	/// </summary>
+	bool isNetworkConnectionModalDisplayed;
+
+	/// <summary>
 	/// Closes the SingleOrMultiplayerModal.
 	/// </summary>
 	void closeSingleVsMultiplayerModal();
+
+	/// <summary>
+	/// Closes the network connection modal and resets its state.
+	/// </summary>
+	void closeNetworkConnectionModal();
 
 	/// <summary>
 	/// The callback function for connecting to the network.

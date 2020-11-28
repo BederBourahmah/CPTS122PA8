@@ -15,6 +15,7 @@
 #include "GhostAnimation.h"
 #include "ShopModal.h"
 #include "WeaponType.h"
+#include "Weapon.h"
 
 /// <summary>
 /// Forward declaration of screen manager.
@@ -229,7 +230,7 @@ private:
 	/// <summary>
 	/// A list of pointers to active weapons.
 	/// </summary>
-	std::list<void*> weapons;
+	std::list<Weapon*> weapons;
 
 	/// <summary>
 	/// Purchases the provided weapon type at the provided cost.
@@ -243,6 +244,12 @@ private:
 	/// Closes the shop modal;
 	/// </summary>
 	void closeShopModal();
+
+	/// <summary>
+	/// Generate the given number of projectiles, pointing them at a randomly selected enemy.
+	/// </summary>
+	/// <param name="count">The number of projectile to create.</param>
+	void generateProjectiles(unsigned char count);
 
 	//Audio
 	sf::Music music;

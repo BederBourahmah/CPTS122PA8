@@ -86,7 +86,7 @@ private:
 	sf::Texture* ghostTextures;
 
 	/// <summary>
-	/// Stores the cumulative time elapsed until the frame period is reached, at which point is value is decreased by that period.
+	/// Stores the cumulative time elapsed until the frame period is reached, at which point its value is decreased by that period.
 	/// </summary>
 	sf::Int64 microSecondsElapsed;
 

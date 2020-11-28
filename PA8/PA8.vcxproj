@@ -169,6 +169,7 @@
     <ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TcpServer.cpp" />
     <ClCompile Include="TextComponent.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="TcpServer.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="VideoHelpers.h" />
+    <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -304,6 +304,11 @@ void SwarmDefense::updateState()
 		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 
+	for (std::list<Weapon*>::iterator i = weapons.begin(); i != weapons.end(); ++i)
+	{
+		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
+	}
+
 	checkForCollisions();
 }
 
@@ -403,8 +408,6 @@ void SwarmDefense::checkForCollisions()
 		if ((*i)->didCollideWithOtherComponent(*playerBase))
 		{
 			(*i)->attack();
-
-			
 		}
 
 	}
@@ -419,11 +422,14 @@ bool SwarmDefense::purchaseWeapon(unsigned int cost, WeaponType type)
 {
 	if (coins < cost) return false;
 	
+	coins -= cost;
+	Weapon* newWeapon = nullptr;
+
 	switch (type)
 	{
 	case WeaponType::Basic:
-		coins -= cost;
-		//TODO: Make this generate a basic weapon and add it to the weapon list.
+		newWeapon = new Weapon(1000000, 1, this, &SwarmDefense::generateProjectiles);
+		weapons.push_back(newWeapon);
 		break;
 	default:
 		break;
@@ -435,4 +441,10 @@ bool SwarmDefense::purchaseWeapon(unsigned int cost, WeaponType type)
 void SwarmDefense::closeShopModal()
 {
 	isShopModalDisplayed = false;
+}
+
+void SwarmDefense::generateProjectiles(unsigned char count)
+{
+	//TODO: Actually generate projectiles.
+	std::cout << "Generated " << (int)count << " projectiles." << std::endl;
 }

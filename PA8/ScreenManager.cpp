@@ -138,12 +138,13 @@ void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 	switch (selectedScreen)
 	{
 	case Screens::MainMenu:
-		mainMenu = new MainMenu(videoMode, this, &ScreenManager::handleConnectToNetwork);
+		mainMenu->resetState();
 		break;
 	case Screens::SwarmDefense:
 		swarmDefense = new SwarmDefense(videoMode, isMultiplayer(), this, &ScreenManager::sendEnemiesToOpponent, &ScreenManager::getEnemiesFromOpponent);
 		break;
 	case Screens::HowToPlayMenu: 
+		howToPlayMenu->resetState();
 		return;
 	case Screens::Exit:
 		break;

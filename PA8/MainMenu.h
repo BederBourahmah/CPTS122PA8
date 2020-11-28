@@ -79,6 +79,11 @@ public:
 	/// </summary>
 	void updateState();
 
+	/// <summary>
+	/// Resets the internal state of this screen.
+	/// </summary>
+	void resetState();
+
 private:
 	TextComponent* howToPlayText;
 

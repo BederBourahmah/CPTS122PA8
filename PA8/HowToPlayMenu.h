@@ -30,6 +30,11 @@ public:
 	void updateState();
 	bool shouldExitGame();
 	void handleEvents(sf::RenderWindow& window);
+
+	/// <summary>
+	/// Resets the internal state of this screen.
+	/// </summary>
+	void resetState();
 };
 
 

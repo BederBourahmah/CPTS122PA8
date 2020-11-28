@@ -222,6 +222,11 @@ void MainMenu::updateState()
 	}
 }
 
+void MainMenu::resetState()
+{
+	selectedScreen = Screens::MainMenu;
+}
+
 void MainMenu::updateSelectorPosition()
 {
 	switch (currentSelection)

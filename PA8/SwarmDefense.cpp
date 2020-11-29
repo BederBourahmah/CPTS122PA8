@@ -15,6 +15,7 @@ SwarmDefense::SwarmDefense(
 	sf::Uint16(ScreenManager::* getEnemiesCallback)()
 	)
 {
+	isShopModalDisplayed = false;
 	videoMode = vm;
 	if (!castleTexture.loadFromFile("assets/castle.png"))
 	{
@@ -145,6 +146,7 @@ SwarmDefense::SwarmDefense(
 	onGetEnemies = getEnemiesCallback;
 	enemiesCollided = 0;
 	unitOfDistance = hypotf((float)videoMode.height, (float)videoMode.width)*0.01f;
+	shopModal = new ShopModal(videoMode, this, &SwarmDefense::purchaseWeapon, &SwarmDefense::closeShopModal);
 	clock.restart();
 }
 
@@ -156,6 +158,8 @@ SwarmDefense::~SwarmDefense()
 	displayedScore = nullptr;
 	delete displayedCoins;
 	displayedCoins = nullptr;
+	delete shopModal;
+	shopModal = nullptr;
 }
 
 void SwarmDefense::drawTo(sf::RenderWindow& window)
@@ -178,6 +182,11 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 	{
 		(*i)->drawTo(window);
 	}
+
+	if (isShopModalDisplayed)
+	{
+		shopModal->drawTo(window);
+	}
 }
 
 void SwarmDefense::processKeyboardInput()
@@ -199,6 +208,12 @@ bool SwarmDefense::shouldExitGame()
 
 void SwarmDefense::handleEvents(sf::RenderWindow& window)
 {
+	if (isShopModalDisplayed)
+	{
+		shopModal->handleEvents(window);
+		return;
+	}
+
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
@@ -230,6 +245,11 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 					}
 				}
 			}
+		}
+
+		if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::S)
+		{
+			isShopModalDisplayed = true;
 		}
 	}
 }
@@ -281,6 +301,11 @@ void SwarmDefense::updateState()
 			enemiesToDestroy.push((*i)->getId());
 		}
 
+		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
+	}
+
+	for (std::list<Weapon*>::iterator i = weapons.begin(); i != weapons.end(); ++i)
+	{
 		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 
@@ -383,8 +408,6 @@ void SwarmDefense::checkForCollisions()
 		if ((*i)->didCollideWithOtherComponent(*playerBase))
 		{
 			(*i)->attack();
-
-			
 		}
 
 	}
@@ -395,7 +418,33 @@ float SwarmDefense::distanceTravelled()
 	return (float)timeElapsed.asMicroseconds() * enemyVelocity;
 }
 
-void SwarmDefense::purchase(int price) {
-	coins = coins - price;
-	//Add purchasing mechanism for shop later.
+bool SwarmDefense::purchaseWeapon(unsigned int cost, WeaponType type)
+{
+	if (coins < cost) return false;
+	
+	coins -= cost;
+	Weapon* newWeapon = nullptr;
+
+	switch (type)
+	{
+	case WeaponType::Basic:
+		newWeapon = new Weapon(1000000, 1, this, &SwarmDefense::generateProjectiles);
+		weapons.push_back(newWeapon);
+		break;
+	default:
+		break;
+	}
+
+	return true;
+}
+
+void SwarmDefense::closeShopModal()
+{
+	isShopModalDisplayed = false;
+}
+
+void SwarmDefense::generateProjectiles(unsigned char count)
+{
+	//TODO: Actually generate projectiles.
+	std::cout << "Generated " << (int)count << " projectiles." << std::endl;
 }

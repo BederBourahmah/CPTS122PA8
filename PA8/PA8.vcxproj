@@ -163,11 +163,13 @@
     <ClCompile Include="ModalBorder.cpp" />
     <ClCompile Include="MoveableRectangle.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="ShopModal.cpp" />
     <ClCompile Include="SingleOrMultiplayerModal.cpp" />
     <ClCompile Include="SwarmDefense.cpp" />
     <ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TcpServer.cpp" />
     <ClCompile Include="TextComponent.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
@@ -187,12 +189,15 @@
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="Screens.h" />
+    <ClInclude Include="ShopModal.h" />
     <ClInclude Include="SingleOrMultiplayerModal.h" />
     <ClInclude Include="SwarmDefense.h" />
     <ClInclude Include="TcpClient.h" />
     <ClInclude Include="TcpServer.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="VideoHelpers.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

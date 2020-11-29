@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -162,6 +162,7 @@
     <ClCompile Include="Modal.cpp" />
     <ClCompile Include="ModalBorder.cpp" />
     <ClCompile Include="MoveableRectangle.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="SingleOrMultiplayerModal.cpp" />
     <ClCompile Include="SwarmDefense.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="ModalSize.h" />
     <ClInclude Include="MoveableComponent.h" />
     <ClInclude Include="MoveableRectangle.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="Screens.h" />

@@ -52,6 +52,9 @@
     <ClCompile Include="TextComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ScreenManager.h">
@@ -121,6 +124,9 @@
       <Filter>Headers\Components</Filter>
     </ClInclude>
     <ClInclude Include="TextComponent.h">
+      <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
       <Filter>Headers\Components</Filter>
     </ClInclude>
   </ItemGroup>

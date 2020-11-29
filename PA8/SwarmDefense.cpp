@@ -227,20 +227,12 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
-
-				Projectile* newProj = new Projectile(videoMode, 0);
-				projectiles.push_back(newProj);
-				
 				float xpos = sf::Mouse::getPosition(window).x;
 				float ypos = sf::Mouse::getPosition(window).y;
 
+				Projectile* newProj = new Projectile(videoMode, 0, xpos, ypos);
+				projectiles.push_back(newProj);
 
-				
-				for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
-					std::cout << "sending projectile" << std::endl;
-					//(*i)->moveTo(xpos, ypos);
-					(*i)->shiftTowards(xpos, ypos, distanceTravelled());
-					}
 				
 
 				for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
@@ -313,6 +305,13 @@ void SwarmDefense::updateState()
 		}
 
 		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
+	}
+
+	for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {		
+		if (!(*i)->getHasHit())
+		{
+			(*i)->shiftTowards((*i)->getxDest(), (*i)->getyDest(), distanceTravelled() * 5);
+		}
 	}
 
 	checkForCollisions();

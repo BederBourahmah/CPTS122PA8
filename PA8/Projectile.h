@@ -17,7 +17,7 @@ public:
 	/// <param name="vm">The video mode that will render this Projectile.</param>
 	/// <param name="newId">The unique ID of the Projectile.</param>
 	/// <param name="gTxtrs">A pointer to the array of textures containing the frames of the ghost animation.</param>
-	Projectile(sf::VideoMode vm, int newId);
+	Projectile(sf::VideoMode vm, int newId, float inpx, float inpy);
 
 	~Projectile();
 
@@ -35,6 +35,10 @@ public:
 
 	/// <returns>True of this Projectile has reached the end of the dying process.</returns>
 	bool getHasHit();
+
+	//Getters for dest
+	float getxDest();
+	float getyDest();
 
 	
 

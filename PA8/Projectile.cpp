@@ -1,6 +1,6 @@
 #include "Projectile.h"
 
-Projectile::Projectile(sf::VideoMode vm, int newId) : MoveableRectangle(sf::Vector2f(0.042f * vm.width, 0.026 * vm.width))
+Projectile::Projectile(sf::VideoMode vm, int newId, float inpx, float inpy) : MoveableRectangle(sf::Vector2f(0.021f * vm.width, 0.013 * vm.width))
 {
 	//moveToRandomEdgescreenPos(vm);
 	
@@ -11,6 +11,8 @@ Projectile::Projectile(sf::VideoMode vm, int newId) : MoveableRectangle(sf::Vect
 	//Initializations
 	id = newId;
 	hasHit = false;
+	xdest = inpx;
+	ydest = inpy;
 	//refreshInterval = 500000;
 }
 
@@ -30,4 +32,11 @@ void Projectile::hit() {
 bool Projectile::getHasHit() {
 	return hasHit;
 }
+
+float Projectile::getxDest() {
+	return xdest;
+}
+float Projectile::getyDest() {
+	return ydest;
+};
 

@@ -5,7 +5,7 @@ ScreenManager::ScreenManager(sf::VideoMode vm)
 	videoMode = vm;
 	mainMenu = new MainMenu(videoMode, this, &ScreenManager::handleConnectToNetwork);
 	currentScreen = Screens::MainMenu;
-	howToPlayMenu = nullptr;
+	howToPlayMenu = new HowToPlayMenu(videoMode);
 	swarmDefense = nullptr;
 	server = nullptr;
 	client = nullptr;
@@ -138,13 +138,13 @@ void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 	switch (selectedScreen)
 	{
 	case Screens::MainMenu:
-		mainMenu = new MainMenu(videoMode, this, &ScreenManager::handleConnectToNetwork);
+		mainMenu->resetState();
 		break;
 	case Screens::SwarmDefense:
 		swarmDefense = new SwarmDefense(videoMode, isMultiplayer(), this, &ScreenManager::sendEnemiesToOpponent, &ScreenManager::getEnemiesFromOpponent);
 		break;
 	case Screens::HowToPlayMenu: 
-		howToPlayMenu = new HowToPlayMenu(videoMode);
+		howToPlayMenu->resetState();
 		return;
 	case Screens::Exit:
 		break;
@@ -173,7 +173,7 @@ void ScreenManager::deleteAllScreens()
 
 void ScreenManager::switchToSelectedScreen(Screens selectedScreen)
 {
-	deleteAllScreens();
+	//deleteAllScreens();
 	initializeSelectedScreen(selectedScreen);
 	currentScreen = selectedScreen;
 }

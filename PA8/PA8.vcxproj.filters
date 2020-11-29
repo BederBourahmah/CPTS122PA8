@@ -19,22 +19,13 @@
     <ClCompile Include="GUIComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
-    <ClCompile Include="IpAddressInputModal.cpp">
-      <Filter>Source\Components</Filter>
-    </ClCompile>
     <ClCompile Include="HowToPlayMenu.cpp">
       <Filter>Source\Screens</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadingModal.cpp">
-      <Filter>Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source\Screens</Filter>
     </ClCompile>
     <ClCompile Include="MenuSelector.cpp">
-      <Filter>Source\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Modal.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="ModalBorder.cpp">
@@ -43,15 +34,28 @@
     <ClCompile Include="MoveableRectangle.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
-    <ClCompile Include="SingleOrMultiplayerModal.cpp">
-      <Filter>Source\Components</Filter>
-    </ClCompile>
     <ClCompile Include="SwarmDefense.cpp">
       <Filter>Source\Screens</Filter>
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
+    <ClCompile Include="IpAddressInputModal.cpp">
+      <Filter>Source\Components\Modals</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingModal.cpp">
+      <Filter>Source\Components\Modals</Filter>
+    </ClCompile>
+    <ClCompile Include="Modal.cpp">
+      <Filter>Source\Components\Modals</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleOrMultiplayerModal.cpp">
+      <Filter>Source\Components\Modals</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopModal.cpp">
+      <Filter>Source\Components\Modals</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Projectile.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
@@ -93,19 +97,10 @@
     <ClInclude Include="IpAddressInputModal.h">
       <Filter>Headers\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Modal.h">
-      <Filter>Headers\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadingModal.h">
-      <Filter>Headers\Components</Filter>
-    </ClInclude>
     <ClInclude Include="MainMenuSelection.h">
       <Filter>Headers\Enum</Filter>
     </ClInclude>
     <ClInclude Include="MenuSelector.h">
-      <Filter>Headers\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ModalBorder.h">
       <Filter>Headers\Components</Filter>
     </ClInclude>
     <ClInclude Include="ModalSize.h">
@@ -120,15 +115,31 @@
     <ClInclude Include="Screens.h">
       <Filter>Headers\Enum</Filter>
     </ClInclude>
-    <ClInclude Include="SingleOrMultiplayerModal.h">
-      <Filter>Headers\Components</Filter>
-    </ClInclude>
     <ClInclude Include="TextComponent.h">
       <Filter>Headers\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingModal.h">
+      <Filter>Headers\Components\Modals</Filter>
+    </ClInclude>
+    <ClInclude Include="Modal.h">
+      <Filter>Headers\Components\Modals</Filter>
+    </ClInclude>
+    <ClInclude Include="ModalBorder.h">
+      <Filter>Headers\Components\Modals</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleOrMultiplayerModal.h">
+      <Filter>Headers\Components\Modals</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopModal.h">
+      <Filter>Headers\Components\Modals</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponType.h">
+      <Filter>Headers\Enum</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Headers\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -151,6 +162,12 @@
     </Filter>
     <Filter Include="Source\Screens">
       <UniqueIdentifier>{db9feb8f-bc02-4831-ac26-993579f73040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Components\Modals">
+      <UniqueIdentifier>{bc1dd875-87f3-4a4e-bbaa-680e7074e12d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Components\Modals">
+      <UniqueIdentifier>{eb6d73a2-1d39-48fb-955b-bf3c91c0078e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -15,6 +15,9 @@
 #include "Enemy.h"
 #include "GhostAnimation.h"
 #include "Projectile.h"
+#include "ShopModal.h"
+#include "WeaponType.h"
+#include "Weapon.h"
 
 
 /// <summary>
@@ -79,13 +82,6 @@ public:
 	/// Updates the internal state of this screen.
 	/// </summary>
 	void updateState();
-
-	/// <summary>
-	/// Purchases an item and decreases from the available coins.
-	/// </summary>
-	/// <param name="Price">The price of the current item.</param>
-	void purchase(int Price);
-	
 
 private:
 	/// <summary>
@@ -235,6 +231,40 @@ private:
 	/// An array of textures containing the images for the different ghost frames.
 	/// </summary>
 	sf::Texture ghostTextures[14];
+
+	/// <summary>
+	/// The modal that will display the shop.
+	/// </summary>
+	ShopModal* shopModal;
+
+	/// <summary>
+	/// Is true when the shop modal is displayed.
+	/// </summary>
+	bool isShopModalDisplayed;
+
+	/// <summary>
+	/// A list of pointers to active weapons.
+	/// </summary>
+	std::list<Weapon*> weapons;
+
+	/// <summary>
+	/// Purchases the provided weapon type at the provided cost.
+	/// </summary>
+	/// <param name="cost">The cost of the weapon.</param>
+	/// <param name="type">The type of weapon to purchase.</param>
+	/// <returns>True if the player had enough money to purchase the weapon.</returns>
+	bool purchaseWeapon(unsigned int cost, WeaponType type);
+
+	/// <summary>
+	/// Closes the shop modal;
+	/// </summary>
+	void closeShopModal();
+
+	/// <summary>
+	/// Generate the given number of projectiles, pointing them at a randomly selected enemy.
+	/// </summary>
+	/// <param name="count">The number of projectile to create.</param>
+	void generateProjectiles(unsigned char count);
 
 	//Audio
 	sf::Music music;

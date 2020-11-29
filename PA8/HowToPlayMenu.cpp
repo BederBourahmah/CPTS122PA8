@@ -33,6 +33,11 @@ HowToPlayMenu::~HowToPlayMenu()
 	selector = nullptr;
 }
 
+void HowToPlayMenu::resetState()
+{
+	shouldGoBackToMainMenu = false;
+}
+
 void HowToPlayMenu::drawTo(sf::RenderWindow& window)
 {
 	window.draw(backgroundSprite);

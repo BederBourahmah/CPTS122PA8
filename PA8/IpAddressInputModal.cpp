@@ -224,6 +224,16 @@ bool IpAddressInputModal::getIsCancelling()
 	return isCancelling;
 }
 
+void IpAddressInputModal::resetState()
+{
+	isIpInputSelected = true;
+	isReady = false;
+	isServer = false;
+	isCancelling = false;
+	portInput->setText("");
+	ipAddressInput->setText("");
+}
+
 void IpAddressInputModal::handleTextEnteredEvent(sf::Uint32 enteredChar)
 {
 	if (enteredChar >= 128) return;

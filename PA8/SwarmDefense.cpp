@@ -185,12 +185,12 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 
 	//Draw projectiles
 	for (std::list<Projectile>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
-		i->drawTo(window);
+		(*i).drawTo(window);
 }
 
 	for (std::list<Enemy>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
-		i->drawTo(window);
+		(*i).drawTo(window);
 	}
 
 	if (isShopModalDisplayed)
@@ -280,19 +280,19 @@ void SwarmDefense::updateState()
 
 	for (std::list<Enemy>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
-		if (!i->getIsDying())
+		if (!(*i).getIsDying())
 		{
-			if (!i->getIsAttacking())
+			if (!(*i).getIsAttacking())
 			{
-				i->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, distanceTravelled());
+				(*i).shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, distanceTravelled());
 			}
 
-			if (i->getDidAttack())
+			if ((*i).getDidAttack())
 
 			{
 				health = health <= 1 ? 0 : health-1;
 				enemiesCollided++;
-				i->die();
+				(*i).die();
 
 				//Play explosion sound
 				sound.setBuffer(Explosion);
@@ -305,18 +305,18 @@ void SwarmDefense::updateState()
 			}
 		}
 
-		if (i->getIsDead())
+		if ((*i).getIsDead())
 		{
-			enemiesToDestroy.push(i->getId());
+			enemiesToDestroy.push((*i).getId());
 		}
 
-		i->setTimeElapsed(timeElapsed.asMicroseconds());
+		(*i).setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 
 	for (std::list<Projectile>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
-		if (!i->getHasHit())
+		if (!(*i).getHasHit())
 		{
-			i->shiftTowards(i->getxDest(), i->getyDest(), distanceTravelled() * 5);
+			(*i).shiftTowards((*i).getxDest(), (*i).getyDest(), distanceTravelled() * 5);
 		}
 	}
 
@@ -369,7 +369,7 @@ void SwarmDefense::destroyEnemies()
 		std::list<Enemy>::iterator itemToDelete = enemies.begin();
 		for (std::list<Enemy>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 		{
-			if (i->getId() == idToDelete)
+			if ((*i).getId() == idToDelete)
 			{
 				itemToDelete = i;
 			}
@@ -423,9 +423,9 @@ void SwarmDefense::checkForCollisions()
 {
 	for (std::list<Enemy>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
-		if (i->didCollideWithOtherComponent(*playerBase))
+		if ((*i).didCollideWithOtherComponent(*playerBase))
 		{
-			i->attack();
+			(*i).attack();
 		}
 
 
@@ -437,11 +437,11 @@ void SwarmDefense::checkForCollisions()
 	for (std::list<Projectile>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
 		for (std::list<Enemy>::iterator j = enemies.begin(); j != enemies.end(); j++)
 		{
-			if (j->didCollideWithOtherComponent(*i))
+			if ((*j).didCollideWithOtherComponent(*i))
 			{
 				projectilesToDestroy.push(i);
 
-				if (!j->getIsDying())
+				if (!(*j).getIsDying())
 				{
 					score++;
 					coins += 10;
@@ -450,7 +450,7 @@ void SwarmDefense::checkForCollisions()
 					sound.setBuffer(Hit);
 					sound.play();
 				}
-				j->die();
+				(*j).die();
 			}
 
 		}
@@ -530,7 +530,7 @@ bool SwarmDefense::getPositionOfRandomEnemy(sf::Vector2f& position)
 	{
 		if (index++ == randomEnemyIndex)
 		{
-			position = i->getCenterCoordinates();
+			position = (*i).getCenterCoordinates();
 			return true;
 		}
 	}

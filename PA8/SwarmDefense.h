@@ -132,8 +132,8 @@ private:
 
 	//The Projectiles!
 
-	//Vector of all projectiles currently in use
-	std::vector<Projectile*> projectiles;
+	//List of all projectiles currently in use
+	std::list<Projectile*> projectiles;
 
 
 	/// <summary>

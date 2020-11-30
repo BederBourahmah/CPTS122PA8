@@ -176,7 +176,7 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 	displayedCoins->drawTo(window);
 
 	//Draw projectiles
-	for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
+	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
 		(*i)->drawTo(window);
 }
 
@@ -293,7 +293,7 @@ void SwarmDefense::updateState()
 			if ((*i)->getDidAttack())
 
 			{
-				health--;
+				health = health <= 1 ? 0 : health-1;
 				enemiesCollided++;
 				(*i)->die();
 
@@ -316,7 +316,7 @@ void SwarmDefense::updateState()
 		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 
-	for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {		
+	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
 		if (!(*i)->getHasHit())
 		{
 			(*i)->shiftTowards((*i)->getxDest(), (*i)->getyDest(), distanceTravelled() * 5);
@@ -435,10 +435,10 @@ void SwarmDefense::checkForCollisions()
 
 	}
 
-	std::queue<std::vector<Projectile*>::iterator> projectilesToDestroy;
+	std::queue<std::list<Projectile*>::iterator> projectilesToDestroy;
 	bool didFind = false;
 
-	for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
+	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
 		for (std::list<Enemy*>::iterator j = enemies.begin(); j != enemies.end(); j++)
 		{
 			 MoveableRectangle* ptr = *i;
@@ -466,7 +466,7 @@ void SwarmDefense::checkForCollisions()
 
 	while (!projectilesToDestroy.empty())
 	{
-		std::vector<Projectile*>::iterator projectile = projectilesToDestroy.front();
+		std::list<Projectile*>::iterator projectile = projectilesToDestroy.front();
 		projectiles.erase(projectile);
 		projectilesToDestroy.pop();
 	}

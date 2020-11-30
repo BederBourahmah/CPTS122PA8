@@ -99,18 +99,18 @@ SwarmDefense::SwarmDefense(
 	currentEnemyId = INT16_MIN;
 	generateEnemy();
 	
-	displayedScore = new TextComponent("Leander.ttf", scorePrefix + std::to_string(score), 50);
+	displayedScore = new TextComponent("Leander.ttf", scorePrefix + std::to_string(score), 50, 1);
 	displayedScore->snapToLeft();
 	displayedScore->setColor(sf::Color::Green);
 	
 	health = 100;
 
-	displayedHealth = new TextComponent("Leander.ttf", healthPrefix + std::to_string(health), 50);
+	displayedHealth = new TextComponent("Leander.ttf", healthPrefix + std::to_string(health), 50, 1);
 	displayedHealth->snapToLeft();
 	displayedHealth->snapToVertical(videoMode, 10, 2);
 	displayedHealth->setColor(sf::Color::Green);
 
-	displayedCoins = new TextComponent("Leander.ttf", coinsPrefix + std::to_string(coins), 50);
+	displayedCoins = new TextComponent("Leander.ttf", coinsPrefix + std::to_string(coins), 50, 1);
 	displayedCoins->snapToLeft();
 	displayedCoins->snapToVertical(videoMode, 10, 3);
 	displayedCoins->setColor(sf::Color::Green);

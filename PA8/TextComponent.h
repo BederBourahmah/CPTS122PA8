@@ -35,6 +35,15 @@ public:
 	TextComponent(std::string textFile, std::string contents, unsigned int size, sf::Color color);
 
 	/// <summary>
+	/// Initializes the underlying font and the words to be displayed with a specific size and outlines the text.
+	/// </summary>
+	/// <param name="textFile">The file name of the font.</param>
+	/// <param name="contents">The words to be displayed.</param>
+	/// <param name="size">The font size.</param>
+	/// <param name="outlineThickness"></param>
+	TextComponent(std::string textFile, std::string contents, unsigned int size, float outlineThickness);
+
+	/// <summary>
 	/// Returns the x-axis coordinate of the center of this component.
 	/// </summary>
 	/// <returns>The x-axis coordinate of the center of this component.</returns>

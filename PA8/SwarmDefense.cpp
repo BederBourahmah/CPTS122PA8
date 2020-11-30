@@ -249,25 +249,6 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 
 				Projectile* newProj = new Projectile(videoMode, 0, xpos, ypos);
 				projectiles.push_back(newProj);
-
-				
-
-				for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
-				{
-					if ((*i)->isPositionInMyArea(event.mouseButton.x, event.mouseButton.y))
-					{
-						if (!(*i)->getIsDying())
-						{
-							score++;
-							coins += 10;
-
-							//Hit sound
-							sound.setBuffer(Hit);
-							sound.play();
-						}
-						(*i)->die();
-					}
-				}
 			}
 		}
 

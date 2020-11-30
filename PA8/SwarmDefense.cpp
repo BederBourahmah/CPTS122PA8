@@ -197,6 +197,7 @@ void SwarmDefense::processKeyboardInput()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
+		music.stop();
 		shouldGoBackToMainMenu = true;
 	}
 }
@@ -469,6 +470,38 @@ void SwarmDefense::closeShopModal()
 
 void SwarmDefense::generateProjectiles(unsigned char count)
 {
-	//TODO: Actually generate projectiles.
-	std::cout << "Generated " << (int)count << " projectiles." << std::endl;
+	sf::Vector2f randomEnemyPosition;
+	if (getPositionOfRandomEnemy(randomEnemyPosition))
+	{
+		fireProjectileAt(randomEnemyPosition);
+	}
+}
+
+void SwarmDefense::fireProjectileAt(sf::Vector2f position)
+{
+	Projectile* newProj = new Projectile(videoMode, 0, position.x, position.y);
+	projectiles.push_back(newProj);
+}
+
+bool SwarmDefense::getPositionOfRandomEnemy(sf::Vector2f& position)
+{
+	if (enemies.empty())
+	{
+		return false;
+	}
+
+	int numberOfEnemies = enemies.size();
+	std::random_device rdev{};
+	std::default_random_engine randomEngine{ rdev() };
+	std::uniform_int_distribution<int> integerDistrubution{ 0, numberOfEnemies-1 };
+	auto randomEnemyIndex = integerDistrubution(randomEngine);
+	int index = 0;
+	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	{
+		if (index++ == randomEnemyIndex)
+		{
+			position = (*i)->getCenterCoordinates();
+			return true;
+		}
+	}
 }

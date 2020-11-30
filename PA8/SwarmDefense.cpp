@@ -188,9 +188,9 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 		(*i)->drawTo(window);
 }
 
-	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	for (std::list<Enemy>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
-		(*i)->drawTo(window);
+		i->drawTo(window);
 	}
 
 	if (isShopModalDisplayed)
@@ -278,21 +278,21 @@ void SwarmDefense::updateState()
 	
 	destroyEnemies();
 
-	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	for (std::list<Enemy>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
-		if (!(*i)->getIsDying())
+		if (!i->getIsDying())
 		{
-			if (!(*i)->getIsAttacking())
+			if (!i->getIsAttacking())
 			{
-				(*i)->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, distanceTravelled());
+				i->shiftTowards((float)videoMode.width / 2.0f, (float)videoMode.height / 2.0f, distanceTravelled());
 			}
 
-			if ((*i)->getDidAttack())
+			if (i->getDidAttack())
 
 			{
 				health = health <= 1 ? 0 : health-1;
 				enemiesCollided++;
-				(*i)->die();
+				i->die();
 
 				//Play explosion sound
 				sound.setBuffer(Explosion);
@@ -305,12 +305,12 @@ void SwarmDefense::updateState()
 			}
 		}
 
-		if ((*i)->getIsDead())
+		if (i->getIsDead())
 		{
-			enemiesToDestroy.push((*i)->getId());
+			enemiesToDestroy.push(i->getId());
 		}
 
-		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
+		i->setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 
 	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
@@ -330,7 +330,7 @@ void SwarmDefense::updateState()
 
 void SwarmDefense::generateEnemy()
 {
-	Enemy* newEnemy = new Enemy(videoMode, currentEnemyId++, ghostTextures);
+	Enemy newEnemy(videoMode, currentEnemyId++, ghostTextures);
 	try
 	{
 		enemies.push_front(newEnemy);
@@ -366,13 +366,12 @@ void SwarmDefense::destroyEnemies()
 		}
 
 		int idToDelete = enemiesToDestroy.front();
-		std::list<Enemy*>::iterator itemToDelete = enemies.begin();
-		for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+		std::list<Enemy>::iterator itemToDelete = enemies.begin();
+		for (std::list<Enemy>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 		{
-			if ((*i)->getId() == idToDelete)
+			if (i->getId() == idToDelete)
 			{
 				itemToDelete = i;
-				delete (*i);
 			}
 		}
 
@@ -422,11 +421,11 @@ void SwarmDefense::destroyEnemies()
 
 void SwarmDefense::checkForCollisions()
 {
-	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	for (std::list<Enemy>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
-		if ((*i)->didCollideWithOtherComponent(*playerBase))
+		if (i->didCollideWithOtherComponent(*playerBase))
 		{
-			(*i)->attack();
+			i->attack();
 		}
 
 
@@ -436,15 +435,15 @@ void SwarmDefense::checkForCollisions()
 	bool didFind = false;
 
 	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
-		for (std::list<Enemy*>::iterator j = enemies.begin(); j != enemies.end(); j++)
+		for (std::list<Enemy>::iterator j = enemies.begin(); j != enemies.end(); j++)
 		{
 			 MoveableRectangle* ptr = *i;
-			if ((*j)->didCollideWithOtherComponent(*ptr))
+			if (j->didCollideWithOtherComponent(*ptr))
 			{
 				projectilesToDestroy.push(i);
 				delete (*i);
 
-				if (!(*j)->getIsDying())
+				if (!j->getIsDying())
 				{
 					score++;
 					coins += 10;
@@ -453,7 +452,7 @@ void SwarmDefense::checkForCollisions()
 					sound.setBuffer(Hit);
 					sound.play();
 				}
-				(*j)->die();
+				j->die();
 			}
 
 		}
@@ -529,11 +528,11 @@ bool SwarmDefense::getPositionOfRandomEnemy(sf::Vector2f& position)
 	std::uniform_int_distribution<int> integerDistrubution{ 0, numberOfEnemies-1 };
 	auto randomEnemyIndex = integerDistrubution(randomEngine);
 	int index = 0;
-	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
+	for (std::list<Enemy>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
 		if (index++ == randomEnemyIndex)
 		{
-			position = (*i)->getCenterCoordinates();
+			position = i->getCenterCoordinates();
 			return true;
 		}
 	}

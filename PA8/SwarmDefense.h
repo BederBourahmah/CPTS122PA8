@@ -107,7 +107,7 @@ private:
 	/// <summary>
 	/// A list of pointers to enemies currently alive.
 	/// </summary>
-	std::list<Enemy*> enemies;
+	std::list<Enemy> enemies;
 
 	/// <summary>
 	/// Generates a new enemy and adds it to the list.

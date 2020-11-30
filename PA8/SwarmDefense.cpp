@@ -245,7 +245,6 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 				{
 					if ((*i)->isPositionInMyArea(event.mouseButton.x, event.mouseButton.y))
 					{
-						//enemiesToDestroy.push((*i)->getId());
 						if (!(*i)->getIsDying())
 						{
 							score++;
@@ -434,8 +433,57 @@ void SwarmDefense::checkForCollisions()
 			(*i)->attack();
 		}
 
+
 	}
-}
+
+	std::vector<Projectile*>::iterator deleteThis;
+	bool didFind = false;
+
+	for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
+		for (std::list<Enemy*>::iterator j = enemies.begin(); j != enemies.end(); j++)
+		{
+			 MoveableRectangle* ptr = *i;
+			if ((*j)->didCollideWithOtherComponent(*ptr))
+			{
+				deleteThis = i;
+				delete (*i);
+				break;
+
+
+				Projectile* temp = *i;
+				delete* i;
+				projectiles.erase(i);
+
+				/*if (deleteThis != nullptr)
+				{
+					projectiles.erase(deleteThis);
+				}*/
+
+				
+
+				if (!(*j)->getIsDying())
+				{
+					score++;
+					coins += 10;
+
+					//Hit sound
+					sound.setBuffer(Hit);
+					sound.play();
+				}
+				(*j)->die();
+			}
+
+			}
+
+
+		}
+		if (didFind)
+		{
+			projectiles.erase(deleteThis);
+		}
+
+	}
+
 
 float SwarmDefense::distanceTravelled()
 {

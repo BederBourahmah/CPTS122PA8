@@ -89,6 +89,11 @@ void ShopModal::handleEvents(sf::RenderWindow& window)
 		{
 			handleClickEvent(event);
 		}
+
+		if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
+		{
+			((*parent).*onCloseModal)();
+		}
 	}
 }
 

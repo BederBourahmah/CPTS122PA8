@@ -99,21 +99,23 @@ SwarmDefense::SwarmDefense(
 	currentEnemyId = INT16_MIN;
 	generateEnemy();
 	
-	displayedScore = new TextComponent("Leander.ttf", scorePrefix + std::to_string(score), 50);
-	displayedScore->snapToVertical(videoMode, 10, 1);
+	displayedScore = new TextComponent("Leander.ttf", scorePrefix + std::to_string(score), 50, 1);
+	displayedScore->snapToLeft();
 	displayedScore->setColor(sf::Color::Green);
 	
-	displayedHealth = new TextComponent("Leander.ttf", healthPrefix + std::to_string(health), 50);
+	health = 100;
+
+	displayedHealth = new TextComponent("Leander.ttf", healthPrefix + std::to_string(health), 50, 1);
+	displayedHealth->snapToLeft();
 	displayedHealth->snapToVertical(videoMode, 10, 2);
 	displayedHealth->setColor(sf::Color::Green);
 
-	displayedCoins = new TextComponent("Leander.ttf", coinsPrefix + std::to_string(coins), 50);
+	displayedCoins = new TextComponent("Leander.ttf", coinsPrefix + std::to_string(coins), 50, 1);
+	displayedCoins->snapToLeft();
 	displayedCoins->snapToVertical(videoMode, 10, 3);
 	displayedCoins->setColor(sf::Color::Green);
 
-	health = 100;
 	isGameOver = false;
-
 
 	//Sounds
 
@@ -168,15 +170,21 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 	displayedScore->setText(scorePrefix + newScore);
 	displayedHealth->setText(healthPrefix + newHealth);
 	displayedCoins->setText(coinsPrefix + newCoins);
-
+	displayedScore->snapToLeft();
+	displayedHealth->snapToLeft();
+	displayedCoins->snapToLeft();
 
 	playerBase->drawTo(window);
-	displayedScore->drawTo(window);
-	displayedHealth->drawTo(window);
-	displayedCoins->drawTo(window);
+	if (!isGameOver)
+	{
+		displayedScore->drawTo(window);
+		displayedHealth->drawTo(window);
+		displayedCoins->drawTo(window);
+	}
+	
 
 	//Draw projectiles
-	for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
+	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
 		(*i)->drawTo(window);
 }
 
@@ -189,15 +197,17 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 	{
 		shopModal->drawTo(window);
 	}
+
+	if (isGameOver)
+	{
+		displayedScore->drawTo(window);
+		displayedHealth->drawTo(window);
+		displayedCoins->drawTo(window);
+	}
 }
 
 void SwarmDefense::processKeyboardInput()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-	{
-		music.stop();
-		shouldGoBackToMainMenu = true;
-	}
 }
 
 void SwarmDefense::processMousePosition(sf::Vector2i mouseWindowPosition)
@@ -222,6 +232,12 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 	{
 		if (event.type == sf::Event::Closed) window.close();
 
+		if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
+		{
+			music.stop();
+			shouldGoBackToMainMenu = true;
+		}
+
 		if (isGameOver) { 
 			return;
 		}
@@ -237,26 +253,6 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 
 				Projectile* newProj = new Projectile(videoMode, 0, xpos, ypos);
 				projectiles.push_back(newProj);
-
-				
-
-				for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
-				{
-					if ((*i)->isPositionInMyArea(event.mouseButton.x, event.mouseButton.y))
-					{
-						//enemiesToDestroy.push((*i)->getId());
-						if (!(*i)->getIsDying())
-						{
-							score++;
-							coins += 10;
-
-							//Hit sound
-							sound.setBuffer(Hit);
-							sound.play();
-						}
-						(*i)->die();
-					}
-				}
 			}
 		}
 
@@ -294,7 +290,7 @@ void SwarmDefense::updateState()
 			if ((*i)->getDidAttack())
 
 			{
-				health--;
+				health = health <= 1 ? 0 : health-1;
 				enemiesCollided++;
 				(*i)->die();
 
@@ -317,7 +313,7 @@ void SwarmDefense::updateState()
 		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 
-	for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {		
+	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
 		if (!(*i)->getHasHit())
 		{
 			(*i)->shiftTowards((*i)->getxDest(), (*i)->getyDest(), distanceTravelled() * 5);
@@ -433,8 +429,47 @@ void SwarmDefense::checkForCollisions()
 			(*i)->attack();
 		}
 
+
 	}
+
+	std::queue<std::list<Projectile*>::iterator> projectilesToDestroy;
+	bool didFind = false;
+
+	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
+		for (std::list<Enemy*>::iterator j = enemies.begin(); j != enemies.end(); j++)
+		{
+			 MoveableRectangle* ptr = *i;
+			if ((*j)->didCollideWithOtherComponent(*ptr))
+			{
+				projectilesToDestroy.push(i);
+				delete (*i);
+
+				if (!(*j)->getIsDying())
+				{
+					score++;
+					coins += 10;
+
+					//Hit sound
+					sound.setBuffer(Hit);
+					sound.play();
+				}
+				(*j)->die();
+			}
+
+		}
+
+
+	}
+
+	while (!projectilesToDestroy.empty())
+	{
+		std::list<Projectile*>::iterator projectile = projectilesToDestroy.front();
+		projectiles.erase(projectile);
+		projectilesToDestroy.pop();
+	}
+
 }
+
 
 float SwarmDefense::distanceTravelled()
 {

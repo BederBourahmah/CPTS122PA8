@@ -320,9 +320,9 @@ void SwarmDefense::updateState()
 		}
 	}
 
-	for (std::list<Weapon*>::iterator i = weapons.begin(); i != weapons.end(); ++i)
+	for (std::list<Weapon>::iterator i = weapons.begin(); i != weapons.end(); ++i)
 	{
-		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
+		(*i).setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 
 	checkForCollisions();
@@ -478,12 +478,11 @@ bool SwarmDefense::purchaseWeapon(unsigned int cost, WeaponType type)
 	if (coins < cost) return false;
 	
 	coins -= cost;
-	Weapon* newWeapon = nullptr;
+	Weapon newWeapon(2000000, 1, this, &SwarmDefense::generateProjectiles);
 
 	switch (type)
 	{
 	case WeaponType::Basic:
-		newWeapon = new Weapon(2000000, 1, this, &SwarmDefense::generateProjectiles);
 		weapons.push_back(newWeapon);
 		break;
 	default:

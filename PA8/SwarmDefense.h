@@ -245,7 +245,7 @@ private:
 	/// <summary>
 	/// A list of pointers to active weapons.
 	/// </summary>
-	std::list<Weapon*> weapons;
+	std::list<Weapon> weapons;
 
 	/// <summary>
 	/// Purchases the provided weapon type at the provided cost.

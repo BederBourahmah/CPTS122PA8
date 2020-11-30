@@ -436,7 +436,7 @@ void SwarmDefense::checkForCollisions()
 
 	}
 
-	std::vector<Projectile*>::iterator deleteThis;
+	std::queue<std::vector<Projectile*>::iterator> projectilesToDestroy;
 	bool didFind = false;
 
 	for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
@@ -445,21 +445,8 @@ void SwarmDefense::checkForCollisions()
 			 MoveableRectangle* ptr = *i;
 			if ((*j)->didCollideWithOtherComponent(*ptr))
 			{
-				deleteThis = i;
+				projectilesToDestroy.push(i);
 				delete (*i);
-				break;
-
-
-				Projectile* temp = *i;
-				delete* i;
-				projectiles.erase(i);
-
-				/*if (deleteThis != nullptr)
-				{
-					projectiles.erase(deleteThis);
-				}*/
-
-				
 
 				if (!(*j)->getIsDying())
 				{
@@ -473,16 +460,19 @@ void SwarmDefense::checkForCollisions()
 				(*j)->die();
 			}
 
-			}
-
-
 		}
-		if (didFind)
-		{
-			projectiles.erase(deleteThis);
-		}
+
 
 	}
+
+	while (!projectilesToDestroy.empty())
+	{
+		std::vector<Projectile*>::iterator projectile = projectilesToDestroy.front();
+		projectiles.erase(projectile);
+		projectilesToDestroy.pop();
+	}
+
+}
 
 
 float SwarmDefense::distanceTravelled()

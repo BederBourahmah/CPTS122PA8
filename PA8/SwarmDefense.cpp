@@ -171,9 +171,13 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 
 
 	playerBase->drawTo(window);
-	displayedScore->drawTo(window);
-	displayedHealth->drawTo(window);
-	displayedCoins->drawTo(window);
+	if (!isGameOver)
+	{
+		displayedScore->drawTo(window);
+		displayedHealth->drawTo(window);
+		displayedCoins->drawTo(window);
+	}
+	
 
 	//Draw projectiles
 	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
@@ -188,6 +192,13 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 	if (isShopModalDisplayed)
 	{
 		shopModal->drawTo(window);
+	}
+
+	if (isGameOver)
+	{
+		displayedScore->drawTo(window);
+		displayedHealth->drawTo(window);
+		displayedCoins->drawTo(window);
 	}
 }
 

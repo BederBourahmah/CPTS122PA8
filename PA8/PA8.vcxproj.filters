@@ -56,6 +56,9 @@
       <Filter>Source\Components\Modals</Filter>
     </ClCompile>
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ScreenManager.h">
@@ -132,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="WeaponType.h">
       <Filter>Headers\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Headers\Components</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

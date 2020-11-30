@@ -11,11 +11,14 @@
 #include <queue>
 #include <cmath>
 #include <iostream>
+#include <vector>
 #include "Enemy.h"
 #include "GhostAnimation.h"
+#include "Projectile.h"
 #include "ShopModal.h"
 #include "WeaponType.h"
 #include "Weapon.h"
+
 
 /// <summary>
 /// Forward declaration of screen manager.
@@ -111,6 +114,11 @@ private:
 	/// </summary>
 	void generateEnemy();
 
+	//Generates a new projectile
+	void generateProj();
+
+
+
 	/// <summary>
 	/// A queue containing the IDs of the enemies to be destroyed.
 	/// </summary>
@@ -120,6 +128,13 @@ private:
 	/// The number of enemies that have collided with the player's base.
 	/// </summary>
 	int enemiesCollided;
+
+
+	//The Projectiles!
+
+	//Vector of all projectiles currently in use
+	std::vector<Projectile*> projectiles;
+
 
 	/// <summary>
 	/// A pointer to the text component that displays the score.

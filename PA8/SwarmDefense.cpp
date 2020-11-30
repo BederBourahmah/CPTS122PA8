@@ -137,7 +137,6 @@ SwarmDefense::SwarmDefense(
 	}
 	music.setVolume(40);
 	music.play();
-
 	
 
 	isMultiplayer = mp;
@@ -177,6 +176,11 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 	displayedScore->drawTo(window);
 	displayedHealth->drawTo(window);
 	displayedCoins->drawTo(window);
+
+	//Draw projectiles
+	for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
+		(*i)->drawTo(window);
+}
 
 	for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 	{
@@ -225,8 +229,18 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
+
+
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
+				float xpos = sf::Mouse::getPosition(window).x;
+				float ypos = sf::Mouse::getPosition(window).y;
+
+				Projectile* newProj = new Projectile(videoMode, 0, xpos, ypos);
+				projectiles.push_back(newProj);
+
+				
+
 				for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); ++i)
 				{
 					if ((*i)->isPositionInMyArea(event.mouseButton.x, event.mouseButton.y))
@@ -304,6 +318,13 @@ void SwarmDefense::updateState()
 		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 
+	for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {		
+		if (!(*i)->getHasHit())
+		{
+			(*i)->shiftTowards((*i)->getxDest(), (*i)->getyDest(), distanceTravelled() * 5);
+		}
+	}
+
 	for (std::list<Weapon*>::iterator i = weapons.begin(); i != weapons.end(); ++i)
 	{
 		(*i)->setTimeElapsed(timeElapsed.asMicroseconds());
@@ -323,7 +344,10 @@ void SwarmDefense::generateEnemy()
 	{
 		std::cout << "Failed to generate enemy: " << ex.what() << std::endl;
 	}
+
 }
+
+
 
 void SwarmDefense::destroyEnemies()
 {

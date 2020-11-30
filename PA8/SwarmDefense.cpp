@@ -100,20 +100,22 @@ SwarmDefense::SwarmDefense(
 	generateEnemy();
 	
 	displayedScore = new TextComponent("Leander.ttf", scorePrefix + std::to_string(score), 50);
-	displayedScore->snapToVertical(videoMode, 10, 1);
+	displayedScore->snapToLeft();
 	displayedScore->setColor(sf::Color::Green);
 	
+	health = 100;
+
 	displayedHealth = new TextComponent("Leander.ttf", healthPrefix + std::to_string(health), 50);
+	displayedHealth->snapToLeft();
 	displayedHealth->snapToVertical(videoMode, 10, 2);
 	displayedHealth->setColor(sf::Color::Green);
 
 	displayedCoins = new TextComponent("Leander.ttf", coinsPrefix + std::to_string(coins), 50);
+	displayedCoins->snapToLeft();
 	displayedCoins->snapToVertical(videoMode, 10, 3);
 	displayedCoins->setColor(sf::Color::Green);
 
-	health = 100;
 	isGameOver = false;
-
 
 	//Sounds
 
@@ -168,7 +170,9 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 	displayedScore->setText(scorePrefix + newScore);
 	displayedHealth->setText(healthPrefix + newHealth);
 	displayedCoins->setText(coinsPrefix + newCoins);
-
+	displayedScore->snapToLeft();
+	displayedHealth->snapToLeft();
+	displayedCoins->snapToLeft();
 
 	playerBase->drawTo(window);
 	if (!isGameOver)

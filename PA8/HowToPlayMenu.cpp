@@ -3,8 +3,8 @@
 HowToPlayMenu::HowToPlayMenu(sf::VideoMode const vm)
 {
 	videoMode = vm;
-	rulesTextHeader = new TextComponent("Leander.ttf", "HOW TO PLAY");
-	rulesTextBody = new TextComponent("Leander.ttf", "Ghosts are attacking the castle!\n Click on them to shoot, but\n do not let them get too close!\n");
+	rulesTextHeader = new TextComponent("Leander.ttf", "HOW TO PLAY", 100);
+	rulesTextBody = new TextComponent("Leander.ttf", "Ghosts are attacking the castle!\nClick on them to shoot, but do\nnot let them get too close! Buy\nweapons from the shop to\nincrease your defense!\n\nControls:\nLeft Mouse Button ~ Shoot\nEsc ~ Exit Game\nS ~ Weapons Shop", 75);
 	returnText = new TextComponent("Leander.ttf", "Return");
 	selector = new MenuSelector(returnText->getWidth(), returnText->getHeight());
 	rulesTextHeader->centerHorizontal(videoMode);

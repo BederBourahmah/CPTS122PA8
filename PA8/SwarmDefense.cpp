@@ -184,8 +184,8 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 	
 
 	//Draw projectiles
-	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
-		(*i)->drawTo(window);
+	for (std::list<Projectile>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
+		i->drawTo(window);
 }
 
 	for (std::list<Enemy>::iterator i = enemies.begin(); i != enemies.end(); ++i)
@@ -251,7 +251,7 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 				float xpos = sf::Mouse::getPosition(window).x;
 				float ypos = sf::Mouse::getPosition(window).y;
 
-				Projectile* newProj = new Projectile(videoMode, 0, xpos, ypos);
+				Projectile newProj(videoMode, 0, xpos, ypos);
 				projectiles.push_back(newProj);
 			}
 		}
@@ -313,10 +313,10 @@ void SwarmDefense::updateState()
 		i->setTimeElapsed(timeElapsed.asMicroseconds());
 	}
 
-	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
-		if (!(*i)->getHasHit())
+	for (std::list<Projectile>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
+		if (!i->getHasHit())
 		{
-			(*i)->shiftTowards((*i)->getxDest(), (*i)->getyDest(), distanceTravelled() * 5);
+			i->shiftTowards(i->getxDest(), i->getyDest(), distanceTravelled() * 5);
 		}
 	}
 
@@ -431,17 +431,15 @@ void SwarmDefense::checkForCollisions()
 
 	}
 
-	std::queue<std::list<Projectile*>::iterator> projectilesToDestroy;
+	std::queue<std::list<Projectile>::iterator> projectilesToDestroy;
 	bool didFind = false;
 
-	for (std::list<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
+	for (std::list<Projectile>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
 		for (std::list<Enemy>::iterator j = enemies.begin(); j != enemies.end(); j++)
 		{
-			 MoveableRectangle* ptr = *i;
-			if (j->didCollideWithOtherComponent(*ptr))
+			if (j->didCollideWithOtherComponent(*i))
 			{
 				projectilesToDestroy.push(i);
-				delete (*i);
 
 				if (!j->getIsDying())
 				{
@@ -462,7 +460,7 @@ void SwarmDefense::checkForCollisions()
 
 	while (!projectilesToDestroy.empty())
 	{
-		std::list<Projectile*>::iterator projectile = projectilesToDestroy.front();
+		std::list<Projectile>::iterator projectile = projectilesToDestroy.front();
 		projectiles.erase(projectile);
 		projectilesToDestroy.pop();
 	}
@@ -511,7 +509,7 @@ void SwarmDefense::generateProjectiles(unsigned char count)
 
 void SwarmDefense::fireProjectileAt(sf::Vector2f position)
 {
-	Projectile* newProj = new Projectile(videoMode, 0, position.x, position.y);
+	Projectile newProj(videoMode, 0, position.x, position.y);
 	projectiles.push_back(newProj);
 }
 

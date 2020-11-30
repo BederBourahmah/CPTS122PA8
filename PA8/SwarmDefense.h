@@ -133,7 +133,7 @@ private:
 	//The Projectiles!
 
 	//List of all projectiles currently in use
-	std::list<Projectile*> projectiles;
+	std::list<Projectile> projectiles;
 
 
 	/// <summary>

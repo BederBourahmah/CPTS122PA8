@@ -114,8 +114,6 @@ SwarmDefense::SwarmDefense(
 	health = 100;
 	isGameOver = false;
 
-	std::cout << "a";
-
 
 	//Sounds
 

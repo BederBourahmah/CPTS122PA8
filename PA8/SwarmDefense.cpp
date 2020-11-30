@@ -177,17 +177,8 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 	displayedHealth->drawTo(window);
 	displayedCoins->drawTo(window);
 
-#if 0
-	////test
-	Projectile* pa(videoMode, 1);
-	projectiles.push_back(pa);
-
-	
-
-#endif
-
+	//Draw projectiles
 	for (std::vector<Projectile*>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
-		//std::cout << "sending projectile" << std::endl;
 		(*i)->drawTo(window);
 }
 

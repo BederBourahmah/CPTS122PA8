@@ -101,7 +101,7 @@ void ShopModal::handlePurchaseBasicWeapon()
 {
 	if (((*parent).*onPurchaseWeapon)(currentBasicWeaponCost, WeaponType::Basic))
 	{
-		currentBasicWeaponCost *= 1.1f;
+		currentBasicWeaponCost *= 2.0f;
 		basicWeaponCost->setText(std::to_string(currentBasicWeaponCost));
 		return;
 	}

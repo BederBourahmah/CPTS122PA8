@@ -486,7 +486,7 @@ bool SwarmDefense::purchaseWeapon(unsigned int cost, WeaponType type)
 	switch (type)
 	{
 	case WeaponType::Basic:
-		newWeapon = new Weapon(1000000, 1, this, &SwarmDefense::generateProjectiles);
+		newWeapon = new Weapon(2000000, 1, this, &SwarmDefense::generateProjectiles);
 		weapons.push_back(newWeapon);
 		break;
 	default:

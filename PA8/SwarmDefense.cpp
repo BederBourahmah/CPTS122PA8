@@ -193,11 +193,6 @@ void SwarmDefense::drawTo(sf::RenderWindow& window)
 
 void SwarmDefense::processKeyboardInput()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-	{
-		music.stop();
-		shouldGoBackToMainMenu = true;
-	}
 }
 
 void SwarmDefense::processMousePosition(sf::Vector2i mouseWindowPosition)
@@ -221,6 +216,12 @@ void SwarmDefense::handleEvents(sf::RenderWindow& window)
 	while (window.pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed) window.close();
+
+		if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
+		{
+			music.stop();
+			shouldGoBackToMainMenu = true;
+		}
 
 		if (isGameOver) { 
 			return;

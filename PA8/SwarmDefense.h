@@ -266,6 +266,19 @@ private:
 	/// <param name="count">The number of projectile to create.</param>
 	void generateProjectiles(unsigned char count);
 
+	/// <summary>
+	/// Creates a new projectile and fires it at the provided coordinate.
+	/// </summary>
+	/// <param name="position">The position to fire the projectile at.</param>
+	void fireProjectileAt(sf::Vector2f position);
+
+	/// <summary>
+	/// Gets the position of a random enemy.
+	/// </summary>
+	/// <param name="position">The position that will be changed to match that of a random enemy.</param>
+	/// <returns>True if successfully found position of a random enemy.</returns>
+	bool getPositionOfRandomEnemy(sf::Vector2f& position);
+
 	//Audio
 	sf::Music music;
 	sf::SoundBuffer Hit;

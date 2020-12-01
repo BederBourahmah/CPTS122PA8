@@ -206,7 +206,7 @@ unsigned short IpAddressInputModal::getPort()
 		return 0;
 	}
 
-	if (intValue > USHRT_MAX || intValue < 0)
+	if (intValue > 65535 || intValue < 0)
 	{
 		return 0;
 	}

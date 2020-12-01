@@ -107,7 +107,7 @@ private:
 	/// <summary>
 	/// A list of pointers to enemies currently alive.
 	/// </summary>
-	std::list<Enemy*> enemies;
+	std::list<Enemy> enemies;
 
 	/// <summary>
 	/// Generates a new enemy and adds it to the list.
@@ -133,7 +133,7 @@ private:
 	//The Projectiles!
 
 	//List of all projectiles currently in use
-	std::list<Projectile*> projectiles;
+	std::list<Projectile> projectiles;
 
 
 	/// <summary>
@@ -245,7 +245,7 @@ private:
 	/// <summary>
 	/// A list of pointers to active weapons.
 	/// </summary>
-	std::list<Weapon*> weapons;
+	std::list<Weapon> weapons;
 
 	/// <summary>
 	/// Purchases the provided weapon type at the provided cost.

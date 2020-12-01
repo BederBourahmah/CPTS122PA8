@@ -51,7 +51,7 @@ void TcpServer::enqueueEnemies(sf::Uint16 numberOfEnemiesToSend)
 	sf::Packet packet;
 	packet << numberOfEnemiesToSend;
 	packetQueue.push(packet);
-	std::cout << "Enqueued " << numberOfEnemiesToSend << " enemies." << std::endl;
+	//std::cout << "Enqueued " << numberOfEnemiesToSend << " enemies." << std::endl;
 }
 
 void TcpServer::sendFrontOfQueue()
@@ -75,7 +75,7 @@ void TcpServer::sendFrontOfQueue()
 	{
 	case sf::Socket::Done:
 		packet >> enemiesSent;
-		std::cout << "Sent " << enemiesSent << " enemies." << std::endl;
+		//std::cout << "Sent " << enemiesSent << " enemies." << std::endl;
 		packetQueue.pop();
 		didConnect = true;
 		return;
@@ -101,7 +101,7 @@ sf::Uint16 TcpServer::getEnemiesFromOpponent()
 	sf::Uint16 numberOfEnemies = 0;
 	if (packet >> numberOfEnemies)
 	{
-		std::cout << "Received " << numberOfEnemies << " enemies." << std::endl;
+		//std::cout << "Received " << numberOfEnemies << " enemies." << std::endl;
 		return numberOfEnemies;
 	}
 

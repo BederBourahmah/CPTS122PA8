@@ -3,15 +3,25 @@
 ScreenManager::ScreenManager(sf::VideoMode vm)
 {
 	videoMode = vm;
-	mainMenu = new MainMenu(videoMode);
+	mainMenu = new MainMenu(videoMode, this, &ScreenManager::handleConnectToNetwork);
 	currentScreen = Screens::MainMenu;
-	sideScroller = nullptr;
+	howToPlayMenu = new HowToPlayMenu(videoMode);
 	swarmDefense = nullptr;
+	server = nullptr;
+	client = nullptr;
+	loadingModal = nullptr;
+	isAttemptingToConnect = false;
 }
 
 ScreenManager::~ScreenManager()
 {
 	deleteAllScreens();
+	delete server;
+	server = nullptr;
+	delete client;
+	client = nullptr;
+	delete loadingModal;
+	loadingModal = nullptr;
 }
 
 Screen* ScreenManager::getCurrentScreen()
@@ -20,8 +30,8 @@ Screen* ScreenManager::getCurrentScreen()
 	{
 	case Screens::MainMenu:
 		return mainMenu;
-	case Screens::SideScroller:
-		return sideScroller;
+	case Screens::HowToPlayMenu:
+		return howToPlayMenu;
 	case Screens::SwarmDefense:
 		return swarmDefense;
 	default:
@@ -34,9 +44,16 @@ void ScreenManager::updateState()
 	Screen* currentScreenPtr = getCurrentScreen();
 	if (currentScreenPtr == nullptr) return;
 
+	if (isAttemptingToConnect && loadingModal != nullptr)
+	{
+		loadingModal->updateState();
+		attemptConnection();
+		return;
+	}
+
 	currentScreenPtr->processKeyboardInput();
 	currentScreenPtr->processMousePosition(sf::Mouse::getPosition());
-	currentScreenPtr->processMouseClick();
+	currentScreenPtr->updateState();
 
 	if (currentScreen == Screens::MainMenu)
 	{
@@ -44,9 +61,8 @@ void ScreenManager::updateState()
 		return;
 	}
 	
-	if (currentScreen == Screens::SideScroller)
+	if (currentScreen == Screens::HowToPlayMenu)
 	{
-		((SideScroller*)currentScreenPtr)->updateState();
 		if (currentScreenPtr->shouldExitGame())
 		{
 			switchToSelectedScreen(Screens::MainMenu);
@@ -54,16 +70,18 @@ void ScreenManager::updateState()
 		return;
 	}
 
-	if (currentScreen == Screens::SwarmDefense)
+	if (currentScreen == Screens::SwarmDefense || currentScreen == Screens::HowToPlayMenu)
 	{
 		if (currentScreenPtr->shouldExitGame())
 		{
 			switchToSelectedScreen(Screens::MainMenu);
 			return;
 		}
-
-		((SwarmDefense*)currentScreenPtr)->updateState();
 	}
+
+	if (client != nullptr) client->sendFrontOfQueue();
+
+	if (server != nullptr) server->sendFrontOfQueue();
 }
 
 bool ScreenManager::shouldExitGame()
@@ -78,18 +96,55 @@ bool ScreenManager::shouldExitGame()
 	return false;
 }
 
+void ScreenManager::handleConnectToNetwork(std::string addr, unsigned int port, bool isServer)
+{
+	if (isServer)
+	{
+		server = new TcpServer(port);
+	}
+	else {
+		client = new TcpClient(addr, port);
+	}
+
+	isAttemptingToConnect = true;
+	loadingModal = new LoadingModal(videoMode);
+}
+
+void ScreenManager::drawTo(sf::RenderWindow& window)
+{
+	getCurrentScreen()->drawTo(window);
+
+	if (loadingModal != nullptr) loadingModal->drawTo(window);
+}
+
+sf::Uint16 ScreenManager::getEnemiesFromOpponent()
+{
+	if (server != nullptr) return server->getEnemiesFromOpponent();
+
+	if (client != nullptr) return client->getEnemiesFromOpponent();
+
+	return 0;
+}
+
+void ScreenManager::sendEnemiesToOpponent(sf::Uint16 enemiesToSend)
+{
+	if (server != nullptr) server->enqueueEnemies(enemiesToSend);
+
+	if (client != nullptr) client->enqueueEnemies(enemiesToSend);
+}
+
 void ScreenManager::initializeSelectedScreen(Screens selectedScreen)
 {
 	switch (selectedScreen)
 	{
 	case Screens::MainMenu:
-		mainMenu = new MainMenu(videoMode);
+		mainMenu->resetState();
 		break;
 	case Screens::SwarmDefense:
-		swarmDefense = new SwarmDefense(videoMode);
+		swarmDefense = new SwarmDefense(videoMode, isMultiplayer(), this, &ScreenManager::sendEnemiesToOpponent, &ScreenManager::getEnemiesFromOpponent);
 		break;
-	case Screens::SideScroller:
-		sideScroller = new SideScroller(videoMode);
+	case Screens::HowToPlayMenu: 
+		howToPlayMenu->resetState();
 		return;
 	case Screens::Exit:
 		break;
@@ -112,13 +167,46 @@ void ScreenManager::deleteAllScreens()
 	mainMenu = nullptr;
 	delete swarmDefense;
 	swarmDefense = nullptr;
-	delete sideScroller;
-	sideScroller = nullptr;
+	delete howToPlayMenu;
+	howToPlayMenu = nullptr;
 }
 
 void ScreenManager::switchToSelectedScreen(Screens selectedScreen)
 {
-	deleteAllScreens();
+	//deleteAllScreens();
 	initializeSelectedScreen(selectedScreen);
 	currentScreen = selectedScreen;
+}
+
+void ScreenManager::attemptConnection()
+{
+	if (server != nullptr)
+	{
+		server->attemptToConnect();
+		if (server->getDidConnect())
+		{
+			isAttemptingToConnect = false;
+			delete loadingModal;
+			loadingModal = nullptr;
+			switchToSelectedScreen(Screens::SwarmDefense);
+		}
+		return;
+	}
+
+	if (client == nullptr) return;
+	
+	client->sendFrontOfQueue();
+	if (client->getIsConnected())
+	{
+		isAttemptingToConnect = false;
+		delete loadingModal;
+		loadingModal = nullptr;
+		switchToSelectedScreen(Screens::SwarmDefense);
+	}
+	
+}
+
+bool ScreenManager::isMultiplayer()
+{
+	return server != nullptr || client != nullptr;
 }

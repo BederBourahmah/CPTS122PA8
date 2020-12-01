@@ -1,27 +1,36 @@
 #include "MoveableRectangle.h"
 
+MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions)
+{
+	shape = sf::RectangleShape(dimensions);
+	centerPosX = dimensions.x / 2.0f;
+	centerPosY = dimensions.y / 2.0f;
+	shape.setOrigin(centerPosX, centerPosY);
+	totalHeight = dimensions.y;
+	totalWidth = dimensions.x;
+}
+
 MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions, sf::Color color)
 {
 	shape = sf::RectangleShape(dimensions);
 	shape.setFillColor(color);
-	centerPosX = dimensions.x / 2;
-	centerPosY = dimensions.y / 2;
+	centerPosX = dimensions.x / 2.0f;
+	centerPosY = dimensions.y / 2.0f;
 	shape.setOrigin(centerPosX, centerPosY);
 	totalHeight = dimensions.y;
 	totalWidth = dimensions.x;
-	id = INT16_MIN;
 }
 
-MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions, sf::Color color, short int newId)
+MoveableRectangle::MoveableRectangle(sf::Vector2f dimensions, const sf::Texture* txtr)
 {
 	shape = sf::RectangleShape(dimensions);
-	shape.setFillColor(color);
-	centerPosX = dimensions.x / 2;
-	centerPosY = dimensions.y / 2;
+	
+	shape.setTexture(txtr);
+	centerPosX = dimensions.x / 2.0f;
+	centerPosY = dimensions.y / 2.0f;
 	shape.setOrigin(centerPosX, centerPosY);
 	totalHeight = dimensions.y;
 	totalWidth = dimensions.x;
-	id = newId;
 }
 
 void MoveableRectangle::drawTo(sf::RenderWindow& window)
@@ -34,9 +43,32 @@ bool MoveableRectangle::didCollideWithOtherComponent(MoveableRectangle otherComp
 	return didComponentsCollide(*this, otherComponent);
 }
 
-int MoveableRectangle::getId()
+void MoveableRectangle::setTexture(const sf::Texture* newTexture)
 {
-	return id;
+	shape.setTexture(newTexture);
+}
+
+void MoveableRectangle::mirror()
+{
+	shape.setScale(-1.0f, 1.0f);
+}
+
+bool MoveableRectangle::isLeftOfCenter(float center)
+{
+	return centerPosX < center;
+}
+
+void MoveableRectangle::updateDimensions(sf::Vector2f dimensions, sf::Vector2f originOffset)
+{
+	shape = sf::RectangleShape(dimensions);
+	auto oldCenterX = centerPosX;
+	centerPosX += (totalWidth - dimensions.x) / 2.0f;
+	auto oldCenterY = centerPosY;
+	centerPosY += (totalHeight - dimensions.y) / 2.0f;
+	shape.setOrigin((dimensions.x + originOffset.x)/2.0f, (dimensions.y + originOffset.y)/2.0f);
+	totalHeight = dimensions.y;
+	totalWidth = dimensions.x;
+	shape.setPosition(oldCenterX, oldCenterY);
 }
 
 void MoveableRectangle::updatePosition()

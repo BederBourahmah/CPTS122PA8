@@ -540,4 +540,6 @@ bool SwarmDefense::getPositionOfRandomEnemy(sf::Vector2f& position)
 			return true;
 		}
 	}
+
+	return false;
 }

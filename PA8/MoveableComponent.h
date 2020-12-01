@@ -195,7 +195,7 @@ public:
 	{
 		float diffX = centerPosX - x;
 		float diffY = centerPosY - y;
-		float angle = std::atanf(diffX / diffY);
+		float angle = std::atan(diffX / diffY);
 		float distance = std::hypotf(diffX, diffY);
 		distance -= distanceToShift;
 		if (distance <= 0)

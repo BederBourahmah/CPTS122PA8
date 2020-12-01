@@ -431,39 +431,46 @@ void SwarmDefense::checkForCollisions()
 
 	}
 
-	std::queue<std::list<Projectile>::iterator> projectilesToDestroy;
+	std::list<Projectile>::iterator projectileToDestroy;
+
 	bool didFind = false;
-
-	for (std::list<Projectile>::iterator i = projectiles.begin(); i != projectiles.end(); i++) {
-		for (std::list<Enemy>::iterator j = enemies.begin(); j != enemies.end(); j++)
-		{
-			if ((*j).didCollideWithOtherComponent(*i))
+	
+	do
+	{
+		didFind = false;
+		for (std::list<Projectile>::iterator i = projectiles.begin(); i != projectiles.end(); ++i) {
+			for (std::list<Enemy>::iterator j = enemies.begin(); j != enemies.end(); ++j)
 			{
-				projectilesToDestroy.push(i);
-
-				if (!(*j).getIsDying())
+				if ((*j).didCollideWithOtherComponent(*i))
 				{
-					score++;
-					coins += 10;
+					didFind = true;
+					projectileToDestroy = i;
 
-					//Hit sound
-					sound.setBuffer(Hit);
-					sound.play();
+					if (!(*j).getIsDying())
+					{
+						score++;
+						coins += 10;
+
+						//Hit sound
+						sound.setBuffer(Hit);
+						sound.play();
+					}
+					(*j).die();
 				}
-				(*j).die();
+
+				if (didFind) break;
 			}
 
+			if (didFind) break;
 		}
 
+		if (didFind)
+		{
+			projectiles.erase(projectileToDestroy);
+		}
 
-	}
-
-	while (!projectilesToDestroy.empty())
-	{
-		std::list<Projectile>::iterator projectile = projectilesToDestroy.front();
-		projectiles.erase(projectile);
-		projectilesToDestroy.pop();
-	}
+	} while (didFind);
+	
 
 }
 
